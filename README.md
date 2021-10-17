@@ -16,6 +16,10 @@ There are other features not listed above: Chat functionality, Friends systems, 
 
 [Thomas Huang](https://github.com/thomashuang02), [Ben Pasteelnick](https://github.com/B-Pasteelnick), [Oscar Xue](https://github.com/oooscarrr), [Owen Wahlgren](https://github.com/owendoteth), [Eric Yang](https://github.com/EricXiaoYang)
 
+#### Sprint 0 Roles
+Product Owner: [Ben Pasteelnick](https://github.com/B-Pasteelnick)
+Scrum Master: [Thomas Huang](https://github.com/thomashuang02)
+
 ## How the project came to be
 
 This project was initially started by [Ben Pasteelnick]() to serve as a platform for people to play poker for the simple fun of the game, instead of for gambling money. 
