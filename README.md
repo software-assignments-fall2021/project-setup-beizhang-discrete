@@ -25,7 +25,7 @@ Scrum Master: [Thomas Huang](https://github.com/thomashuang02)
 
 This project was initially started by [Ben Pasteelnick]() to serve as a platform for people to play poker for the simple fun of the game, instead of for gambling money. 
 
-You can find each team members' individual contributions on [CONTRIBUTING.md](./CONTRIBUTING.md)
+You can find out how to contribute on [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ## How to build and test
 
