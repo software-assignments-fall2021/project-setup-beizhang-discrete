@@ -18,6 +18,7 @@ There are other features not listed above: Chat functionality, Friends systems, 
 
 #### Sprint 0 Roles
 Product Owner: [Ben Pasteelnick](https://github.com/B-Pasteelnick)
+
 Scrum Master: [Thomas Huang](https://github.com/thomashuang02)
 
 ## How the project came to be
