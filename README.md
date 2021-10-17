@@ -31,6 +31,10 @@ You can find each team members' individual contributions on [CONTRIBUTING.md](./
 
 ## Any Relevant Documents
 
+- [Documentation](https://github.com/software-students-fall2021/user-experience-design-beizhang-discrete/blob/e9d399f87baa3c4654b4786236993fcf88cc0ff3/README.md) for app map, wireframes, and prototype
+
+---
+
 1. See the [Sprint Planning instructions](instructions-1b-sprint-planning.md) for the requirements of Sprint Planning for each Sprint.
 
 1. See the [Front-End Development instructions](./instructions-2-front-end.md) for the requirements of the initial Front-End Development.
