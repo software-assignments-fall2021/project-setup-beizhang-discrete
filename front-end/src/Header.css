@@ -1,0 +1,46 @@
+.Header {
+    width: 100vw;
+    background: IndianRed;
+    font-family: "Segoe UI",Arial,sans-serif;
+    text-decoration: none;
+    padding-top:30px;
+    padding-bottom: 30px;
+}
+
+.noUnderline {
+    text-decoration: none;
+}
+
+.Logo, .Title, .UserProfileButton {
+    color: white
+}
+
+.Logo {
+}
+
+.Title {
+    font-size: 30px;
+    text-align:center;
+    font-weight: bold;
+}
+
+.UserProfileButton {
+    text-align: right
+}
+
+table {
+    table-layout: fixed ;
+    width: 100% ;
+}
+td {
+    width: 33.3333333333333333% ;
+}
+
+.glowing {
+    animation: glow 1.5s infinite alternate;
+}
+@keyframes glow {
+    to {
+        text-shadow: 0 0 10px rgb(255, 236, 236);
+    }
+}
