@@ -6,9 +6,9 @@ function Header(props) {
     return (
         <table className="Header">
             <tr>
-                <td>
-                    <NavLink className='Logo noUnderline' to='/'>
-                        [Logo]
+                <td className='LogoHolder'>
+                    <NavLink to='/'>
+                        <img className='Logo' src={'../logo.png'} alt={'logo'} />
                     </NavLink>
                 </td>
                 <td>
@@ -16,7 +16,7 @@ function Header(props) {
                         All In Poker
                     </NavLink>
                 </td>
-                <td>
+                <td className='UserProfileButtonHolder'>
                     {/* conditionally rendering user profile button */}
                     { props.showUserProfileButton === true &&
                         <NavLink className='UserProfileButton noUnderline' to='/user'>
@@ -28,7 +28,5 @@ function Header(props) {
         </table>
     );
 }
-
-
 
 export default Header;

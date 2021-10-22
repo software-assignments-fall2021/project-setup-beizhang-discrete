@@ -18,11 +18,11 @@ const App = (props) => {
         <Header showUserProfileButton={showUserProfileButton} />
         <Switch>
           <Route exact path="/">
-            <Home />
+            <Home title="Home | All In Poker"/>
           </Route>
 
           <Route path="/user">
-            <UserProfile />
+            <UserProfile title="User Profile | All In Poker"/>
           </Route>
         </Switch>
       </Router>

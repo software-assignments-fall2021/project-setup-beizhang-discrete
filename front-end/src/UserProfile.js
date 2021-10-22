@@ -1,6 +1,9 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 
 function UserProfile(props) {
+    useEffect(() => {
+        document.title = props.title || "";
+    }, [props.title]);
     return (
         <div className="UserProfile">
             {/* user profile page */}
