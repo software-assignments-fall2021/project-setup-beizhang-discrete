@@ -7,17 +7,17 @@ function Home(props) {
         document.title = props.title || "";
     }, [props.title]);
     return (
-        <div className="Home">
-            <NavLink to='/join'>
-                <div className="cardButton">
+        <div>
+            <div className='cardButtonWrapper'>
+                <NavLink className="cardButton spades" to='/join'>
                     Join Table
-                </div>
-            </NavLink>
-            <NavLink to='/create'>
-                <div className="cardButton">
+                </NavLink>
+            </div>
+            <div className='cardButtonWrapper'>
+                <NavLink className="cardButton hearts" to='/create'>
                     Create Table
-                </div>
-            </NavLink>
+                </NavLink>
+            </div>
         </div>
     )
 }
