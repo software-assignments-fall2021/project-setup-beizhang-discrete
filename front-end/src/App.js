@@ -8,10 +8,8 @@ import UserProfile from './UserProfile';
 import JoinTable from './JoinTable';
 import CreateTable from './CreateTable';
 
-//boolean that determines whether or not User Profile button appear in header.
-//will depend on to-be-implemented logic (e.g. disappears on User Profile page)
-let showUserProfileButton = true;
-let isLoggedIn = false;
+let showUserProfileButton = true; //determines whether or not user profile buttons should be rendered in header
+let isLoggedIn = false; //determines whether user profile button should say "Sign In" or "Profile"
 
 const App = (props) => {
   return (

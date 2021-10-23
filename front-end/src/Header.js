@@ -21,7 +21,7 @@ function Header(props) {
                     { props.showUserProfileButton === true &&
                         <NavLink className='UserProfileButton noUnderline' to='/user'>
                             {props.isLoggedIn
-                                ? <span className='button'>User Profile</span>
+                                ? <span className='button'>Profile</span>
                                 : <span className='button'>Sign In</span>
                             }
                         </NavLink>
