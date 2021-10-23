@@ -12,6 +12,9 @@
 .Logo, .Title, .UserProfileButton {
     color: white;
 }
+.Title:hover {
+    color: white;
+}
 .Logo {
     width: 50px;
     height: auto;

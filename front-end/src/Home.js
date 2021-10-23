@@ -9,12 +9,12 @@ function Home(props) {
     return (
         <div>
             <div className='cardButtonWrapper'>
-                <NavLink className="cardButton spades" to='/join'>
+                <NavLink className="cardButton spades" to='/tablelist'>
                     Join Table
                 </NavLink>
             </div>
             <div className='cardButtonWrapper'>
-                <NavLink className="cardButton hearts" to='/create'>
+                <NavLink className="cardButton hearts" to='/tablecreate'>
                     Create Table
                 </NavLink>
             </div>
