@@ -4,9 +4,9 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import './App.css';
 import Home from './Home';
 import Header from './Header';
-import UserProfile from './UserProfile';
-import JoinTable from './JoinTable';
-import CreateTable from './CreateTable';
+import UserProfile from './UserProfile'
+import Tablelist from './TableList/Tablelist';
+import Tablecreate from './TableList/Tablecreate';
 
 let showUserProfileButton = true; //determines whether or not user profile buttons should be rendered in header
 let isLoggedIn = false; //determines whether user profile button should say "Sign In" or "Profile"
@@ -29,13 +29,13 @@ const App = (props) => {
           </Route>
 
           {/*join table page*/}
-          <Route path="/join">
-            <JoinTable title="Join Table | All In Poker"/>
+          <Route path="/tablelist">
+            <Tablelist title = "Join Table | All In Poker"/>
           </Route>
 
           {/*create table page*/}
-          <Route path="/create">
-            <CreateTable title="Create Table | All In Poker"/>
+          <Route path="/tablecreate">
+            <Tablecreate title = "Create Table | All In Poker"/>
           </Route>
         </Switch>
       </Router>
