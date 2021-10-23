@@ -1,0 +1,44 @@
+.cardButtonWrapper {
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 20px;
+    box-sizing: border-box;
+}
+.cardButton {
+    /* dimension stuff */
+    border: 1px black solid;
+    border-radius: 3vw;
+    padding-top: 30%;
+    padding-bottom: 30%;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    /* text formatting */
+    text-decoration: none;
+    font-family: "Rockwell",serif;
+    font-size: 50px;
+
+    /* background change rate */
+    transition: background 0.25s ease-in-out;
+
+    box-shadow: rgb(75, 75, 75) 2px 2px;
+}
+.spades {
+    color: black;
+    background: url('./card_buttons/spades_button.png') no-repeat;
+    background-size: 100% 100%;
+}
+.spades:hover, .spades:active {
+    background: url('./card_buttons/spades_button_hover.png') no-repeat;
+    background-size: 100% 100%;
+}
+.hearts {
+    color: red;
+    background: url('./card_buttons/hearts_button.png') no-repeat;
+    background-size: 100% 100%;
+}
+.hearts:hover, .hearts:active {
+    background: url('./card_buttons/hearts_button_hover.png') no-repeat;
+    background-size: 100% 100%;
+}
