@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 import { NavLink } from 'react-router-dom';
-import './Header.css'
+import './Header.css';
 
 function Header(props) {
     return (
@@ -20,7 +20,10 @@ function Header(props) {
                     {/* conditionally rendering user profile button */}
                     { props.showUserProfileButton === true &&
                         <NavLink className='UserProfileButton noUnderline' to='/user'>
-                            <span className='button'>User Profile</span>
+                            {props.isLoggedIn
+                                ? <span className='button'>User Profile</span>
+                                : <span className='button'>Sign In</span>
+                            }
                         </NavLink>
                     }
                 </td>

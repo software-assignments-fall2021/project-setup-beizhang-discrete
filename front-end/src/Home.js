@@ -1,4 +1,6 @@
-import React, {useEffect} from 'react'
+import React, {useEffect} from 'react';
+import { NavLink } from 'react-router-dom';
+import './Home.css';
 
 function Home(props) {
     useEffect(() => {
@@ -6,8 +8,16 @@ function Home(props) {
     }, [props.title]);
     return (
         <div className="Home">
-            {/*implement home page*/}
-            <center><p>home page goes here</p></center>
+            <NavLink to='/join'>
+                <div className="cardButton">
+                    Join Table
+                </div>
+            </NavLink>
+            <NavLink to='/create'>
+                <div className="cardButton">
+                    Create Table
+                </div>
+            </NavLink>
         </div>
     )
 }

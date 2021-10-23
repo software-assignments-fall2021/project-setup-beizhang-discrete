@@ -1,0 +1,14 @@
+.cardButton {
+    overflow:hidden;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2.5vw;
+    border: 1px black solid;
+    border-radius: 3vw;
+    width: 95vw;
+    height: 64vw;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
