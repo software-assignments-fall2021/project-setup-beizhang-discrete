@@ -38,11 +38,23 @@
     width: 20%;
 }
 
-.glowing {
-    animation: glow 1.5s infinite alternate;
+.button {
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 7px;
+    color: white;
+    transition: background-color 0.5s ease-in-out;
+}
+.button:hover {
+    background-color: rgb(228, 126, 126);
+}
+
+/* glow effect when hovering over title */
+.Title:hover {
+    animation: glow 0.75s infinite alternate;
 }
 @keyframes glow {
     to {
-        text-shadow: 0 0 10px rgb(255, 223, 223);
+        text-shadow: 0 0 10px rgb(255, 255, 255);
     }
 }
