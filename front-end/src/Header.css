@@ -3,8 +3,6 @@
     background: IndianRed;
     font-family: "Rockwell",serif;
     text-decoration: none;
-    padding-top: 10px;
-    padding-bottom: 10px;
 }
 .noUnderline {
     text-decoration: none;
@@ -20,6 +18,8 @@
     height: auto;
     float: left;
     margin-left: 10%;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 .LogoHolder {
     width: 24%;

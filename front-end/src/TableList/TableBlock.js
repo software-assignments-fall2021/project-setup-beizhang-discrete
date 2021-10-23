@@ -18,10 +18,10 @@ const TableBlock = ( {table} ) => {
 
         <Container className = "bg-gray border">
             <Row>
-                <Col className="bg-gray border"> table.name </Col>
-                <Col className="bg-gray border"> table.curPlayers/table.totalPlayers </Col>
-                <Col className="bg-gray border"> table.gameType </Col>
-                <Col className="bg-gray border"> table.status </Col>
+                <Col className="bg-white border"> table.name </Col>
+                <Col className="bg-white border"> table.curPlayers/table.totalPlayers </Col>
+                <Col className="bg-white border"> table.gameType </Col>
+                <Col className="bg-white border"> table.status </Col>
                 
             </Row>
         </Container>
