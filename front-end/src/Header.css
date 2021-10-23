@@ -1,20 +1,17 @@
 .Header {
     width: 100vw;
     background: IndianRed;
-    font-family: "Segoe UI",Arial,sans-serif;
+    font-family: "Rockwell",serif;
     text-decoration: none;
     padding-top: 10px;
     padding-bottom: 10px;
 }
-
 .noUnderline {
     text-decoration: none;
 }
-
 .Logo, .Title, .UserProfileButton {
     color: white;
 }
-
 .Logo {
     width: 50px;
     height: auto;
@@ -22,27 +19,35 @@
     margin-left: 10%;
 }
 .LogoHolder {
-    width: 20%;
+    width: 24%;
 }
-
 .Title {
     font-size: 30px;
     font-weight: bold;
 }
-
 .UserProfileButton {
     margin-right: 10%;
 }
 .UserProfileButtonHolder {
     text-align: right;
-    width: 20%;
+    width: 24%;
 }
-
+.button {
+    border-radius: 10px;
+    padding: 7px;
+    color: white;
+    transition: background-color 0.25s ease-in-out;
+    background-color: rgb(231, 118, 118);
+}
+.button:hover, .button:active {
+    background-color: rgb(236, 155, 155);
+}
+/* glow effect when hovering over title */
 .glowing {
-    animation: glow 1.5s infinite alternate;
+    animation: glow 1s infinite alternate;
 }
 @keyframes glow {
     to {
-        text-shadow: 0 0 10px rgb(255, 223, 223);
+        text-shadow: 0 0 10px rgb(255, 222, 222);
     }
 }
