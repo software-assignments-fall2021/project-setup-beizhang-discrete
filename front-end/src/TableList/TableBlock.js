@@ -7,24 +7,17 @@ import Col from 'react-bootstrap/Col'
 
 const TableBlock = ( {table} ) => {
     return (
-        // <Stack direction = "horizontal" gap={3}  style={{"border": "1px solid"}}>
-            
-        //     <div className="bg-light border">props.name</div>
-        //     <div className="bg-light border">props.curPlayers/props.numPlayers</div>
-        //     <div className="bg-light border">props.gameType</div>
-        //     <div className="bg-light border">props.status</div>
-
-        // </Stack>
-
-        <Container className = "bg-gray border">
-            <Row>
-                <Col className="bg-gray border"> table.name </Col>
-                <Col className="bg-gray border"> table.curPlayers/table.totalPlayers </Col>
-                <Col className="bg-gray border"> table.gameType </Col>
-                <Col className="bg-gray border"> table.status </Col>
-                
-            </Row>
-        </Container>
+        <Row>
+            <Col className="bg-gray border" key={table.id}>
+                {table.name} </Col>
+            <Col className="bg-gray border" key={table.id}>
+                {table.curPlayers}/{table.numPlayers} </Col>
+            <Col className="bg-gray border" key={table.id}>
+                {table.startingValue} </Col>
+            <Col className="bg-gray border" key={table.id}>
+                {table.status} </Col>
+        </Row>
+        // </Container>
 
 
     )
