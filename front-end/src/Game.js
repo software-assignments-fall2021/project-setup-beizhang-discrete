@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import './Game.css';
-import Chat from './chat/Chat'
+import Chat from './Chat'
 
 function Game(props) {
     useEffect(() => {

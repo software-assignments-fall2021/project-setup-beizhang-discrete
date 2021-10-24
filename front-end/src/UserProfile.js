@@ -15,7 +15,6 @@ const UserProfile = (props) => {
         document.title = props.title || "";
     }, [props.title]);
 
-
     const returnProfile = () => {
         //User profile page
         return (
@@ -57,7 +56,7 @@ const UserProfile = (props) => {
     }
     
     return(!user ? returnLoginOrCreate() : returnProfile())
-    
+
 }
 
 const handleLogin = (email, password) => {

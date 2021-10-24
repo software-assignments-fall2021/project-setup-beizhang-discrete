@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Tablelist.css'
 import Container from 'react-bootstrap/Container'
 import { Col, Form, Row } from 'react-bootstrap'
@@ -8,7 +8,10 @@ import Button from '@restart/ui/esm/Button'
 
 
 
-const Tablecreate = () => {
+const Tablecreate = (props) => {
+    useEffect(() => {
+        props.updateUserProfileButton(true);
+    }, [props]);
     return (
         <Container className="bg-white border" fluid="md">
             <h1> Create Table</h1>
@@ -60,11 +63,11 @@ const Tablecreate = () => {
                     </Col>
                 </Row>
             </Form>
-
-            <Button>
-                Create Table
-            </Button>
-
+            <a href='/game'>
+                <Button>
+                    Create Table
+                </Button>
+            </a>
 
         </Container>
     )

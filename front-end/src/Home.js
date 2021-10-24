@@ -6,6 +6,9 @@ function Home(props) {
     useEffect(() => {
         document.title = props.title || "";
     }, [props.title]);
+    useEffect(() => {
+        props.updateUserProfileButton(true);
+    }, [props]);
     return (
         <div>
             {/*temp link for testing chat*/}
@@ -19,9 +22,6 @@ function Home(props) {
                     Create Table
                 </NavLink>
             </div>
-            <NavLink to='/game'>
-                <center>Test Chat</center>
-            </NavLink>
         </div>
     );
 }
