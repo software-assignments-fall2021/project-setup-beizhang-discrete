@@ -1,13 +1,13 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { useState } from 'react';
-//import logo from './logo.svg';
 import './App.css';
 import Home from './Home';
 import Header from './Header';
 import UserProfile from './UserProfile'
 import Tablelist from './TableList/Tablelist';
 import Tablecreate from './TableList/Tablecreate';
+import Game from './Game'
 
 
 let showUserProfileButton = true; //determines whether or not user profile buttons should be rendered in header
@@ -82,6 +82,11 @@ const App = (props) => {
           {/*create table page*/}
           <Route path="/tablecreate">
             <Tablecreate title = "Create Table | All In Poker"/>
+          </Route>
+
+          {/*game page*/}
+          <Route path="/game">
+            <Game title = "Game | All In Poker"/>
           </Route>
         </Switch>
       </Router>

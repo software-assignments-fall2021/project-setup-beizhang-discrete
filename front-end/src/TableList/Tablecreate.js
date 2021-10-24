@@ -10,9 +10,7 @@ import Button from '@restart/ui/esm/Button'
 
 const Tablecreate = () => {
     return (
-
         <Container className="bg-white border" fluid="md">
-
             <h1> Create Table</h1>
             <h4> # of Players</h4>
 

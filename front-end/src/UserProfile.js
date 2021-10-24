@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react'
-import { NavLink } from 'react-router-dom';
 import './UserProfile.css';
 
 function UserProfile(props) {

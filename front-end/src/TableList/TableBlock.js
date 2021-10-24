@@ -18,8 +18,6 @@ const TableBlock = ( {table} ) => {
                 {table.status} </Col>
         </Row>
         // </Container>
-
-
     )
 }
 
