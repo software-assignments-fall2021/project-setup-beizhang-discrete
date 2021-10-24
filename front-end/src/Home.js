@@ -8,6 +8,7 @@ function Home(props) {
     }, [props.title]);
     return (
         <div>
+            {/*temp link for testing chat*/}
             <div className='cardButtonWrapper'>
                 <NavLink className="cardButton spades" to='/tablelist'>
                     Join Table
@@ -18,8 +19,11 @@ function Home(props) {
                     Create Table
                 </NavLink>
             </div>
+            <NavLink to='/game'>
+                <center>Test Chat</center>
+            </NavLink>
         </div>
-    )
+    );
 }
 
 export default Home;
