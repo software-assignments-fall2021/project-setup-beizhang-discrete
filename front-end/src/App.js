@@ -62,7 +62,6 @@ const App = (props) => {
   const updateUserProfileButton = (boolean) => {
     if(boolean !== showUserProfileButton) {
       toggleShowUserProfileButton(boolean);
-      console.log('new value: ', showUserProfileButton);
     }
   }
 
@@ -73,28 +72,24 @@ const App = (props) => {
         <Header showUserProfileButton={showUserProfileButton} isLoggedIn={isLoggedIn}/>
         <Switch>
           {/*home page*/}
-          <Route exact path="/" render={() => {
-            updateUserProfileButton(true)
-            return (<Home title="Home | All In Poker"/>);
-          }}/>
+          <Route exact path="/">
+            <Home title="Home | All In Poker" updateUserProfileButton={updateUserProfileButton}/>
+          </Route>
 
           {/*user profile page*/}
-          <Route path="/user" render={() => {
-            updateUserProfileButton(false)
-            return (<UserProfile title="User Profile | All In Poker"/>);
-          }}/>
+          <Route path="/user">
+            <UserProfile title="User Profile | All In Poker" updateUserProfileButton={updateUserProfileButton}/>
+          </Route>
 
           {/*join table page*/}
-          <Route exact path="/tablelist" render={() => {
-            updateUserProfileButton(true)
-            return (<Tablelist tables={tables} title="Join Table | All In Poker"/>);
-          }}/>
+          <Route exact path="/tablelist">
+            <Tablelist title="Join Table | All In Poker" tables={tables} updateUserProfileButton={updateUserProfileButton}/>
+          </Route>
 
           {/*create table page*/}
-          <Route exact path="/tablecreate" render={() => {
-            updateUserProfileButton(true)
-            return (<Tablecreate title="Create Table | All In Poker"/>);
-          }}/>
+          <Route exact path="/tablecreate">
+            <Tablecreate title="Create Table | All In Poker" updateUserProfileButton={updateUserProfileButton}/>
+          </Route>
 
           {/*game page*/}
           <Route path="/game" render={() => {

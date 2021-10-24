@@ -5,6 +5,9 @@ function UserProfile(props) {
     useEffect(() => {
         document.title = props.title || "";
     }, [props.title]);
+    useEffect(() => {
+        props.updateUserProfileButton(false);
+    }, [props]);
     return (
         <div className="UserProfile">
             {/* user profile page */}
