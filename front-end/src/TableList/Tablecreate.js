@@ -6,11 +6,11 @@ import Button from '@restart/ui/esm/Button'
 
 // import TableBlock from './TableBlock'
 
+
+
 const Tablecreate = () => {
     return (
-        
-        <Container className = "border"fluid="md">
-            
+        <Container className="bg-white border" fluid="md">
             <h1> Create Table</h1>
             <h4> # of Players</h4>
 
@@ -34,33 +34,38 @@ const Tablecreate = () => {
                     <Button className="bg-white no border">7</Button>
                 </Col>
             </Row>
-            
+
             <h4>Table Name</h4>
-            
+
             <Form className="mb-3">
-                <Form.Control placeholder="Enter Table Name" />
+                <Row>
+                    <Form.Control placeholder="Enter Table Name"> 
+                    
+                    
+                    </Form.Control>
+                    
+                </Row>
+                <Row>
+                    <Col>
+                        <Form.Label>Starting Value</Form.Label>
+                        <Form.Control placeholder="Starting Value" />
+                    </Col>
+                    <Col>
+                        <Form.Label>Small Blind</Form.Label>
+                        <Form.Control placeholder="Small Blind" />
+                    </Col>
+                    <Col>
+                        <Form.Label>Big Blind</Form.Label>
+                        <Form.Control placeholder="Big Blind" />
+                    </Col>
+                </Row>
             </Form>
 
-            <Row>
-                <Col>
-                    <Form>
-                        <Form.Label>Starting Value</Form.Label>
-                        <Form.Control placeholder = "Starting Value" />
-                    </Form>
-                </Col>
-                <Col>
-                    <Form.Label>Small Blind</Form.Label>
-                    <Form.Control placeholder = "Small Blind" />
-                </Col>
-                <Col>
-                    <Form.Label>Big Blind</Form.Label>
-                    <Form.Control placeholder = "Big Blind" />
-                </Col>
-            </Row>
+            <Button>
+                Create Table
+            </Button>
 
 
-
-            
         </Container>
     )
 }
