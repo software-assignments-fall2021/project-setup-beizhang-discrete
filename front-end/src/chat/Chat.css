@@ -49,4 +49,6 @@ as they'll be reverted upon install */
 .sc-user-input--emoji-icon:hover circle {
     fill: rgb(63, 63, 63) !important;
 }
-  
+.sc-user-input--file-icon {
+    display: none !important;
+}

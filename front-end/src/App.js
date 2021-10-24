@@ -9,9 +9,8 @@ import Tablelist from './TableList/Tablelist';
 import Tablecreate from './TableList/Tablecreate';
 import Game from './Game'
 
-
-let showUserProfileButton = true; //determines whether or not user profile buttons should be rendered in header
 let isLoggedIn = false; //determines whether user profile button should say "Sign In" or "Profile"
+//^ make this use state instead
 
 const App = (props) => {
   //Sample Data
@@ -56,7 +55,16 @@ const App = (props) => {
         bigBind: 30,
         status: "open"
     }
-])  
+  ])  
+
+  //determines whether or not user profile button should be rendered in header
+  const [showUserProfileButton, toggleShowUserProfileButton] = useState(true);
+  const updateUserProfileButton = (boolean) => {
+    if(boolean !== showUserProfileButton) {
+      toggleShowUserProfileButton(boolean);
+      console.log('new value: ', showUserProfileButton);
+    }
+  }
 
   return (
     <div className="App">
@@ -65,29 +73,34 @@ const App = (props) => {
         <Header showUserProfileButton={showUserProfileButton} isLoggedIn={isLoggedIn}/>
         <Switch>
           {/*home page*/}
-          <Route exact path="/">
-            <Home title="Home | All In Poker"/>
-          </Route>
+          <Route exact path="/" render={() => {
+            updateUserProfileButton(true)
+            return (<Home title="Home | All In Poker"/>);
+          }}/>
 
           {/*user profile page*/}
-          <Route path="/user">
-            <UserProfile title="User Profile | All In Poker"/>
-          </Route>
+          <Route path="/user" render={() => {
+            updateUserProfileButton(false)
+            return (<UserProfile title="User Profile | All In Poker"/>);
+          }}/>
 
           {/*join table page*/}
-          <Route path="/tablelist">
-            <Tablelist tables = {tables} title = "Join Table | All In Poker"/>
-          </Route>
+          <Route exact path="/tablelist" render={() => {
+            updateUserProfileButton(true)
+            return (<Tablelist tables={tables} title="Join Table | All In Poker"/>);
+          }}/>
 
           {/*create table page*/}
-          <Route path="/tablecreate">
-            <Tablecreate title = "Create Table | All In Poker"/>
-          </Route>
+          <Route exact path="/tablecreate" render={() => {
+            updateUserProfileButton(true)
+            return (<Tablecreate title="Create Table | All In Poker"/>);
+          }}/>
 
           {/*game page*/}
-          <Route path="/game">
-            <Game title = "Game | All In Poker"/>
-          </Route>
+          <Route path="/game" render={() => {
+            updateUserProfileButton(false)
+            return (<Game title="Game | All In Poker"/>);
+          }}/>
         </Switch>
       </Router>
     </div>
