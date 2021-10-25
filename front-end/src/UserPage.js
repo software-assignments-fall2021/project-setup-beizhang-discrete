@@ -2,13 +2,13 @@ import React, {useEffect} from 'react';
 import './UserPage.css';
 import Button from 'react-bootstrap/Button';
 
+//A row in friend list
 const FriendListItem= (props) => {
     return(
         <div className='FriendItem'>
             <img className='FriendPhoto' src={'./profileicon.png'} alt={'Friend Photo'} />
             <p className='FriendName'>{props.name}</p>
             <p className='FriendStatus'>{props.status}</p>
-            <Button>Invite</Button>
         </div>
     )
 }
@@ -23,6 +23,7 @@ function UserPage(props) {
         <div className="UserPage">
 
             <div className='PhotoName'>
+                {/* Placeholders for photo and username */}
                 <img className='ProfilePhoto' src={'./profileicon.png'} alt={'Profile Icon'} />
                 <h1 className='Username'>Username</h1>
             </div>
@@ -36,6 +37,7 @@ function UserPage(props) {
 
             <h3 className='FriendList'>Friend List</h3>
             <div className='FriendListBox'>
+                {/* Hard-coded friends */}
                 <FriendListItem name={<Button>Owen</Button>} status='Playing'/>
                 <FriendListItem name={<Button>Thomas</Button>} status='Online'/>
                 <FriendListItem name={<Button>Eric</Button>} status='Away'/>
