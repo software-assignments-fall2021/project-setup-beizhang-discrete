@@ -12,14 +12,6 @@ for (const val of cardValues){
     }
 }
 let gameDeck = [...deck]
-<<<<<<< HEAD
-
-=======
-
-
-
-
->>>>>>> b09a695c71853378419216476362fac65d5db3d7
 function Game(props) {
     const [action, setAction] = useState("")
     const [handFirst, setHandFirst] = useState("")
@@ -30,10 +22,6 @@ function Game(props) {
     const [turn, setTurn] = useState("")
     const [river, setRiver] = useState("")
     const [rulesText, setRulesText] = useState("Preflop Betting.")
-<<<<<<< HEAD
-=======
-    console.log("setting gamephase from start")
->>>>>>> b09a695c71853378419216476362fac65d5db3d7
     const [gamePhase, setGamePhase] = useState(0)
     //Game Phases:
     // 0: Preflop betting (2 cards in hand)
@@ -44,7 +32,6 @@ function Game(props) {
     useEffect(() => {
         document.title = props.title || "";
     }, [props.title]);
-<<<<<<< HEAD
 
     useEffect(() => {
         shuffleDeck()
@@ -52,15 +39,6 @@ function Game(props) {
     }, []);
 
     useEffect(() => {
-=======
-
-    useEffect(() => {
-        shuffleDeck()
-        drawHand()
-    }, []);
-
-    useEffect(() => {
->>>>>>> b09a695c71853378419216476362fac65d5db3d7
         switch(gamePhase){
             case 1:
                 setFlopFirst(getCard())
@@ -76,11 +54,6 @@ function Game(props) {
                 setRiver(getCard())
                 setRulesText("The river! Last round of bets!")
                 break;
-<<<<<<< HEAD
-=======
-            default:
-                console.log("error! gamephase: " + gamePhase)
->>>>>>> b09a695c71853378419216476362fac65d5db3d7
         }
     }, [gamePhase])
 
@@ -93,11 +66,6 @@ function Game(props) {
             [gameDeck[currentIndex], gameDeck[randomIndex]] = [
             gameDeck[randomIndex], gameDeck[currentIndex]];
         }
-<<<<<<< HEAD
-=======
-        
-        console.log(gameDeck)
->>>>>>> b09a695c71853378419216476362fac65d5db3d7
     }
 
     const getCard = () => {
@@ -114,10 +82,6 @@ function Game(props) {
         setAction("Called")
         if (gamePhase < 3){
             setGamePhase(gamePhase+1)
-<<<<<<< HEAD
-=======
-            console.log("game phase: " + gamePhase)
->>>>>>> b09a695c71853378419216476362fac65d5db3d7
         }
     }
     const raise = () => {
@@ -130,18 +94,9 @@ function Game(props) {
         setFlopThird("")
         setTurn("")
         setRiver("")
-<<<<<<< HEAD
         setGamePhase(0)
         shuffleDeck()
         drawHand()
-=======
-        console.log("setting gamephase from fold")
-        setGamePhase(0)
-        shuffleDeck()
-        drawHand()
-        console.log(handFirst + handSecond)
-
->>>>>>> b09a695c71853378419216476362fac65d5db3d7
     }
 
     return (
