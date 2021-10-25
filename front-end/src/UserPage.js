@@ -1,6 +1,7 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import './UserPage.css';
 import Button from 'react-bootstrap/Button';
+import {Modal} from 'react-bootstrap'
 
 //A row in friend list
 const FriendListItem= (props) => {
@@ -13,8 +14,12 @@ const FriendListItem= (props) => {
     )
 }
 
-function UserPage(props) {
+const UserPage = (props) => {
+    const [showModal, setModal] = useState(false)
+    const openModal = () => setModal(true)
+    const closeModal = () => setModal(false)
     
+    const [usernameToSearch, setSearchUsername] = useState('')
     useEffect(() => {
         document.title = props.title || "";
     }, [props.title]);
@@ -48,10 +53,40 @@ function UserPage(props) {
             <div className='AddFriend'>
                 <h4>Add Friend</h4>
                 <form>
-                    <input type="SearchUsername" placeholder={'Username'}/>
-                    <input type='submit' value='Search'/>
+                    <input type="SearchUsername" placeholder={'Username'} onChange={(e) => setSearchUsername(e.target.value)}/> 
+                    <Button onClick={()=>{
+                        //search for users here on backend
+                        openModal()
+                        }}>
+                        Search
+                        </Button>
                 </form>
             </div>
+
+            {/* Hardcoded Popup Modal => Needs to be flatlist once backend is implemented */}
+
+            <Modal show={showModal} onHide={() => closeModal()} >
+                <Modal.Header>
+                <Modal.Title>
+                <p>
+                Users matching '{usernameToSearch}'
+                </p>
+                </Modal.Title>
+                </Modal.Header>
+                <Modal.Body></Modal.Body>
+                <Modal.Body>
+                <FriendListItem name={<Button>Gary</Button>} status='Playing'/>
+                <FriendListItem name={<Button>GaryW</Button>} status='Online'/>
+                <FriendListItem name={<Button>GaryVee</Button>} status='Away'/>
+                <FriendListItem name={<Button>Gary6152</Button>} status='Offline'/>
+                <FriendListItem name={<Button>Garyeee</Button>} status='Offline'/>
+                </Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={() => closeModal()}>
+                Close
+                </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     )
 }
