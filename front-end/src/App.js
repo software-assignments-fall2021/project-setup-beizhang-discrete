@@ -8,6 +8,7 @@ import UserProfile from './UserProfile'
 import Tablelist from './TableList/Tablelist';
 import Tablecreate from './TableList/Tablecreate';
 import Game from './Game'
+import UserPage from './UserPage';
 
 let isLoggedIn = false; //determines whether user profile button should say "Sign In" or "Profile"
 //^ make this use state instead
@@ -76,9 +77,14 @@ const App = (props) => {
             <Home title="Home | All In Poker" updateUserProfileButton={updateUserProfileButton}/>
           </Route>
 
-          {/*user profile page*/}
+          {/*log in page*/}
           <Route path="/user">
             <UserProfile title="User Profile | All In Poker" updateUserProfileButton={updateUserProfileButton}/>
+          </Route>
+
+          {/*user profile page*/}
+          <Route exact path="/userpage">
+            <UserPage title="User Page | All In Poker" updateUserProfileButton={updateUserProfileButton}/>
           </Route>
 
           {/*join table page*/}
