@@ -4,7 +4,7 @@ import { useState } from 'react';
 import './App.css';
 import Home from './Home';
 import Header from './Header';
-import UserProfile from './UserProfile'
+import UserProfile from './UserPage'
 import Tablelist from './TableList/Tablelist';
 import Tablecreate from './TableList/Tablecreate';
 import Game from './Game'
