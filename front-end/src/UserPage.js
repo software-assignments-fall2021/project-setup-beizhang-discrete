@@ -1,8 +1,9 @@
 import React, {useEffect} from 'react';
-import './UserProfile.css';
+import './UserPage.css';
 /* import profileicon from './profileicon.png'; */
 
-function UserProfile(props) {
+function UserPage(props) {
+    
     useEffect(() => {
         document.title = props.title || "";
     }, [props.title]);
@@ -27,4 +28,4 @@ function UserProfile(props) {
     )
 }
 
-export default UserProfile;
+export default UserPage;
