@@ -1,10 +1,9 @@
 import Button from '@restart/ui/esm/Button';
 import React, {useEffect, useState} from 'react'
-import { NavLink } from 'react-router-dom';
-import './UserProfile.css';
+import './Login.css';
 import UserPage from './UserPage';
 
-const UserProfile = (props) => {
+const Login = (props) => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -59,7 +58,7 @@ const UserProfile = (props) => {
 
                 {/* temp button while login unimplemented */}
                 <br/>
-                <a href='/userpage'>
+                <a href='/user'>
                     <center><Button>See User Page</Button></center>
                 </a>
 
@@ -83,4 +82,4 @@ const handleCreate = (email, password, confirmPassword) => {
 
     alert(`Creating account with ${email}:${password}`)
 }
-export default UserProfile;
+export default Login;

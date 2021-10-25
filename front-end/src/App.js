@@ -4,7 +4,7 @@ import { useState } from 'react';
 import './App.css';
 import Home from './Home';
 import Header from './Header';
-import UserProfile from './UserProfile'
+import Login from './Login'
 import Tablelist from './TableList/Tablelist';
 import Tablecreate from './TableList/Tablecreate';
 import Game from './Game'
@@ -78,13 +78,13 @@ const App = (props) => {
           </Route>
 
           {/*log in page*/}
-          <Route path="/user">
-            <UserProfile title="User Profile | All In Poker" updateUserProfileButton={updateUserProfileButton}/>
+          <Route path="/login">
+            <Login title="User Profile | All In Poker" updateUserProfileButton={updateUserProfileButton}/>
           </Route>
 
           {/*user profile page*/}
-          <Route exact path="/userpage">
-            <UserPage title="User Page | All In Poker" updateUserProfileButton={updateUserProfileButton}/>
+          <Route exact path="/user">
+            <UserPage title="Login | All In Poker" updateUserProfileButton={updateUserProfileButton}/>
           </Route>
 
           {/*join table page*/}
