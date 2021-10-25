@@ -1,0 +1,48 @@
+.playerOption{
+    margin: 15px;
+    vertical-align: bottom;
+    position:relative;
+    padding-left: 25px;
+    padding-right: 25px;
+    top: 280px;
+    display: table-cell;
+}
+.playerCards{
+    background-color: white;
+    border: 3px solid black;
+    display: table-cell;
+    margin: 10px;
+    position: relative;
+    top: 280px;
+}
+
+.centerCards:empty{
+    border:none;
+}
+.centerCards{
+    background-color: white;
+    border: 3px solid black;
+    margin: 10px;
+    margin-left: 100px;
+    margin-right: 100px;
+    
+}
+
+
+
+.playerAction{
+    position: relative;
+    top: 280px;
+}
+
+.playerChips{
+    position: absolute;
+    bottom: 60px;
+    padding-left: 10px;
+}
+
+.playerID{
+    position: absolute;
+    padding-left: 10px;
+    bottom: 20px;
+}
