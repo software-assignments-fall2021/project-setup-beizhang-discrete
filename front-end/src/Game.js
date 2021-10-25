@@ -13,9 +13,6 @@ for (const val of cardValues){
 }
 let gameDeck = [...deck]
 
-
-
-
 function Game(props) {
     const [action, setAction] = useState("")
     const [handFirst, setHandFirst] = useState("")
@@ -26,7 +23,6 @@ function Game(props) {
     const [turn, setTurn] = useState("")
     const [river, setRiver] = useState("")
     const [rulesText, setRulesText] = useState("Preflop Betting.")
-    console.log("setting gamephase from start")
     const [gamePhase, setGamePhase] = useState(0)
     //Game Phases:
     // 0: Preflop betting (2 cards in hand)
@@ -71,8 +67,6 @@ function Game(props) {
             [gameDeck[currentIndex], gameDeck[randomIndex]] = [
             gameDeck[randomIndex], gameDeck[currentIndex]];
         }
-        
-        console.log(gameDeck)
     }
 
     const getCard = () => {
@@ -89,7 +83,6 @@ function Game(props) {
         setAction("Called")
         if (gamePhase < 3){
             setGamePhase(gamePhase+1)
-            console.log("game phase: " + gamePhase)
         }
     }
     const raise = () => {
@@ -102,12 +95,9 @@ function Game(props) {
         setFlopThird("")
         setTurn("")
         setRiver("")
-        console.log("setting gamephase from fold")
         setGamePhase(0)
         shuffleDeck()
         drawHand()
-        console.log(handFirst + handSecond)
-
     }
 
     return (
