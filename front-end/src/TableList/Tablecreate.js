@@ -1,7 +1,7 @@
-import React, { useEffect, ReactDOM  } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Tablelist.css'
 import Container from 'react-bootstrap/Container'
-import { Col, Form, Row } from 'react-bootstrap'
+import { Col, Form, Row, Modal } from 'react-bootstrap'
 import Button from '@restart/ui/esm/Button'
 
 // import TableBlock from './TableBlock'
@@ -12,7 +12,11 @@ const FriendListItem= (props) => {
             <img className='FriendPhoto' src={'./profileicon.png'} alt={'Friend Photo'} />
             <p className='FriendName'>{props.name}</p>
             <p className='FriendStatus'>{props.status}</p>
-            <Button>Invite</Button>
+            <div className='Invitablility'>
+                {props.status==='Online'
+                ? <Button>Invite</Button>
+                : <p>Unavailable</p>}
+            </div>
         </div>
     )
 }
@@ -23,31 +27,12 @@ const Tablecreate = (props) => {
         props.updateUserProfileButton(true);
     }, [props]);
 
-    function openOverlay() {
-        ReactDOM.render(<InviteFriendOverlay/>, document.getElementById('root'))
-    }
-      
-    function closeOverlay() {
-        
-    }
-
-    const InviteFriendOverlay = (props) =>{
-        return(
-            <div className="InviteOverlay">
-                <a href="javascript:void(0)" className="closebtn" onClick={closeOverlay}>&times;</a>
-                <div className="FriendsToInvite">
-                    <FriendListItem name={<Button>Owen</Button>} status='Playing'/>
-                    <FriendListItem name={<Button>Thomas</Button>} status='Online'/>
-                    <FriendListItem name={<Button>Eric</Button>} status='Away'/>
-                    <FriendListItem name={<Button>Ben</Button>} status='Offline'/>
-                    <FriendListItem name={<Button>Oscar</Button>} status='Offline'/>
-                </div>
-            </div>
-        )
-    }
+    const [showModal, setModal] = useState(false)
+    const openModal = () => setModal(true)
+    const closeModal = () => setModal(false)
 
     return (       
-        <div id='root'>
+        <div>
 
         <Container className="bg-white border" fluid="md">
             <h1> Create Table</h1>
@@ -78,9 +63,7 @@ const Tablecreate = (props) => {
 
             <Form className="mb-3">
                 <Row>
-                    <Form.Control placeholder="Enter Table Name"> 
-                    
-                    
+                    <Form.Control placeholder="Enter Table Name">      
                     </Form.Control>
                     
                 </Row>
@@ -105,12 +88,34 @@ const Tablecreate = (props) => {
                 </Button>
             </a>
 
-            <button onClick={openOverlay}>
+            <Button onClick={()=>openModal()}>
                 Invite Friend
-            </button>
+            </Button>
 
         </Container>
 
+        <Modal show={showModal} onHide={() => closeModal()} >
+                <Modal.Header>
+                <Modal.Title>
+                <p>
+                Invite Friends to Your Table
+                </p>
+                </Modal.Title>
+                </Modal.Header>
+                <Modal.Body></Modal.Body>
+                <Modal.Body>
+                <FriendListItem name='Ronaldo' status='Online'/>
+                <FriendListItem name='Leclerc' status='Online'/>
+                <FriendListItem name='Norris' status='Playing'/>
+                <FriendListItem name='Verstappen' status='Offline'/>
+                <FriendListItem name='Hamilton' status='Offline'/>
+                </Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={() => closeModal()}>
+                Close
+                </Button>
+                </Modal.Footer>
+        </Modal>
 
         </div>
     )
