@@ -20,7 +20,7 @@ function Header(props) {
                     <td className='UserProfileButtonHolder'>
                         {/* conditionally rendering user profile button */}
                         { props.showUserProfileButton === true &&
-                            <NavLink className='UserProfileButton noUnderline' to='/user'>
+                            <NavLink className='UserProfileButton noUnderline' to='/login'>
                                 {props.isLoggedIn
                                     ? <span className='button'>Profile</span>
                                     : <span className='button'>Sign In</span>
