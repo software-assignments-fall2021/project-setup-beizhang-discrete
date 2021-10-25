@@ -14,6 +14,7 @@ const UserProfile = (props) => {
     useEffect(() => {
         //Check if user is already logged in here and assign to user
         // user logged in? setUser(true) else setUser(false) 
+        // setUser(true)
         document.title = props.title || "";
     }, [props.title]);
 
