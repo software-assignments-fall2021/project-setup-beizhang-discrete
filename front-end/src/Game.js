@@ -13,14 +13,14 @@ for (const val of cardValues){
 }
 let gameDeck = [...deck]
 function Game(props) {
-    const [action, setAction] = useState("")
-    const [handFirst, setHandFirst] = useState("")
-    const [handSecond, setHandSecond] = useState("")
-    const [flopFirst, setFlopFirst] = useState("")
-    const [flopSecond, setFlopSecond] = useState("")
-    const [flopThird, setFlopThird] = useState("")
-    const [turn, setTurn] = useState("")
-    const [river, setRiver] = useState("")
+    const [action, setAction] = useState(null)
+    const [handFirst, setHandFirst] = useState(null)
+    const [handSecond, setHandSecond] = useState(null)
+    const [flopFirst, setFlopFirst] = useState(null)
+    const [flopSecond, setFlopSecond] = useState(null)
+    const [flopThird, setFlopThird] = useState(null)
+    const [turn, setTurn] = useState(null)
+    const [river, setRiver] = useState(null)
     const [gamePhase, setGamePhase] = useState(0)
     //Game Phases:
     // 0: Preflop betting (2 cards in hand)
@@ -85,49 +85,54 @@ function Game(props) {
     }
     const fold = () => {
         setAction("Folded")
-        setFlopFirst()
-        setFlopSecond()
-        setFlopThird()
-        setTurn()
-        setRiver()
+        setFlopFirst(null)
+        setFlopSecond(null)
+        setFlopThird(null)
+        setTurn(null)
+        setRiver(null)
         setGamePhase(0)
         shuffleDeck()
         drawHand()
     }
 
-    let r = (
+    return (
         <div>
+            <div>
+                <center>
+                    <div className="pot"><br />pot goes here</div>
+                    <p>
+                        <div className="centerCards">{flopFirst}</div>
+                        <div className="centerCards">{flopSecond}</div>
+                        <div className="centerCards">{flopThird}</div>
+                        <div className="centerCards">{turn}</div>
+                        <div className="centerCards">{river}</div>
+                    </p>
+                </center>
+            </div>
+        <div className="playerElements">
             <center>
+                <button className="playerOption" onClick={call}>Call</button>
+                <button className="playerOption" onClick={raise}>Raise</button>
+                <button className="playerOption" onClick={fold}>Fold</button>
+                <p className="playerAction">
+                    {action}
+                </p>
                 <p>
-                    <div className="centerCards"> {flopFirst} </div>
-                    <div className="centerCards"> {flopSecond} </div>
-                    <div className="centerCards"> {flopThird} </div>
-                    <div className="centerCards"> {turn} </div>
-                    <div className="centerCards"> {river} </div>
+                    <div className="playerCards">{handFirst}</div>
+                    <div className="playerCards">{handSecond}</div> 
                 </p>
                 
-            <button className="playerOption" onClick={call}>Call</button>
-            <button className="playerOption" onClick={raise}>Raise</button>
-            <button className="playerOption" onClick={fold}>Fold</button>
-            <p className="playerAction">
-                {action}
-            </p>
-            <p>
-                <div className="playerCards">{handFirst}</div>
-                <div className="playerCards">{handSecond}</div> 
-            </p>
-            
-            <div className="playerChips">
-                Chips here
-            </div>
-            <div className="playerID">
-                Username here
-            </div>
+                <div className="playerChips">
+                    Chips here
+                </div>
+                <div className="playerID">
+                    Username here
+                </div>
             </center>
             <Chat />
         </div>
+        </div>
     )
-    return r
 }
 
 export default Game;
