@@ -50,6 +50,8 @@ function Game(props) {
             case 3:
                 setRiver(getCard())
                 break;
+            default:
+                break;
         }
     }, [gamePhase])
 
