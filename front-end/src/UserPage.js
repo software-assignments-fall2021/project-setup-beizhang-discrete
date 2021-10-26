@@ -5,10 +5,10 @@ import {Modal} from 'react-bootstrap'
 const axios = require('axios');
 
 //A row in friend list
-const FriendListItem= (props) => {
+const FriendListItem = (props) => {
     return(
         <div className='FriendItem'>
-            <img className='FriendPhoto' src={'./profileicon.png'} alt={'Friend'} />
+            <img className='FriendPhoto' src={props.avatar} alt={'Friend'} />
             <p className='FriendName'>{props.name}</p>
             <p className='FriendStatus'>{props.status}</p>
         </div>
@@ -25,9 +25,11 @@ const UserPage = (props) => {
     
     const [usernameToSearch, setSearchUsername] = useState('');
     
+    const mockarooURL = "https://my.api.mockaroo.com/";
+    const mockarooAPIKey = '428573d0';
+
     /* fetching mock user data */
-    const mockUserInfoAPI = "https://my.api.mockaroo.com/userInfo.json";
-    const mockUserInfoAPIKey = '428573d0';
+    const mockUserInfoAPI = "userInfo.json";
     const [userInfo, setUserInfo] = useState({
         username: 'Guest',
         avatar: './profileicon.png',
@@ -38,8 +40,8 @@ const UserPage = (props) => {
     useEffect(() => {
         async function fetchUserInfo() {
             try {
-                const fetchedUserInfo = await axios.get(`${mockUserInfoAPI}?key=${mockUserInfoAPIKey}`)
-                setUserInfo(fetchedUserInfo);
+                const fetchedUserInfo = await axios.get(`${mockarooURL}${mockUserInfoAPI}?key=${mockarooAPIKey}`)
+                setUserInfo(fetchedUserInfo[0]);
             } catch (err) {
                 console.log(err);
             }
@@ -48,12 +50,36 @@ const UserPage = (props) => {
     }, []);
     /* end fetching mock user data */
 
+    /* fetching mock friend list data */
+    /* each friend object follow this schema: 
+    {
+        name: String,
+        avatar: Image (png),
+        status: random choice from [Playing, Online, Away, Offline]
+        id: GUID
+    }*/
+    const mockFriendListAPI = "friendList.json";
+    const [friendList, modifyFriendList] = useState([]);
+    useEffect(() => {
+        async function fetchFriendList() {
+            try {
+                const fetchedFriendList = await axios.get(`${mockarooURL}${mockFriendListAPI}?key=${mockarooAPIKey}`)
+                modifyFriendList(fetchedFriendList);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        fetchFriendList();
+    }, []);
+    /* end fetching mock friend list data */
+
     return (
         <div className="UserPage">
 
             <div className='PhotoName'>
                 {/* Placeholders for photo and username */}
                 <img className='ProfilePhoto' src={userInfo.avatar} alt={'Profile Icon'} />
+                &nbsp;&nbsp;&nbsp;&nbsp;
                 <h1 className='Username'>{userInfo.username}</h1>
             </div>
 
@@ -66,12 +92,9 @@ const UserPage = (props) => {
 
             <h3 className='FriendList'>Friend List</h3>
             <div className='FriendListBox'>
-                {/* Hard-coded friends */}
-                <FriendListItem name={<Button>Owen</Button>} status='Playing'/>
-                <FriendListItem name={<Button>Thomas</Button>} status='Online'/>
-                <FriendListItem name={<Button>Eric</Button>} status='Away'/>
-                <FriendListItem name={<Button>Ben</Button>} status='Offline'/>
-                <FriendListItem name={<Button>Oscar</Button>} status='Offline'/>
+                {friendList.map(friendInfo => (
+                    <FriendListItem key={friendInfo.id} name={<Button>{friendInfo.name}</Button>} avatar={friendInfo.avatar} status={friendInfo.status}/>
+                ))}
             </div>
 
             <div className='AddFriend'>

@@ -31,6 +31,7 @@
 
 .ProfilePhoto{
     width: 150px;
+    height: auto;
 }
 
 /* .Username{
