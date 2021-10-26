@@ -76,12 +76,12 @@ const UserPage = (props) => {
 
             <div className='AddFriend'>
                 <h4>Add Friend</h4>
-                <form>
+                <form className="friendSearch" onSubmit={(event) => {
+                        openModal();
+                        event.preventDefault(); /*prevent page reload*/
+                    }}>
                     <input type="SearchUsername" placeholder={'Username'} onChange={(e) => setSearchUsername(e.target.value)}/> 
-                    <Button onClick={()=>{
-                        //search for users here on backend
-                        openModal()
-                        }}>
+                    <Button onClick={openModal}>
                         Search
                         </Button>
                 </form>
