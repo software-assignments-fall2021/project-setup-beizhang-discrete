@@ -1,10 +1,9 @@
 import Button from '@restart/ui/esm/Button';
 import React, {useEffect, useState} from 'react'
-import { NavLink } from 'react-router-dom';
-import './UserProfile.css';
+import './Login.css';
 import UserPage from './UserPage';
 
-const UserProfile = (props) => {
+const Login = (props) => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -29,36 +28,38 @@ const UserProfile = (props) => {
         //Login or Create Account
         return (
             <div>
-                <div className="UserProfile" style={{alignItems: 'center', textAlign: 'center'}}>
-                    <h4 style={{color: 'white', margin: '6vh'}}>Login to Existing Account</h4>
+                <div className="UserProfile">
+                    <h4 className="header4">Login to Existing Account</h4>
         
-                    <form style={{display: 'flex', alignItems: 'center', flexDirection: 'column', marginTop: '6vh'}}>
-                        <label style={{padding: '10px'}}>    
+                    <form className="loginForm">
+                        <label className="formLabel">    
                             <input type="text" placeholder={'Email'} onChange = {change => setEmail(change.target.value)}/>
                         </label>
-                        <label style={{padding: '10px'}}>    
+                        <label className="formLabel">    
                             <input type="password" placeholder={'Password'} onChange = {change => setPassword(change.target.value)}/>
                         </label>
                     </form>
                     <Button onClick={() => {handleLogin(email, password)}}>Login</Button>
-                    <h4 style={{color: 'white', margin: '6vh'}}>Create Account</h4>
+                    <h4 className="header4">Create Account</h4>
         
-                    <form style={{display: 'flex', alignItems: 'center', flexDirection: 'column', marginTop: '3vh'}}>
-                        <label style={{padding: '10px'}}>    
+                    <form className="loginForm">
+                        <label className="formLabel">    
                             <input type="text" placeholder={'Email'} onChange = {change => setEmail(change.target.value)}/>
                         </label>
-                        <label style={{padding: '10px'}}>    
+                        <label className="formLabel">    
                             <input type="password" placeholder={'Password'} onChange = {change => setPassword(change.target.value)}/>
                         </label>
-                        <label style={{padding: '10px'}}>    
+                        <label className="formLabel">    
                             <input type="password" placeholder={'Confirm Password'} onChange = {change => setConfirmPassword(change.target.value)}/>
                         </label>
                     </form>
                     <Button onClick={() => {handleCreate(email, password, confirmPassword)}}>Create Account</Button>
                 </div>
 
-                <a href='/userpage'>
-                    <Button>See User Page</Button>
+                {/* temp button while login unimplemented */}
+                <br/>
+                <a href='/user'>
+                    <center><Button>See User Page</Button></center>
                 </a>
 
             </div>
@@ -81,4 +82,4 @@ const handleCreate = (email, password, confirmPassword) => {
 
     alert(`Creating account with ${email}:${password}`)
 }
-export default UserProfile;
+export default Login;

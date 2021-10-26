@@ -7,7 +7,7 @@ import {Modal} from 'react-bootstrap'
 const FriendListItem= (props) => {
     return(
         <div className='FriendItem'>
-            <img className='FriendPhoto' src={'./profileicon.png'} alt={'Friend Photo'} />
+            <img className='FriendPhoto' src={'./profileicon.png'} alt={'Friend'} />
             <p className='FriendName'>{props.name}</p>
             <p className='FriendStatus'>{props.status}</p>
         </div>

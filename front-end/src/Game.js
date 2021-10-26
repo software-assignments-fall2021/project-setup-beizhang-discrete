@@ -54,13 +54,15 @@ function Game(props) {
                 setRiver(getCard())
                 setRulesText("The river! Last round of bets!")
                 break;
+            default:
+                {/* default case */}
         }
     }, [gamePhase])
 
     const shuffleDeck = () => {
         gameDeck = [...deck]
         let currentIndex = gameDeck.length,  randomIndex;
-        while (currentIndex != 0) {
+        while (currentIndex !== 0) {
             randomIndex = Math.floor(Math.random() * currentIndex);
             currentIndex--;
             [gameDeck[currentIndex], gameDeck[randomIndex]] = [

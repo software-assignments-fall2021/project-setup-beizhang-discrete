@@ -1,0 +1,17 @@
+.UserProfile {
+    align-items: center;
+    text-align: center;
+}
+.header4 { 
+    color: white;
+    margin: 6vh;
+}
+.loginForm {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 6vh;
+}
+.formLabel {
+    padding: 10px;
+}
