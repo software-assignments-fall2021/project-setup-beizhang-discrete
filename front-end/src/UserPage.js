@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './UserPage.css';
 import Button from 'react-bootstrap/Button';
 import {Modal} from 'react-bootstrap'
+const axios = require('axios');
 
 //A row in friend list
 const FriendListItem= (props) => {
@@ -15,29 +16,52 @@ const FriendListItem= (props) => {
 }
 
 const UserPage = (props) => {
+    useEffect(() => {
+        document.title = props.title || "";
+    }, [props.title]);
     const [showModal, setModal] = useState(false)
     const openModal = () => setModal(true)
     const closeModal = () => setModal(false)
     
-    const [usernameToSearch, setSearchUsername] = useState('')
+    const [usernameToSearch, setSearchUsername] = useState('');
+    
+    /* fetching mock user data */
+    const mockUserInfoAPI = "https://my.api.mockaroo.com/userInfo.json";
+    const mockUserInfoAPIKey = '428573d0';
+    const [userInfo, setUserInfo] = useState({
+        username: 'Guest',
+        avatar: './profileicon.png',
+        joined_since: 'N/A',
+        games_played: 0,
+        games_won: 0
+    });
     useEffect(() => {
-        document.title = props.title || "";
-    }, [props.title]);
+        async function fetchUserInfo() {
+            try {
+                const fetchedUserInfo = await axios.get(`${mockUserInfoAPI}?key=${mockUserInfoAPIKey}`)
+                setUserInfo(fetchedUserInfo);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        fetchUserInfo();
+    }, []);
+    /* end fetching mock user data */
 
     return (
         <div className="UserPage">
 
             <div className='PhotoName'>
                 {/* Placeholders for photo and username */}
-                <img className='ProfilePhoto' src={'./profileicon.png'} alt={'Profile Icon'} />
-                <h1 className='Username'>Username</h1>
+                <img className='ProfilePhoto' src={userInfo.avatar} alt={'Profile Icon'} />
+                <h1 className='Username'>{userInfo.username}</h1>
             </div>
 
             <h2 className='UserStats'>User Stats</h2>
             <div className='StatsBox'>
-                <p>Joined since: {props.datejoined}</p>
-                <p>Games played: {props.gamesplayed}</p>
-                <p>Games won: {props.gameswon}</p>
+                <p>Joined since: {userInfo['joined_since']}</p>
+                <p>Games played: {userInfo['games_played']}</p>
+                <p>Games won: {userInfo['games_won']}</p>
             </div>
 
             <h3 className='FriendList'>Friend List</h3>
