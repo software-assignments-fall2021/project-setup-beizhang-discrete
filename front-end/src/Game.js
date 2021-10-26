@@ -13,15 +13,14 @@ for (const val of cardValues){
 }
 let gameDeck = [...deck]
 function Game(props) {
-    const [action, setAction] = useState("")
-    const [handFirst, setHandFirst] = useState("")
-    const [handSecond, setHandSecond] = useState("")
-    const [flopFirst, setFlopFirst] = useState("")
-    const [flopSecond, setFlopSecond] = useState("")
-    const [flopThird, setFlopThird] = useState("")
-    const [turn, setTurn] = useState("")
-    const [river, setRiver] = useState("")
-    const [rulesText, setRulesText] = useState("Preflop Betting.")
+    const [action, setAction] = useState(null)
+    const [handFirst, setHandFirst] = useState(null)
+    const [handSecond, setHandSecond] = useState(null)
+    const [flopFirst, setFlopFirst] = useState(null)
+    const [flopSecond, setFlopSecond] = useState(null)
+    const [flopThird, setFlopThird] = useState(null)
+    const [turn, setTurn] = useState(null)
+    const [river, setRiver] = useState(null)
     const [gamePhase, setGamePhase] = useState(0)
     //Game Phases:
     // 0: Preflop betting (2 cards in hand)
@@ -44,18 +43,15 @@ function Game(props) {
                 setFlopFirst(getCard())
                 setFlopSecond(getCard())
                 setFlopThird(getCard())
-                setRulesText("The flop comes down!")
                 break;
             case 2:
                 setTurn(getCard())
-                setRulesText("Here comes the turn!")
                 break;
             case 3:
                 setRiver(getCard())
-                setRulesText("The river! Last round of bets!")
                 break;
             default:
-                {/* default case */}
+                break;
         }
     }, [gamePhase])
 
@@ -91,11 +87,11 @@ function Game(props) {
     }
     const fold = () => {
         setAction("Folded")
-        setFlopFirst("")
-        setFlopSecond("")
-        setFlopThird("")
-        setTurn("")
-        setRiver("")
+        setFlopFirst(null)
+        setFlopSecond(null)
+        setFlopThird(null)
+        setTurn(null)
+        setRiver(null)
         setGamePhase(0)
         shuffleDeck()
         drawHand()
@@ -103,22 +99,40 @@ function Game(props) {
 
     return (
         <div>
+            <div>
+                <center>
+                    <div className="pot"><br />pot goes here</div>
+                    <p>
+                        <div className="centerCards">{flopFirst}</div>
+                        <div className="centerCards">{flopSecond}</div>
+                        <div className="centerCards">{flopThird}</div>
+                        <div className="centerCards">{turn}</div>
+                        <div className="centerCards">{river}</div>
+                    </p>
+                </center>
+            </div>
+        <div className="playerElements">
             <center>
-                <p>
-                    Center Cards: {flopFirst}, {flopSecond}, {flopThird}, {turn}, {river}
+                <button className="playerOption" onClick={call}>Call</button>
+                <button className="playerOption" onClick={raise}>Raise</button>
+                <button className="playerOption" onClick={fold}>Fold</button>
+                <p className="playerAction">
+                    {action}
                 </p>
                 <p>
-                    Your Hand has: {handFirst} {handSecond}
+                    <div className="playerCards">{handFirst}</div>
+                    <div className="playerCards">{handSecond}</div> 
                 </p>
-            <button onClick={call}>Call</button>
-            <button onClick={raise}>Raise</button>
-            <button onClick={fold}>Fold</button>
-            <p>
-                {action}
-            </p>
-            
+                
+                <div className="playerChips">
+                    Chips here
+                </div>
+                <div className="playerID">
+                    Username here
+                </div>
             </center>
             <Chat />
+        </div>
         </div>
     )
 }

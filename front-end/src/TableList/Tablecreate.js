@@ -9,7 +9,7 @@ import Button from '@restart/ui/esm/Button'
 const FriendListItem= (props) => {
     return(
         <div className='FriendItem'>
-            <img className='FriendPhoto' src={'./profileicon.png'} alt={'Friend Photo'} />
+            <img className='FriendPhoto' src={'./profileicon.png'} alt={'Friend'} />
             <p className='FriendName'>{props.name}</p>
             <p className='FriendStatus'>{props.status}</p>
             <div className='Invitablility'>
@@ -22,10 +22,11 @@ const FriendListItem= (props) => {
 }
 
 const Tablecreate = (props) => {
-
     useEffect(() => {
         props.updateUserProfileButton(true);
     }, [props]);
+
+    const friendList = props.friendList;
 
     const [showModal, setModal] = useState(false)
     const openModal = () => setModal(true)
@@ -104,11 +105,9 @@ const Tablecreate = (props) => {
                 </Modal.Header>
                 <Modal.Body></Modal.Body>
                 <Modal.Body>
-                <FriendListItem name='Ronaldo' status='Online'/>
-                <FriendListItem name='Leclerc' status='Online'/>
-                <FriendListItem name='Norris' status='Playing'/>
-                <FriendListItem name='Verstappen' status='Offline'/>
-                <FriendListItem name='Hamilton' status='Offline'/>
+                {friendList.map(friendInfo => (
+                    <FriendListItem key={friendInfo.id} name={<Button>{friendInfo.name}</Button>} avatar={friendInfo.avatar} status={friendInfo.status}/>
+                ))}
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={() => closeModal()}>
