@@ -23,6 +23,9 @@ const Login = (props) => {
             <UserPage title="User Page | All In Poker"/>
         )
     }
+    useEffect(() => {
+        props.updateUserProfileButton(false);
+    }, [props]);
 
     const returnLoginOrCreate = () => {
         //Login or Create Account
