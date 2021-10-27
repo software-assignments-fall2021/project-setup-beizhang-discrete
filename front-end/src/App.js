@@ -23,15 +23,14 @@ const App = (props) => {
   */
   const fetchData = async (api, setState) => {
     const mockarooURL = "https://my.api.mockaroo.com/";
-    const mockarooAPIKey = '428573d0';
+    const mockarooAPIKey = '1e756d10';
     try {
-        const fetched = await axios.get(`${mockarooURL}${api}?key=${mockarooAPIKey}`)
-        setState(fetched);
+        const fetched = await axios.get(`${mockarooURL}${api}?key=${mockarooAPIKey}`);
+        setState(fetched.data);
     } catch (err) {
         console.log(err);
     }
   }
-
   /* fetching mock user data */
   const mockUserInfoAPI = "userInfo.json";
   const [userInfo, setUserInfo] = useState([{
@@ -42,7 +41,7 @@ const App = (props) => {
       games_won: 0
   }]);
   useEffect(() => {
-    fetchData(mockUserInfoAPI, setUserInfo);
+      fetchData(mockUserInfoAPI, setUserInfo);
   }, []);
   /* end fetching mock user data */
 
@@ -57,7 +56,7 @@ const App = (props) => {
   const mockFriendListAPI = "friendList.json";
   const [friendList, modifyFriendList] = useState([]);
   useEffect(() => {
-    fetchData(mockFriendListAPI, modifyFriendList);
+      fetchData(mockFriendListAPI, modifyFriendList);
   }, []);
   /* end fetching mock friend list data */
 
@@ -66,7 +65,7 @@ const App = (props) => {
   const mockAllUsersListAPI = "allUsersList.json";
   const [allUsersList, modifyallUsersList] = useState([]);
   useEffect(() => {
-    fetchData(mockAllUsersListAPI, modifyallUsersList);
+      fetchData(mockAllUsersListAPI, modifyallUsersList);
   }, []);
   /* end fetching mock all users list data */
 
@@ -96,9 +95,8 @@ const App = (props) => {
 
           {/*user profile page*/}
           <Route exact path="/user">
-            <UserPage title="Login | All In Poker" updateUserProfileButton={updateUserProfileButton}
-              userInfo={userInfo} friendList={friendList} allUsersList={allUsersList}
-            />
+            <UserPage title="Login | All In Poker" updateUserProfileButton={updateUserProfileButton} 
+            userInfo={userInfo} friendList={friendList} allUsersList={allUsersList}/>
           </Route>
 
           {/*join table page*/}

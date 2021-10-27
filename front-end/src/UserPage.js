@@ -24,7 +24,7 @@ const UserPage = (props) => {
     
     const [usernameToSearch, setSearchUsername] = useState('');
 
-    const userInfo = props.userInfo[0];
+    const userInfo = props.userInfo;
     const friendList = props.friendList;
     const allUsersList = props.allUsersList;
     
@@ -83,9 +83,9 @@ const UserPage = (props) => {
                 <Modal.Body>
                 {/*filter all users by those whose names match the one in the search box*/}
                 {allUsersList.filter(
-                        userInfo => userInfo.name.toLowerCase().includes(usernameToSearch.toLowerCase())
-                    ).map(userInfo => (
-                        <FriendListItem key={userInfo.id} name={<Button>{userInfo.name}</Button>} avatar={userInfo.avatar} status={userInfo.status}/>
+                        user => user.name.toLowerCase().includes(usernameToSearch.toLowerCase())
+                    ).map(user => (
+                        <FriendListItem key={user.id} name={<Button>{user.name}</Button>} avatar={user.avatar} status={user.status}/>
                     ))}
                 </Modal.Body>
                 <Modal.Footer>
