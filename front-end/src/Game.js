@@ -52,7 +52,8 @@ function Game(props) {
 
     useEffect(() => {
         shuffleDeck()
-        drawHand()
+        setHandFirst(getCard())
+        setHandSecond(getCard())
     }, []);
 
     useEffect(() => {
@@ -108,11 +109,6 @@ function Game(props) {
         return r
     }
 
-    const drawHand = () => {
-        setHandFirst(getCard())
-        setHandSecond(getCard())
-    }
-
     const call = () => {
         setAction("Called")
         if (gamePhase < 4){
@@ -131,7 +127,8 @@ function Game(props) {
         setRiver(null)
         setGamePhase(0)
         shuffleDeck()
-        drawHand()
+        setHandFirst(getCard())
+        setHandSecond(getCard())
     }
 
     return (
@@ -191,7 +188,7 @@ function Game(props) {
             </div>
             <div>
                 <center>
-                    <div className="pot"><br />1000</div>
+                    <div className="pot"><br />0</div>
                     <p>
                         <div className="centerCards">{flopFirst}</div>
                         <div className="centerCards">{flopSecond}</div>
