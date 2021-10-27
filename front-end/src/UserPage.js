@@ -27,6 +27,10 @@ const UserPage = (props) => {
     const userInfo = props.userInfo[0];
     const friendList = props.friendList;
     const allUsersList = props.allUsersList;
+    
+    useEffect(() => {
+        props.updateUserProfileButton(false);
+    }, [props]);
 
     return (
         <div className="UserPage">

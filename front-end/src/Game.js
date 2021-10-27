@@ -131,6 +131,10 @@ function Game(props) {
         setHandSecond(getCard())
     }
 
+    useEffect(() => {
+        props.updateUserProfileButton(false);
+    }, [props]);
+    
     return (
         <div>
             <div className="player2">

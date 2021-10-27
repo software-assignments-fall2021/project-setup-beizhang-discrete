@@ -70,50 +70,6 @@ const App = (props) => {
   }, [allUsersList]);
   /* end fetching mock all users list data */
 
-  //Sample Data
-  const [tables, setTables] = useState([
-    {
-        id: 1095329798,
-        name: "For Pro Players",
-        curPlayers: 3,
-        numPlayers: 7,
-        startingValue: 100,
-        smallBlind: 20,
-        bigBlind: 30,
-        status: "close"
-    },
-    {
-        id: 3048768204958,
-        name: "Casual",
-        curPlayers: 2,
-        numPlayers: 9,
-        startingValue: 200,
-        smallBlind: 30,
-        bigBlind: 50,
-        status: "open"
-    },
-    {
-        id: 231507609126,
-        name: "playn'chill",
-        curPlayers: 1,
-        numPlayers: 5,
-        startingValue: 300,
-        smallBlind: 50,
-        bigBlind: 100,
-        status: "open"
-    },
-    {
-        id: 897587021358,
-        name: "Something really long to see what happens",
-        curPlayers: 6,
-        numPlayers: 7,
-        startingValue: 500,
-        smallBlind: 20,
-        bigBlind: 30,
-        status: "open"
-    }
-  ])  
-
   //determines whether or not user profile button should be rendered in header
   const [showUserProfileButton, toggleShowUserProfileButton] = useState(true);
   const updateUserProfileButton = (boolean) => {
@@ -147,7 +103,7 @@ const App = (props) => {
 
           {/*join table page*/}
           <Route exact path="/tablelist">
-            <Tablelist title="Join Table | All In Poker" tables={tables} updateUserProfileButton={updateUserProfileButton}
+            <Tablelist title="Join Table | All In Poker" updateUserProfileButton={updateUserProfileButton}
               fetchData={fetchData}
             />
           </Route>
@@ -160,10 +116,9 @@ const App = (props) => {
           </Route>
 
           {/*game page*/}
-          <Route path="/game" render={() => {
-            updateUserProfileButton(false)
-            return (<Game title="Game | All In Poker"/>);
-          }}/>
+          <Route path="/game">
+            <Game title="Game | All In Poker" updateUserProfileButton={updateUserProfileButton}/>
+          </Route>
         </Switch>
       </Router>
     </div>
