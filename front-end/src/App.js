@@ -43,7 +43,7 @@ const App = (props) => {
   }]);
   useEffect(() => {
     fetchData(mockUserInfoAPI, setUserInfo);
-  }, [userInfo]);
+  }, []);
   /* end fetching mock user data */
 
   /* fetching mock friend list data */
@@ -58,7 +58,7 @@ const App = (props) => {
   const [friendList, modifyFriendList] = useState([]);
   useEffect(() => {
     fetchData(mockFriendListAPI, modifyFriendList);
-  }, [friendList]);
+  }, []);
   /* end fetching mock friend list data */
 
   /* fetching mock all users list data */
@@ -67,7 +67,7 @@ const App = (props) => {
   const [allUsersList, modifyallUsersList] = useState([]);
   useEffect(() => {
     fetchData(mockAllUsersListAPI, modifyallUsersList);
-  }, [allUsersList]);
+  }, []);
   /* end fetching mock all users list data */
 
   //determines whether or not user profile button should be rendered in header

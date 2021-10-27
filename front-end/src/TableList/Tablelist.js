@@ -18,7 +18,7 @@ const Tablelist = (props) => {
     const [tableList, modifyTableList] = useState([]);
     useEffect(() => {
       fetchData(mockTableListAPI, modifyTableList);
-    }, [tableList, fetchData]);
+    }, []);
 
     return (
         <div className='container'>
