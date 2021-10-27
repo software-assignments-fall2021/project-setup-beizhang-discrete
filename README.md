@@ -29,6 +29,9 @@ You can find out how to contribute on [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ## How to build and test
 
+Install node and npm.
+React front-end: clone repository -> change to `front-end` directory -> `npm install --legacy-peer-deps` -> `npm run build`
+
 ## Any Relevant Documents
 
 - [Documentation](https://github.com/software-students-fall2021/user-experience-design-beizhang-discrete/blob/e9d399f87baa3c4654b4786236993fcf88cc0ff3/README.md) for app map, wireframes, and prototype
