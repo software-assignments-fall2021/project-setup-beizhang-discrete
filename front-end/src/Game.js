@@ -28,13 +28,32 @@ function Game(props) {
     // 2: Turn (4 cards in center)
     // 3: River (5 cards in center. Last round of betting.)
 
+    const[player2First, setPlayer2First] = useState("???")
+    const[player2Second, setPlayer2Second] = useState("???")
+
+    const[player3First, setPlayer3First] = useState("???")
+    const[player3Second, setPlayer3Second] = useState("???")
+
+    const[player4First, setPlayer4First] = useState("???")
+    const[player4Second, setPlayer4Second] = useState("???")
+
+    const[player5First, setPlayer5First] = useState("???")
+    const[player5Second, setPlayer5Second] = useState("???")
+
+    const[player6First, setPlayer6First] = useState("???")
+    const[player6Second, setPlayer6Second] = useState("???")
+
+    const[player7First, setPlayer7First] = useState("???")
+    const[player7Second, setPlayer7Second] = useState("???")
+
     useEffect(() => {
         document.title = props.title || "";
     }, [props.title]);
 
     useEffect(() => {
         shuffleDeck()
-        drawHand()
+        setHandFirst(getCard())
+        setHandSecond(getCard())
     }, []);
 
     useEffect(() => {
@@ -49,6 +68,25 @@ function Game(props) {
                 break;
             case 3:
                 setRiver(getCard())
+                break;
+            case 4:
+                setPlayer2First(getCard())
+                setPlayer2Second(getCard())
+
+                setPlayer3First(getCard())
+                setPlayer3Second(getCard())
+
+                setPlayer4First(getCard())
+                setPlayer4Second(getCard())
+
+                setPlayer5First(getCard())
+                setPlayer5Second(getCard())
+
+                setPlayer6First(getCard())
+                setPlayer6Second(getCard())
+
+                setPlayer7First(getCard())
+                setPlayer7Second(getCard())
                 break;
             default:
                 break;
@@ -71,14 +109,9 @@ function Game(props) {
         return r
     }
 
-    const drawHand = () => {
-        setHandFirst(getCard())
-        setHandSecond(getCard())
-    }
-
     const call = () => {
         setAction("Called")
-        if (gamePhase < 3){
+        if (gamePhase < 4){
             setGamePhase(gamePhase+1)
         }
     }
@@ -94,14 +127,68 @@ function Game(props) {
         setRiver(null)
         setGamePhase(0)
         shuffleDeck()
-        drawHand()
+        setHandFirst(getCard())
+        setHandSecond(getCard())
     }
 
     return (
         <div>
+            <div className="player2">
+                
+                <div className="opponentName">p2 UName</div>
+                <div className="opponentChips">p2 Chips</div>
+                <div className="opponentFirstCard">{player2First}</div>
+                <div className="opponentSecondCard">{player2Second}</div>
+                
+            </div>
+
+            <div className="player3">
+                
+                <div className="opponentName">p3 UName</div>
+                <div className="opponentChips">p3 Chips</div>
+                <div className="opponentFirstCard">{player3First}</div>
+                <div className="opponentSecondCard">{player3Second}</div>
+                
+            </div>
+
+            <div className="player4">
+                
+                <div className="opponentName">p4 UName</div>
+                <div className="opponentChips">p4 Chips</div>
+                <div className="opponentFirstCard">{player4First}</div>
+                <div className="opponentSecondCard">{player4Second}</div>
+                
+            </div>
+
+            <div className="player5">
+                
+                <div className="opponentName">p5 UName</div>
+                <div className="opponentChips">p5 Chips</div>
+                <div className="opponentFirstCard">{player5First}</div>
+                <div className="opponentSecondCard">{player5Second}</div>
+                
+            </div>
+
+            <div className="player6">
+                
+                <div className="opponentName">p6 UName</div>
+                <div className="opponentChips">p6 Chips</div>
+                <div className="opponentFirstCard">{player6First}</div>
+                <div className="opponentSecondCard">{player6Second}</div>
+                
+            </div>
+
+            <div className="player7">
+                
+                <div className="opponentName">p7 UName</div>
+                <div className="opponentChips">p7 Chips</div>
+                <div className="opponentFirstCard">{player7First}</div>
+                <div className="opponentSecondCard">{player7Second}</div>
+                
+            </div>
             <div>
                 <center>
-                    <div className="pot"><br />pot goes here</div>
+                    <div className="pot"><br />0</div>
                     <p>
                         <div className="centerCards">{flopFirst}</div>
                         <div className="centerCards">{flopSecond}</div>
