@@ -193,13 +193,13 @@ function Game(props) {
             <div>
                 <center>
                     <div className="pot"><br />0</div>
-                    <p>
+                    <div>
                         <div className="centerCards">{flopFirst}</div>
                         <div className="centerCards">{flopSecond}</div>
                         <div className="centerCards">{flopThird}</div>
                         <div className="centerCards">{turn}</div>
                         <div className="centerCards">{river}</div>
-                    </p>
+                    </div>
                 </center>
             </div>
         <div className="playerElements">
@@ -210,10 +210,10 @@ function Game(props) {
                 <p className="playerAction">
                     {action}
                 </p>
-                <p>
+                <div>
                     <div className="playerCards">{handFirst}</div>
                     <div className="playerCards">{handSecond}</div> 
-                </p>
+                </div>
                 
                 <div className="playerChips">
                     Chips here
