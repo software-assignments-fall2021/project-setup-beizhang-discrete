@@ -86,6 +86,9 @@ function Game(props) {
 
                 setPlayer7First(getCard())
                 setPlayer7Second(getCard())
+                break;
+            default:
+                break;
         }
     }, [gamePhase])
 

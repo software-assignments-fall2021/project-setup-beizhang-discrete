@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { useState } from 'react';
 import './App.css';
@@ -9,11 +9,67 @@ import Tablelist from './TableList/Tablelist';
 import Tablecreate from './TableList/Tablecreate';
 import Game from './Game'
 import UserPage from './UserPage';
+const axios = require('axios');
 
 let isLoggedIn = false; //determines whether user profile button should say "Sign In" or "Profile"
 //^ make this use state instead
 
 const App = (props) => {
+
+  /* generic helper function to fetch data */
+  /* 
+    api: path of data
+    setState: function to modify relevant state variable 
+  */
+  const fetchData = async (api, setState) => {
+    const mockarooURL = "https://my.api.mockaroo.com/";
+    const mockarooAPIKey = '428573d0';
+    try {
+        const fetched = await axios.get(`${mockarooURL}${api}?key=${mockarooAPIKey}`)
+        setState(fetched);
+    } catch (err) {
+        console.log(err);
+    }
+  }
+
+  /* fetching mock user data */
+  const mockUserInfoAPI = "userInfo.json";
+  const [userInfo, setUserInfo] = useState([{
+      username: 'Guest',
+      avatar: './profileicon.png',
+      joined_since: 'N/A',
+      games_played: 0,
+      games_won: 0
+  }]);
+  useEffect(() => {
+    fetchData(mockUserInfoAPI, setUserInfo);
+  }, [userInfo]);
+  /* end fetching mock user data */
+
+  /* fetching mock friend list data */
+  /* each friend object follow this schema: 
+  {
+      name: String,
+      avatar: Image (png),
+      status: random choice from [Playing, Online, Away, Offline]
+      id: GUID
+  }*/
+  const mockFriendListAPI = "friendList.json";
+  const [friendList, modifyFriendList] = useState([]);
+  useEffect(() => {
+    fetchData(mockFriendListAPI, modifyFriendList);
+  }, [friendList]);
+  /* end fetching mock friend list data */
+
+  /* fetching mock all users list data */
+  /* objects identical in structure to friends */
+  const mockAllUsersListAPI = "allUsersList.json";
+  const [allUsersList, modifyallUsersList] = useState([]);
+  useEffect(() => {
+    fetchData(mockAllUsersListAPI, modifyallUsersList);
+  }, [allUsersList]);
+  /* end fetching mock all users list data */
+
   //Sample Data
   const [tables, setTables] = useState([
     {
@@ -22,8 +78,8 @@ const App = (props) => {
         curPlayers: 3,
         numPlayers: 7,
         startingValue: 100,
-        smallBind: 20,
-        bigBind: 30,
+        smallBlind: 20,
+        bigBlind: 30,
         status: "close"
     },
     {
@@ -32,8 +88,8 @@ const App = (props) => {
         curPlayers: 2,
         numPlayers: 9,
         startingValue: 200,
-        smallBind: 30,
-        bigBind: 50,
+        smallBlind: 30,
+        bigBlind: 50,
         status: "open"
     },
     {
@@ -42,8 +98,8 @@ const App = (props) => {
         curPlayers: 1,
         numPlayers: 5,
         startingValue: 300,
-        smallBind: 50,
-        bigBind: 100,
+        smallBlind: 50,
+        bigBlind: 100,
         status: "open"
     },
     {
@@ -52,8 +108,8 @@ const App = (props) => {
         curPlayers: 6,
         numPlayers: 7,
         startingValue: 500,
-        smallBind: 20,
-        bigBind: 30,
+        smallBlind: 20,
+        bigBlind: 30,
         status: "open"
     }
   ])  
@@ -84,17 +140,23 @@ const App = (props) => {
 
           {/*user profile page*/}
           <Route exact path="/user">
-            <UserPage title="Login | All In Poker" updateUserProfileButton={updateUserProfileButton}/>
+            <UserPage title="Login | All In Poker" updateUserProfileButton={updateUserProfileButton}
+              userInfo={userInfo} friendList={friendList} allUsersList={allUsersList}
+            />
           </Route>
 
           {/*join table page*/}
           <Route exact path="/tablelist">
-            <Tablelist title="Join Table | All In Poker" tables={tables} updateUserProfileButton={updateUserProfileButton}/>
+            <Tablelist title="Join Table | All In Poker" tables={tables} updateUserProfileButton={updateUserProfileButton}
+              fetchData={fetchData}
+            />
           </Route>
 
           {/*create table page*/}
           <Route exact path="/tablecreate">
-            <Tablecreate title="Create Table | All In Poker" updateUserProfileButton={updateUserProfileButton}/>
+            <Tablecreate title="Create Table | All In Poker" updateUserProfileButton={updateUserProfileButton}
+              friendList={friendList}
+            />
           </Route>
 
           {/*game page*/}
