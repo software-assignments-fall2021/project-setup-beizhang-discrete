@@ -30,7 +30,7 @@ You can find out how to contribute on [CONTRIBUTING.md](./CONTRIBUTING.md)
 ## How to build and test
 
 Install node and npm.
-React front-end: clone repository -> change to `front-end` directory -> `npm install --legacy-peer-deps` -> `npm run build`
+React front-end: clone repository -> change to `front-end` directory -> `npm install --legacy-peer-deps` -> `npm start`
 
 ## Any Relevant Documents
 
