@@ -11,10 +11,8 @@ import Game from './Game'
 import UserPage from './UserPage';
 const axios = require('axios');
 
-let isLoggedIn = false; //determines whether user profile button should say "Sign In" or "Profile"
-//^ make this use state instead
-
 const App = (props) => {
+  const [user, setUser] = useState({});
 
   /* generic helper function to fetch data */
   /* 
@@ -31,19 +29,6 @@ const App = (props) => {
         console.log(err);
     }
   }
-  /* fetching mock user data */
-  const mockUserInfoAPI = "userInfo.json";
-  const [userInfo, setUserInfo] = useState([{
-      username: 'Guest',
-      avatar: './profileicon.png',
-      joined_since: 'N/A',
-      games_played: 0,
-      games_won: 0
-  }]);
-  useEffect(() => {
-      fetchData(mockUserInfoAPI, setUserInfo);
-  }, []);
-  /* end fetching mock user data */
 
   /* fetching mock friend list data */
   /* each friend object follow this schema: 
@@ -57,7 +42,7 @@ const App = (props) => {
   const [friendList, modifyFriendList] = useState([]);
   useEffect(() => {
       fetchData(mockFriendListAPI, modifyFriendList);
-  }, []);
+  }, [user]);
   /* end fetching mock friend list data */
 
   /* fetching mock all users list data */
@@ -81,7 +66,7 @@ const App = (props) => {
     <div className="App">
       <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
       <Router>
-        <Header showUserProfileButton={showUserProfileButton} isLoggedIn={isLoggedIn}/>
+        <Header showUserProfileButton={showUserProfileButton} isLoggedIn={user.success}/>
         <Switch>
           {/*home page*/}
           <Route exact path="/">
@@ -90,13 +75,15 @@ const App = (props) => {
 
           {/*log in page*/}
           <Route path="/login">
-            <Login title="User Profile | All In Poker" updateUserProfileButton={updateUserProfileButton}/>
+            <Login title="User Profile | All In Poker" updateUserProfileButton={updateUserProfileButton}
+              user={user} setUser={setUser}
+            />
           </Route>
 
           {/*user profile page*/}
           <Route exact path="/user">
             <UserPage title="Login | All In Poker" updateUserProfileButton={updateUserProfileButton} 
-            userInfo={userInfo} friendList={friendList} allUsersList={allUsersList}/>
+            user={user} friendList={friendList} allUsersList={allUsersList}/>
           </Route>
 
           {/*join table page*/}
