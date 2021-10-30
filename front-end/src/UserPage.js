@@ -24,7 +24,7 @@ const UserPage = (props) => {
     
     const [usernameToSearch, setSearchUsername] = useState('');
 
-    const userInfo = props.userInfo;
+    const user = props.user;
     const friendList = props.friendList;
     const allUsersList = props.allUsersList;
     
@@ -37,16 +37,16 @@ const UserPage = (props) => {
 
             <div className='PhotoName'>
                 {/* Placeholders for photo and username */}
-                <img className='ProfilePhoto' src={userInfo.avatar} alt={'Profile Icon'} />
+                <img className='ProfilePhoto' src={user.avatar} alt={'Profile Icon'} />
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <h1 className='Username'>{userInfo.username}</h1>
+                <h1 className='Username'>{user.username}</h1>
             </div>
 
             <h2 className='UserStats'>User Stats</h2>
             <div className='StatsBox'>
-                <p>Joined since: {userInfo['joined_since']}</p>
-                <p>Games played: {userInfo['games_played']}</p>
-                <p>Games won: {userInfo['games_won']}</p>
+                <p>Joined since: {user['joined_since']}</p>
+                <p>Games played: {user['games_played']}</p>
+                <p>Games won: {user['games_won']}</p>
             </div>
 
             <h3 className='FriendList'>Friend List</h3>
