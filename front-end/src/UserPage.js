@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './UserPage.css';
 import Button from 'react-bootstrap/Button';
-import {Modal} from 'react-bootstrap'
+import {Modal} from 'react-bootstrap';
 import { Redirect } from 'react-router';
 
 //A row in friend list
