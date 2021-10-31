@@ -83,7 +83,7 @@ const App = (props) => {
           {/*user profile page*/}
           <Route exact path="/user">
             <UserPage title="Login | All In Poker" updateUserProfileButton={updateUserProfileButton} 
-            user={user} friendList={friendList} allUsersList={allUsersList}/>
+            user={user} setUser={setUser} friendList={friendList} allUsersList={allUsersList}/>
           </Route>
 
           {/*join table page*/}

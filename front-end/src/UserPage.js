@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './UserPage.css';
 import Button from 'react-bootstrap/Button';
 import {Modal} from 'react-bootstrap'
+import { Redirect } from 'react-router';
 
 //A row in friend list
 const FriendListItem = (props) => {
@@ -31,6 +32,17 @@ const UserPage = (props) => {
     useEffect(() => {
         props.updateUserProfileButton(false);
     }, [props]);
+
+    if(!user.success) {
+        return (
+            <Redirect to="/login"/>
+        )
+    }
+
+    const handleLogout = () => {
+        props.setUser({});
+        return (<Redirect to="/"/>)
+    }
 
     return (
         <div className="UserPage">
@@ -69,8 +81,6 @@ const UserPage = (props) => {
                 </form>
             </div>
 
-            {/* Hardcoded Popup Modal => Needs to be flatlist once backend is implemented */}
-
             <Modal show={showModal} onHide={() => closeModal()} >
                 <Modal.Header>
                 <Modal.Title>
@@ -94,6 +104,8 @@ const UserPage = (props) => {
                 </Button>
                 </Modal.Footer>
             </Modal>
+
+            <Button onClick={() => handleLogout()}>Log Out</Button>
         </div>
     )
 }

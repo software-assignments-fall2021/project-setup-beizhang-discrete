@@ -1,4 +1,3 @@
-import Button from '@restart/ui/esm/Button';
 import React, {useEffect, useState} from 'react';
 import { Redirect } from "react-router-dom";
 import './Login.css';
@@ -102,6 +101,10 @@ const Login = (props) => {
                         {JSON.stringify(status, null, 2)}
                     </p>
                     
+                    <form className="loginForm" action="/">
+                        <input type="submit" value="Continue as Guest" />
+                    </form>
+
                     <h4 className="header4">Login to Existing Account</h4>
         
                     <form className="loginForm" onSubmit={handleSubmit}>
