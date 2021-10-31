@@ -21,7 +21,8 @@ const App = (props) => {
   */
   const fetchData = async (api, setState) => {
     const mockarooURL = "https://my.api.mockaroo.com/";
-    const mockarooAPIKey = '1e756d10';
+    //mockaroo keys: 428573d0, 1e756d10
+    const mockarooAPIKey = '428573d0';
     try {
         const fetched = await axios.get(`${mockarooURL}${api}?key=${mockarooAPIKey}`);
         setState(fetched.data);
