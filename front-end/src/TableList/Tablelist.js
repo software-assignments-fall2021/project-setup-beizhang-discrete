@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import TableBlock from './TableBlock';
 import './Tablelist.css';
@@ -10,6 +11,15 @@ const Tablelist = (props) => {
     useEffect(() => {
         props.updateUserProfileButton(true);
     }, [props]);
+
+    const fetchData = props.fetchData;
+    /*fetch table list */
+    const mockTableListAPI = "tableList.json";
+    const [tableList, modifyTableList] = useState([]);
+    useEffect(() => {
+      fetchData(mockTableListAPI, modifyTableList);
+    }, []);
+
     return (
         <div className='container'>
                 
@@ -24,7 +34,7 @@ const Tablelist = (props) => {
             {/* </Button> */}
 
             <Container className = "bg-gray border">
-                {props.tables.map((table) => (
+                {tableList.map((table) => (
                     <TableBlock key={table.id} table={table}> </TableBlock>
                 ))}
 

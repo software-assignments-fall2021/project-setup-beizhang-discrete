@@ -16,10 +16,15 @@ There are other features not listed above: Chat functionality, Friends systems, 
 
 [Thomas Huang](https://github.com/thomashuang02), [Ben Pasteelnick](https://github.com/B-Pasteelnick), [Oscar Xue](https://github.com/oooscarrr), [Owen Wahlgren](https://github.com/owendoteth), [Eric Yang](https://github.com/EricXiaoYang)
 
-#### Sprint 0 Roles
+#### Sprint 0-1 Roles
 Product Owner: [Ben Pasteelnick](https://github.com/B-Pasteelnick)
 
 Scrum Master: [Thomas Huang](https://github.com/thomashuang02)
+
+#### Sprint 2 Roles
+Product Owner: [Owen Wahlgren](https://github.com/owendoteth)
+
+Scrum Master: [Eric Wang](https://github.com/EricXiaoYang)
 
 ## How the project came to be
 
@@ -28,6 +33,9 @@ This project was initially started by [Ben Pasteelnick]() to serve as a platform
 You can find out how to contribute on [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ## How to build and test
+
+Install node and npm.
+React front-end: clone repository -> change to `front-end` directory -> `npm install --legacy-peer-deps` -> `npm start`
 
 ## Any Relevant Documents
 

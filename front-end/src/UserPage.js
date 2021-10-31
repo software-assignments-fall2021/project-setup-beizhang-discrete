@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './UserPage.css';
 import Button from 'react-bootstrap/Button';
 import {Modal} from 'react-bootstrap'
-const axios = require('axios');
+import { Redirect } from 'react-router';
 
 //A row in friend list
 const FriendListItem = (props) => {
@@ -24,70 +24,41 @@ const UserPage = (props) => {
     const closeModal = () => setModal(false)
     
     const [usernameToSearch, setSearchUsername] = useState('');
+
+    const user = props.user;
+    const friendList = props.friendList;
+    const allUsersList = props.allUsersList;
     
-    const mockarooURL = "https://my.api.mockaroo.com/";
-    const mockarooAPIKey = '428573d0';
-
-    /* fetching mock user data */
-    const mockUserInfoAPI = "userInfo.json";
-    const [userInfo, setUserInfo] = useState({
-        username: 'Guest',
-        avatar: './profileicon.png',
-        joined_since: 'N/A',
-        games_played: 0,
-        games_won: 0
-    });
     useEffect(() => {
-        async function fetchUserInfo() {
-            try {
-                const fetchedUserInfo = await axios.get(`${mockarooURL}${mockUserInfoAPI}?key=${mockarooAPIKey}`)
-                setUserInfo(fetchedUserInfo[0]);
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        fetchUserInfo();
-    }, []);
-    /* end fetching mock user data */
+        props.updateUserProfileButton(false);
+    }, [props]);
 
-    /* fetching mock friend list data */
-    /* each friend object follow this schema: 
-    {
-        name: String,
-        avatar: Image (png),
-        status: random choice from [Playing, Online, Away, Offline]
-        id: GUID
-    }*/
-    const mockFriendListAPI = "friendList.json";
-    const [friendList, modifyFriendList] = useState([]);
-    useEffect(() => {
-        async function fetchFriendList() {
-            try {
-                const fetchedFriendList = await axios.get(`${mockarooURL}${mockFriendListAPI}?key=${mockarooAPIKey}`)
-                modifyFriendList(fetchedFriendList);
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        fetchFriendList();
-    }, []);
-    /* end fetching mock friend list data */
+    if(!user.success) {
+        return (
+            <Redirect to="/login"/>
+        )
+    }
+
+    const handleLogout = () => {
+        props.setUser({});
+        return (<Redirect to="/"/>)
+    }
 
     return (
         <div className="UserPage">
 
             <div className='PhotoName'>
                 {/* Placeholders for photo and username */}
-                <img className='ProfilePhoto' src={userInfo.avatar} alt={'Profile Icon'} />
+                <img className='ProfilePhoto' src={user.avatar} alt={'Profile Icon'} />
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <h1 className='Username'>{userInfo.username}</h1>
+                <h1 className='Username'>{user.username}</h1>
             </div>
 
             <h2 className='UserStats'>User Stats</h2>
             <div className='StatsBox'>
-                <p>Joined since: {userInfo['joined_since']}</p>
-                <p>Games played: {userInfo['games_played']}</p>
-                <p>Games won: {userInfo['games_won']}</p>
+                <p>Joined since: {user['joined_since']}</p>
+                <p>Games played: {user['games_played']}</p>
+                <p>Games won: {user['games_won']}</p>
             </div>
 
             <h3 className='FriendList'>Friend List</h3>
@@ -110,8 +81,6 @@ const UserPage = (props) => {
                 </form>
             </div>
 
-            {/* Hardcoded Popup Modal => Needs to be flatlist once backend is implemented */}
-
             <Modal show={showModal} onHide={() => closeModal()} >
                 <Modal.Header>
                 <Modal.Title>
@@ -122,11 +91,12 @@ const UserPage = (props) => {
                 </Modal.Header>
                 <Modal.Body></Modal.Body>
                 <Modal.Body>
-                <FriendListItem name={<Button>Gary</Button>} status='Playing'/>
-                <FriendListItem name={<Button>GaryW</Button>} status='Online'/>
-                <FriendListItem name={<Button>GaryVee</Button>} status='Away'/>
-                <FriendListItem name={<Button>Gary6152</Button>} status='Offline'/>
-                <FriendListItem name={<Button>Garyeee</Button>} status='Offline'/>
+                {/*filter all users by those whose names match the one in the search box*/}
+                {allUsersList.filter(
+                        user => user.name.toLowerCase().includes(usernameToSearch.toLowerCase())
+                    ).map(user => (
+                        <FriendListItem key={user.id} name={<Button>{user.name}</Button>} avatar={user.avatar} status={user.status}/>
+                    ))}
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={() => closeModal()}>
@@ -134,6 +104,8 @@ const UserPage = (props) => {
                 </Button>
                 </Modal.Footer>
             </Modal>
+
+            <Button onClick={() => handleLogout()}>Log Out</Button>
         </div>
     )
 }
