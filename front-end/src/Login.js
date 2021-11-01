@@ -11,7 +11,7 @@ const Login = (props) => {
     const returnProfile = () => {
         //User profile page
         return (
-            <Redirect to="/user"/>
+            <Redirect to="/"/>
         )
     }
     useEffect(() => {

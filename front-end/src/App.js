@@ -76,14 +76,14 @@ const App = (props) => {
 
           {/*log in page*/}
           <Route path="/login">
-            <Login title="User Profile | All In Poker" updateUserProfileButton={updateUserProfileButton}
+            <Login title="Login | All In Poker" updateUserProfileButton={updateUserProfileButton}
               user={user} setUser={setUser}
             />
           </Route>
 
           {/*user profile page*/}
           <Route exact path="/user">
-            <UserPage title="Login | All In Poker" updateUserProfileButton={updateUserProfileButton} 
+            <UserPage title="User Profile | All In Poker" updateUserProfileButton={updateUserProfileButton} 
             user={user} setUser={setUser} friendList={friendList} allUsersList={allUsersList}/>
           </Route>
 
