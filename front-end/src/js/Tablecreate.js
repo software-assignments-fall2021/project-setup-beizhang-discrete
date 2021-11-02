@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import './Tablelist.css'
+import '../css/Tablelist.css'
 import Container from 'react-bootstrap/Container'
 import { Col, Form, Row, Modal } from 'react-bootstrap'
 import Button from '@restart/ui/esm/Button'

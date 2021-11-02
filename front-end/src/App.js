@@ -2,13 +2,13 @@ import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { useState } from 'react';
 import './App.css';
-import Home from './Home';
-import Header from './Header';
-import Login from './Login'
-import Tablelist from './TableList/Tablelist';
-import Tablecreate from './TableList/Tablecreate';
-import Game from './Game'
-import UserPage from './UserPage';
+import Home from './js/Home';
+import Header from './js/Header';
+import Login from './js/Login'
+import Tablelist from './js/Tablelist';
+import Tablecreate from './js/Tablecreate';
+import Game from './js/Game'
+import UserPage from './js/UserPage';
 const axios = require('axios');
 
 const App = (props) => {

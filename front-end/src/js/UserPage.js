@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import './UserPage.css';
+import '../css/UserPage.css';
 import Button from 'react-bootstrap/Button';
 import {Modal} from 'react-bootstrap';
 import { Redirect } from 'react-router';
