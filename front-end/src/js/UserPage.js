@@ -3,6 +3,7 @@ import '../css/UserPage.css';
 import Button from 'react-bootstrap/Button';
 import {Modal} from 'react-bootstrap';
 import { Redirect } from 'react-router';
+import AvatarUpload from './AvatarUpload';
 
 //A row in friend list
 const FriendListItem = (props) => {
@@ -49,7 +50,10 @@ const UserPage = (props) => {
 
             <div className='PhotoName'>
                 {/* Placeholders for photo and username */}
-                <img className='ProfilePhoto' src={user.avatar} alt={'Profile Icon'} />
+                <div className='avatar-container'>
+                    <img className='ProfilePhoto' src={user.avatar} alt={'Profile Icon'} />
+                    <AvatarUpload />
+                </div>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <h1 className='Username'>{user.username}</h1>
             </div>
