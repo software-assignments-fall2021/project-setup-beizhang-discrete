@@ -54,7 +54,6 @@ const UserPage = (props) => {
                     <img className='ProfilePhoto' src={user.avatar} alt={'Profile Icon'} />
                     <AvatarUpload />
                 </div>
-                &nbsp;&nbsp;&nbsp;&nbsp;
                 <h1 className='Username'>{user.username}</h1>
             </div>
 
@@ -109,7 +108,7 @@ const UserPage = (props) => {
                 </Modal.Footer>
             </Modal>
 
-            <Button onClick={() => handleLogout()}>Log Out</Button>
+            <Button className="logout" onClick={() => handleLogout()}>Log Out</Button>
         </div>
     )
 }

@@ -30,13 +30,14 @@
 }
 
 .ProfilePhoto{
-    width: 150px;
+    width: 30vw;
+    max-width: 200px;
     height: auto;
 }
 
-/* .Username{
-    margin-top: 30px;
-} */
+.Username{
+    margin-left: 10px;
+}
 
 .UserStats{
     margin-top: 30px;
