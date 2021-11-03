@@ -2,13 +2,13 @@ import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { useState } from 'react';
 import './App.css';
-import Home from './Home';
-import Header from './Header';
-import Login from './Login'
-import Tablelist from './TableList/Tablelist';
-import Tablecreate from './TableList/Tablecreate';
-import Game from './Game'
-import UserPage from './UserPage';
+import Home from './js/Home';
+import Header from './js/Header';
+import Login from './js/Login'
+import Tablelist from './js/Tablelist';
+import Tablecreate from './js/Tablecreate';
+import Game from './js/Game'
+import UserPage from './js/UserPage';
 const axios = require('axios');
 
 const App = (props) => {
@@ -21,7 +21,8 @@ const App = (props) => {
   */
   const fetchData = async (api, setState) => {
     const mockarooURL = "https://my.api.mockaroo.com/";
-    const mockarooAPIKey = '1e756d10';
+    //mockaroo keys: 428573d0, 1e756d10
+    const mockarooAPIKey = '428573d0';
     try {
         const fetched = await axios.get(`${mockarooURL}${api}?key=${mockarooAPIKey}`);
         setState(fetched.data);
@@ -75,14 +76,14 @@ const App = (props) => {
 
           {/*log in page*/}
           <Route path="/login">
-            <Login title="User Profile | All In Poker" updateUserProfileButton={updateUserProfileButton}
+            <Login title="Login | All In Poker" updateUserProfileButton={updateUserProfileButton}
               user={user} setUser={setUser}
             />
           </Route>
 
           {/*user profile page*/}
           <Route exact path="/user">
-            <UserPage title="Login | All In Poker" updateUserProfileButton={updateUserProfileButton} 
+            <UserPage title="User Profile | All In Poker" updateUserProfileButton={updateUserProfileButton} 
             user={user} setUser={setUser} friendList={friendList} allUsersList={allUsersList}/>
           </Route>
 

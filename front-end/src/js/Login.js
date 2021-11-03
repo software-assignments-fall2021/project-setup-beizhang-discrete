@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { Redirect } from "react-router-dom";
-import './Login.css';
+import '../css/Login.css';
 const axios = require('axios');
 
 const Login = (props) => {
@@ -11,7 +11,7 @@ const Login = (props) => {
     const returnProfile = () => {
         //User profile page
         return (
-            <Redirect to="/user"/>
+            <Redirect to="/"/>
         )
     }
     useEffect(() => {
