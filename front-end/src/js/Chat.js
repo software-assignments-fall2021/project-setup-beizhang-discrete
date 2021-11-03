@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Chat.css';
+import '../css/Chat.css';
 import {Launcher} from 'react-chat-window';
 
 /*https://www.npmjs.com/package/react-chat-window*/

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import TableBlock from './TableBlock';
-import './Tablelist.css';
+import '../css/Tablelist.css';
 import Button from 'react-bootstrap/Button';
 import { Container } from 'react-bootstrap';
 // import Header from '../Header'

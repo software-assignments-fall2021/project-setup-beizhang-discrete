@@ -32,21 +32,21 @@
 }
 .spades {
     color: black;
-    background: url('./card_buttons/spades_button.png') no-repeat;
+    background: url('../card_buttons/spades_button.png') no-repeat;
     background-size: 100% 100%;
 }
 .spades:hover, .spades:active {
     color: black;
-    background: url('./card_buttons/spades_button_hover.png') no-repeat;
+    background: url('../card_buttons/spades_button_hover.png') no-repeat;
     background-size: 100% 100%;
 }
 .hearts {
     color: red;
-    background: url('./card_buttons/hearts_button.png') no-repeat;
+    background: url('../card_buttons/hearts_button.png') no-repeat;
     background-size: 100% 100%;
 }
 .hearts:hover, .hearts:active {
     color: red;
-    background: url('./card_buttons/hearts_button_hover.png') no-repeat;
+    background: url('../card_buttons/hearts_button_hover.png') no-repeat;
     background-size: 100% 100%;
 }
