@@ -5,6 +5,11 @@ import Chat from './Chat'
 const cardValues = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 const cardSuits = ['Hearts', 'Diamonds', 'Spades', 'Clubs']
 
+//to be passed in from table making screen
+const startingChips = 1000
+const bigBlind = 10
+const smallBlind = 5
+
 const deck = []
 for (const val of cardValues){
     for (const suit of cardSuits){
@@ -13,9 +18,11 @@ for (const val of cardValues){
 }
 let gameDeck = [...deck]
 function Game(props) {
+
     const [action, setAction] = useState(null)
-    const [handFirst, setHandFirst] = useState(null)
-    const [handSecond, setHandSecond] = useState(null)
+    const [numPlayers, setNumPlayers] = useState(7)
+    const [handFirst, setHandFirst] = useState(gameDeck.shift())
+    const [handSecond, setHandSecond] = useState(gameDeck.shift())
     const [flopFirst, setFlopFirst] = useState(null)
     const [flopSecond, setFlopSecond] = useState(null)
     const [flopThird, setFlopThird] = useState(null)
@@ -46,47 +53,73 @@ function Game(props) {
     const[player7First, setPlayer7First] = useState("???")
     const[player7Second, setPlayer7Second] = useState("???")
 
+    const[player1Chips, setPlayer1Chips] = useState(startingChips)
+    const[player2Chips, setPlayer2Chips] = useState(startingChips)
+    const[player3Chips, setPlayer3Chips] = useState(startingChips)
+    const[player4Chips, setPlayer4Chips] = useState(startingChips)
+    const[player5Chips, setPlayer5Chips] = useState(startingChips)
+    const[player6Chips, setPlayer6Chips] = useState(startingChips)
+    const[player7Chips, setPlayer7Chips] = useState(startingChips)
+
+    const[pot, setPot] = useState(0)
+    const[formHolder, setFormHolder] = useState()
+    const[bet, setBet] = useState(bigBlind)
+
     useEffect(() => {
         document.title = props.title || "";
     }, [props.title]);
 
     useEffect(() => {
         shuffleDeck()
-        setHandFirst(getCard())
-        setHandSecond(getCard())
+        setHandFirst(gameDeck.shift())
+        setHandSecond(gameDeck.shift())
     }, []);
 
     useEffect(() => {
+        setPlayer1Chips(player1Chips - bet)
+        setPlayer2Chips(player2Chips - bet)
+        setPlayer3Chips(player3Chips - bet)
+        setPlayer4Chips(player4Chips - bet)
+        setPlayer5Chips(player5Chips - bet)
+        setPlayer6Chips(player6Chips - bet)
+        setPlayer7Chips(player7Chips - bet)
+        setPot(bet * numPlayers)
+
         switch(gamePhase){
             case 1:
-                setFlopFirst(getCard())
-                setFlopSecond(getCard())
-                setFlopThird(getCard())
+                setFlopFirst(gameDeck.shift())
+                setFlopSecond(gameDeck.shift())
+                setFlopThird(gameDeck.shift())
+                setBet(0)
                 break;
             case 2:
-                setTurn(getCard())
+                setTurn(gameDeck.shift())
+                setBet(0)
                 break;
             case 3:
-                setRiver(getCard())
+                setRiver(gameDeck.shift())
+                setBet(0)
                 break;
             case 4:
-                setPlayer2First(getCard())
-                setPlayer2Second(getCard())
+                setPlayer2First(gameDeck.shift())
+                setPlayer2Second(gameDeck.shift())
 
-                setPlayer3First(getCard())
-                setPlayer3Second(getCard())
+                setPlayer3First(gameDeck.shift())
+                setPlayer3Second(gameDeck.shift())
 
-                setPlayer4First(getCard())
-                setPlayer4Second(getCard())
+                setPlayer4First(gameDeck.shift())
+                setPlayer4Second(gameDeck.shift())
 
-                setPlayer5First(getCard())
-                setPlayer5Second(getCard())
+                setPlayer5First(gameDeck.shift())
+                setPlayer5Second(gameDeck.shift())
 
-                setPlayer6First(getCard())
-                setPlayer6Second(getCard())
+                setPlayer6First(gameDeck.shift())
+                setPlayer6Second(gameDeck.shift())
 
-                setPlayer7First(getCard())
-                setPlayer7Second(getCard())
+                setPlayer7First(gameDeck.shift())
+                setPlayer7Second(gameDeck.shift())
+
+                setPlayer1Chips()
                 break;
             default:
                 break;
@@ -104,10 +137,7 @@ function Game(props) {
         }
     }
 
-    const getCard = () => {
-        let r = gameDeck.shift()
-        return r
-    }
+
 
     const call = () => {
         setAction("Called")
@@ -117,6 +147,10 @@ function Game(props) {
     }
     const raise = () => {
         setAction("Raised")
+        setBet(formHolder)
+        if (gamePhase < 4){
+            setGamePhase(gamePhase+1)
+        }
     }
     const fold = () => {
         setAction("Folded")
@@ -125,22 +159,50 @@ function Game(props) {
         setFlopThird(null)
         setTurn(null)
         setRiver(null)
+        setPot(0)
         setGamePhase(0)
         shuffleDeck()
-        setHandFirst(getCard())
-        setHandSecond(getCard())
+        setHandFirst(gameDeck.shift())
+        setHandSecond(gameDeck.shift())
+
+        setPlayer2First("???")
+        setPlayer2Second("???")
+
+        setPlayer3First("???")
+        setPlayer3Second("???")
+
+        setPlayer4First("???")
+        setPlayer4Second("???")
+
+        setPlayer5First("???")
+        setPlayer5Second("???")
+
+        setPlayer6First("???")
+        setPlayer6Second("???")
+
+        setPlayer7First("???")
+        setPlayer7Second("???")
     }
 
     useEffect(() => {
         props.updateUserProfileButton(false);
     }, [props]);
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        setBet(formHolder)
+        console.log(bet)
+    }
     
     return (
+        
         <div>
+            <div className="bet">Current Bet: {bet}</div>
+
             <div className="player2">
                 
                 <div className="opponentName">p2 UName</div>
-                <div className="opponentChips">p2 Chips</div>
+                <div className="opponentChips">{player2Chips}</div>
                 <div className="opponentFirstCard">{player2First}</div>
                 <div className="opponentSecondCard">{player2Second}</div>
                 
@@ -149,7 +211,7 @@ function Game(props) {
             <div className="player3">
                 
                 <div className="opponentName">p3 UName</div>
-                <div className="opponentChips">p3 Chips</div>
+                <div className="opponentChips">{player3Chips}</div>
                 <div className="opponentFirstCard">{player3First}</div>
                 <div className="opponentSecondCard">{player3Second}</div>
                 
@@ -158,7 +220,7 @@ function Game(props) {
             <div className="player4">
                 
                 <div className="opponentName">p4 UName</div>
-                <div className="opponentChips">p4 Chips</div>
+                <div className="opponentChips">{player4Chips}</div>
                 <div className="opponentFirstCard">{player4First}</div>
                 <div className="opponentSecondCard">{player4Second}</div>
                 
@@ -167,7 +229,7 @@ function Game(props) {
             <div className="player5">
                 
                 <div className="opponentName">p5 UName</div>
-                <div className="opponentChips">p5 Chips</div>
+                <div className="opponentChips">{player5Chips}</div>
                 <div className="opponentFirstCard">{player5First}</div>
                 <div className="opponentSecondCard">{player5Second}</div>
                 
@@ -176,7 +238,7 @@ function Game(props) {
             <div className="player6">
                 
                 <div className="opponentName">p6 UName</div>
-                <div className="opponentChips">p6 Chips</div>
+                <div className="opponentChips">{player6Chips}</div>
                 <div className="opponentFirstCard">{player6First}</div>
                 <div className="opponentSecondCard">{player6Second}</div>
                 
@@ -185,14 +247,14 @@ function Game(props) {
             <div className="player7">
                 
                 <div className="opponentName">p7 UName</div>
-                <div className="opponentChips">p7 Chips</div>
+                <div className="opponentChips">{player7Chips}</div>
                 <div className="opponentFirstCard">{player7First}</div>
                 <div className="opponentSecondCard">{player7Second}</div>
                 
             </div>
             <div>
                 <center>
-                    <div className="pot"><br />0</div>
+                    <div className="pot"><br />{pot}</div>
                     <div>
                         <div className="centerCards">{flopFirst}</div>
                         <div className="centerCards">{flopSecond}</div>
@@ -207,16 +269,25 @@ function Game(props) {
                 <button className="playerOption" onClick={call}>Call</button>
                 <button className="playerOption" onClick={raise}>Raise</button>
                 <button className="playerOption" onClick={fold}>Fold</button>
-                <p className="playerAction">
-                    {action}
-                </p>
+                <form onSubmit={handleSubmit}>
+                <input className="raiseForm"
+                type="text" 
+                onChange={(e) => setFormHolder(e.target.value)}
+                />
+                </form>
                 <div>
-                    <div className="playerCards">{handFirst}</div>
-                    <div className="playerCards">{handSecond}</div> 
+                    <div className="playerCards">
+                        {handFirst.split(" ")[0]} 
+                        <img className='suit' src={'../' + handFirst.split(" ")[2] + '.png'}/>
+                    </div>
+                    <div className="playerCards">
+                        {handSecond.split(" ")[0]} 
+                        <img className='suit' src={'../' + handSecond.split(" ")[2] + '.png'}/>
+                    </div> 
                 </div>
                 
                 <div className="playerChips">
-                    Chips here
+                    {player1Chips}
                 </div>
                 <div className="playerID">
                     Username here

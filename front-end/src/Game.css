@@ -7,6 +7,14 @@
     top: 270px;
     display: table-cell;
 }
+
+.raiseForm{
+    position:relative;
+    top:255px;
+    width:90px;
+    right: 2px;
+}
+
 .playerCards{
     background-color: white;
     border: 3px solid black;
@@ -18,11 +26,13 @@
 }
 
 .centerCards{
+    position: relative;
     background-color: white;
     border: 3px solid black;
     margin: 10px;
     margin-left: 120px;
     margin-right: 120px;
+    top: 70px;
     
 }
 
@@ -65,7 +75,7 @@
     clip-path: circle();
     font-size: 20px;
     position:relative;
-    margin-top:30px;
+    top: 70px;
     border:1px solid black;
 }
 
@@ -92,4 +102,14 @@
 
 .opponentName, .opponentChips, .opponentFirstCard, .opponentSecondCard{
     border: 1px solid black;
+}
+
+.suit{
+    width:25px;
+}
+
+.bet{
+    text-align: center;
+    border:1px solid IndianRed;
+    margin: 10px;
 }
