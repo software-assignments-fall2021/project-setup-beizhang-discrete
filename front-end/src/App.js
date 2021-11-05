@@ -14,6 +14,30 @@ const axios = require('axios');
 const App = (props) => {
   const [user, setUser] = useState({});
 
+  // const fetchData = async (route, setState) => {
+  //   const port = 4000;
+  //   const URL = `https://localhost:${port}`;
+  //   try {
+  //       const fetched = await axios.get(`${URL}${route}/?id=${user._id}&friends=${user.friends}`);
+  //       setState(fetched.data);
+  //   } catch (err) {
+  //       console.log(err);
+  //   }
+  // }
+
+  // const friendListRoute = '/friend-list';
+  // const [friendList, modifyFriendList] = useState([]);
+  // useEffect(() => {
+  //     fetchData(friendListRoute, modifyFriendList);
+  // }, [user]);
+
+  // const allUsersListRoute = "/all-users-list";
+  // const [allUsersList, modifyallUsersList] = useState([]);
+  // useEffect(() => {
+  //     fetchData(allUsersListRoute, modifyallUsersList);
+  // }, []);
+
+  
   /* generic helper function to fetch data */
   /* 
     api: path of data

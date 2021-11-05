@@ -58,4 +58,39 @@ app.post("/upload-avatar", upload.single("avatar"), (req, res, next) => {
     res.send('cannot implement yet without database integration')
 });
 
+
+//Routes for fetching all user list, friend list and user profile info, not yet implemented
+// app.get('/all-users-list', (req, res) => {
+//     allUsersList= await User.find({}, (err, result) => {
+//         if (err) {
+//             return 'haha'
+//         } else {
+//             return result
+//         }       
+//     }).lean()
+//     res.json(allUsersList)
+// })
+
+// app.get('/user-profile', (req, res) => {
+//     userProfile=await User.findById(req.query.id, (err, result) => {
+//         if (err) {
+//             throw err
+//         } else {
+//             return result
+//         }
+//     }).lean()
+//     res.json(userProfile)
+// })
+
+// app.get('/friend-list', (req, res) => {
+//     friendList=await User.find({_id: {$in : req.query.friends}}, (err, result) => {
+//         if (err) {
+//             throw err
+//         } else {
+//             return result
+//         }
+//     }).lean()
+//     res.json(friendList)
+// })
+
 module.exports = app;
