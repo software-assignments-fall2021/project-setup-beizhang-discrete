@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const multer = require("multer");
 require("dotenv").config({ silent: true });
 const morgan = require("morgan");
+const axios = require('axios');
 
 /* ------------------------------- middleware ------------------------------- */
 app.use(morgan("dev"));
@@ -38,9 +39,36 @@ const upload = multer({
     }
 });
 
+/* ----------------------------------- api ---------------------------------- */
+
+const dbURL = "https://my.api.mockaroo.com";
+//mockaroo keys: 428573d0, 1e756d10
+const mockarooAPIKey = '1e756d10';
+
+const mockFriendListAPI = "/friendList.json";
+app.get("/friendList", (req, res) => {
+    axios.get(`${dbURL}${mockFriendListAPI}?key=${mockarooAPIKey}`)
+    .then(axiosResponse => {
+        res.send(axiosResponse.data);
+    }).catch(err => {
+        console.log(err);
+    });
+});
+
+const mockAllUsersListAPI = "/allUsersList.json";
+app.get("/allUsersList", (req, res) => {
+    axios.get(`${dbURL}${mockAllUsersListAPI}?key=${mockarooAPIKey}`)
+    .then(axiosResponse => {
+        res.send(axiosResponse.data);
+    }).catch(err => {
+        console.log(err);
+    });
+});
+
+
 //importing User schema
 const User = require('./schemae/User').User;
-// const api = *mongodb atlas api url*
+// const dbURL = *mongodb atlas api url*
 // mongoose.connect(api, {
 //     useNewUrlParser: true,
 //     useUnifiedTopology: true
@@ -48,14 +76,36 @@ const User = require('./schemae/User').User;
 //     console.log("Mongoose is connected.");
 // });
 
-app.post("/upload-avatar", upload.single("avatar"), (req, res, next) => {
+app.post("/uploadAvatar", upload.single("avatar"), (req, res) => {
     // const query = { "_id" : req.body._id };
     // const setAvatar = { $set: { avatar: '/uploads' + req.file.filename } };
-    // User.findOne(query, setAvatar, async (err, res) => {
+    // User.findOneAndUpdate(query, setAvatar, async (err, user) => {
     //     if(err) throw err;
-    //     res.send('Successfully updated avatar.')
+    //     res.send(user.avatar)
     // });
-    res.send('cannot implement yet without database integration')
+    res.send('https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg')
+});
+
+const mockLoginAPI = "/login.json";
+app.post("/login", (req, res) => {
+    const username = req.body.username, password = req.body.password;
+    axios.post(`${dbURL}${mockLoginAPI}?key=${mockarooAPIKey}`)
+    .then(axiosResponse => {
+        res.send(axiosResponse.data);
+    }).catch(err => {
+        console.log(err);
+    });
+});
+
+const mockSignUpAPI = "/createAccount.json";
+app.post("/signUp", (req, res) => {
+    const username = req.body.username, password = req.body.password, confirmPassword = req.body.confirmPassword;
+    axios.post(`${dbURL}${mockSignUpAPI}?key=${mockarooAPIKey}`)
+    .then(axiosResponse => {
+        res.send(axiosResponse.data);
+    }).catch(err => {
+        console.log(err);
+    });
 });
 
 module.exports = app;
