@@ -138,38 +138,7 @@ function Game(props) {
         }
     }
 
-    const checkFlush = (input) => {
-        const diamonds = []
-        const clubs = []
-        const hearts = []
-        const spades = []
 
-        for (var i; i < input.length; i++){
-            switch(input[i]){
-                case '../hearts.png':
-                    hearts.push[i]
-                    break;
-                case '../diamonds.png':
-                    diamonds.push[i]
-                    break;
-                case '../clubs.png':
-                    clubs.push[i]
-                    break;
-                case '../spades.png':
-                    spades.push[i]
-                    break;
-            }
-        }
-
-        if (diamonds.length > 4)
-            return diamonds
-        if (clubs.length > 4)
-            return clubs
-        if (hearts.length > 4)
-            return hearts
-        if (spades.length > 4)
-            return spades
-    }
 
     const call = () => {
         setAction("Called")
