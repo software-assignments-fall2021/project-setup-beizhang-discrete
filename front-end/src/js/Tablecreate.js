@@ -39,6 +39,23 @@ const Tablecreate = (props) => {
             <h1> Create Table</h1>
             <h4> # of Players</h4>
 
+            <h1 className="text-center"> Create Table</h1>
+            <h4 className="text-center"> # of Players</h4>
+            
+            <Form onSubmit={handleCreateTable}>
+                <Row className="align-items-center">
+                        <Form.Select className="me-sm-2" 
+                        id="inlineFormCustomSelect"
+                        name="numPlayers">
+                            <option value="0">Choose # of Players</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                        </Form.Select>
+                </Row>
             <Row>
                 <Col className="bg-gray border">
                     <Button className="bg-white no border">2</Button>

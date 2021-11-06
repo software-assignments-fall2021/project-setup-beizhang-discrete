@@ -108,4 +108,25 @@ app.post("/signUp", (req, res) => {
     });
 });
 
+const mockSignUpAPI = "/createTable.json";
+app.post("/createTable", (req, res) => {
+    const username = req.body.username, password = req.body.password, confirmPassword = req.body.confirmPassword;
+    axios.post(`${dbURL}${mockCreateTableAPI}?key=${mockarooAPIKey}`)
+    .then(axiosResponse => {
+        res.send(axiosResponse.data);
+    }).catch(err => {
+        console.log(err);
+    });
+});
+
+const mockFriendListAPI = "/tableList.json";
+app.get("/tableList", (req, res) => {
+    axios.get(`${dbURL}${mockTableListAPI}?key=${mockarooAPIKey}`)
+    .then(axiosResponse => {
+        res.send(axiosResponse.data);
+    }).catch(err => {
+        console.log(err);
+    });
+});
+
 module.exports = app;
