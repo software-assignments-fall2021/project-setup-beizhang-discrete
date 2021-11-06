@@ -128,9 +128,9 @@ app.post("/uploadAvatar", upload.single("avatar"), (req, res) => {
 // }
 
 /* -------------------------------- get user -------------------------------- */
-// app.get("/user", (req, res) => {
-//     res.send(req.user);
-// });
+app.get("/user", (req, res) => {
+    res.send(req.user);
+});
 
 /* ---------------------------------- login --------------------------------- */
 const mockLoginAPI = "/login.json";
@@ -146,15 +146,6 @@ app.post("/login", (req, res, next) => {
 });
 
 /* ----------------------------- create account ----------------------------- */
-const validateRegistration = (username, password, confirmPassword) => {
-    if(username !== username.replace(/<\/?[^>]+(>|$)/g, "")) {
-        return false;
-    }
-    if(password !== confirmPassword) {
-        return false;
-    }
-    return true;
-}
 const mockSignUpAPI = "/createAccount.json";
 app.post("/signUp", (req, res, next) => {
     // User.findOne({username: req.body.username}, async (err, user) => {
@@ -173,24 +164,27 @@ app.post("/signUp", (req, res, next) => {
     //         authenticate(req, res, next);
     //     }
     // });
-    const username = req.body.username, password = req.body.password, confirmPassword = req.body.confirmPassword;
-    if(validateRegistration(username, password, confirmPassword)) {
-        axios.post(`${dbURL}${mockSignUpAPI}?key=${mockarooAPIKey}`)
-        .then(axiosResponse => {
-            res.send(axiosResponse.data);
-        }).catch(err => {
-            console.log(err);
-        });
-    }
-    else {
-        res.send(false);
-    }
+
+    //should do client-side validation for these and confirmPassword
+    const username = req.username, password = req.password;
+    axios.post(`${dbURL}${mockSignUpAPI}?key=${mockarooAPIKey}`)
+    .then(axiosResponse => {
+        res.send(axiosResponse.data);
+    }).catch(err => {
+        console.log(err);
+    });
 });
 
 /* --------------------------------- logout --------------------------------- */
-// app.get("/logout", function(req, res){
-//     req.logout();
-//     res.redirect("/");
-// });
+app.get("/logout", function(req, res){
+     req.logout();
+     res.redirect("/");
+});
+
+/* ------------------------------ default route ----------------------------- */
+app.get('*', (req, res) => {
+    //res.sendFile(path.join(__dirname, '../front-end/build/index.html'));
+    res.sendFile(path.join(__dirname, '../front-end/public/index.html'));
+});
 
 module.exports = app;
