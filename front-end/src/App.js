@@ -21,6 +21,7 @@ const App = (props) => {
   */
   const fetchData = (path, setState) => {
     axios.get(`/${path}`).then(res => {
+      console.log(res.data);
       setState(res.data);
     }).catch(err => {
       console.log(err);
