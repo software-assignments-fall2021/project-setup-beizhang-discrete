@@ -26,10 +26,18 @@ const UserPage = (props) => {
     
     const [usernameToSearch, setSearchUsername] = useState('');
 
+    const fetchData = props.fetchData;
     const user = props.user;
-    const friendList = props.friendList;
-    const allUsersList = props.allUsersList;
+    const friendList = props.friendList, modifyFriendList = props.modifyFriendList;
+    const allUsersList = props.allUsersList, modifyAllUsersList = props.modifyAllUsersList;
     
+    useEffect(() => {
+        fetchData("friendList", modifyFriendList);
+    }, [user]);
+    useEffect(() => {
+         fetchData("allUsersList", modifyAllUsersList);
+    }, []);
+
     useEffect(() => {
         props.updateUserProfileButton(false);
     }, [props]);
@@ -47,12 +55,11 @@ const UserPage = (props) => {
 
     return (
         <div className="UserPage">
-
             <div className='PhotoName'>
                 {/* Placeholders for photo and username */}
                 <div className='avatar-container'>
                     <img className='ProfilePhoto' src={user.avatar} alt={'Profile Icon'} />
-                    <AvatarUpload />
+                    <AvatarUpload/>
                 </div>
                 <h1 className='Username'>{user.username}</h1>
             </div>

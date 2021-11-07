@@ -45,7 +45,7 @@ const Login = (props) => {
         // send the request to the server api to authenticate
         const response = await axios({
           method: "post",
-          url: "https://my.api.mockaroo.com/login.json?key=1e756d10",
+          url: "login",
           data: formData,
           headers: { "Content-Type": "multipart/form-data" },
         });
@@ -75,7 +75,7 @@ const Login = (props) => {
           // send the request to the server api to authenticate
           const response = await axios({
             method: "post",
-            url: "https://my.api.mockaroo.com/createAccount.json?key=1e756d10",
+            url: "/signUp",
             data: formData,
             headers: { "Content-Type": "multipart/form-data" },
           });
