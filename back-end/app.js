@@ -108,9 +108,9 @@ app.post("/signUp", (req, res) => {
     });
 });
 
-const mockSignUpAPI = "/createTable.json";
+const mockCreateTableAPI = "/createTable.json";
 app.post("/createTable", (req, res) => {
-    const username = req.body.username, password = req.body.password, confirmPassword = req.body.confirmPassword;
+    const numPlayers = req.body.numPlayers, tableName = req.body.tableName, startingValue = req.body.startingValue, smallBlind = req.body.smallBlind, bigBlind = req.body.bigBlind;
     axios.post(`${dbURL}${mockCreateTableAPI}?key=${mockarooAPIKey}`)
     .then(axiosResponse => {
         res.send(axiosResponse.data);
@@ -119,7 +119,7 @@ app.post("/createTable", (req, res) => {
     });
 });
 
-const mockFriendListAPI = "/tableList.json";
+const mockTableListAPI = "/tableList.json";
 app.get("/tableList", (req, res) => {
     axios.get(`${dbURL}${mockTableListAPI}?key=${mockarooAPIKey}`)
     .then(axiosResponse => {
