@@ -61,7 +61,7 @@ const upload = multer({
 
 const dbURL = "https://my.api.mockaroo.com";
 //mockaroo keys: 428573d0, 1e756d10
-const mockarooAPIKey = '1e756d10';
+const mockarooAPIKey = '428573d0';
 
 //importing User schema
 const User = require('./schemae/User').User;
