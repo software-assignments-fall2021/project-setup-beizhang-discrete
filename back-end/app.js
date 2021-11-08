@@ -78,6 +78,15 @@ const User = require('./schemae/User').User;
 /* --------------------------- TODO: create table --------------------------- */
 
 /* ---------------------------- TODO: add friend ---------------------------- */
+app.get("/friendRequests", (req, res) => {
+    //send back friend requests in db
+    res.send('Not implemented without db');
+})
+
+app.post("/sendFriendRequest", (req, res) => {
+    //add new friend request into db
+    res.send('Not implemented without db');
+})
 
 /* ----------------------------- get friend list ---------------------------- */
 const mockFriendListAPI = "/friendList.json";
@@ -186,5 +195,37 @@ app.get('*', (req, res) => {
     //res.sendFile(path.join(__dirname, '../front-end/build/index.html'));
     res.sendFile(path.join(__dirname, '../front-end/public/index.html'));
 });
+
+
+//Routes for fetching all user list, friend list and user profile info, not yet implemented
+// app.get('/allUsersList', (req, res) => {
+//     await User.find({}, (err, result) => {
+//         if (err) {
+//             throw err
+//         } else {
+//             res.json(result)
+//         }       
+//     }).lean()
+// })
+
+// app.get('/user', (req, res) => {
+//     await User.findById(req.query.id, (err, result) => {
+//         if (err) {
+//             throw err
+//         } else {
+//             res.json(result)
+//         }
+//     }).lean()
+// })
+
+// app.get('/friendList', (req, res) => {
+//     await User.find({_id: {$in : req.query.friends}}, (err, result) => {
+//         if (err) {
+//             throw err
+//         } else {
+//             res.json(result)
+//         }
+//     }).lean()
+// })
 
 module.exports = app;
