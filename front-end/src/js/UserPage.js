@@ -140,7 +140,7 @@ const UserPage = (props) => {
                 {allUsersList.filter(
                         aUser => aUser.name.toLowerCase().includes(usernameToSearch.toLowerCase())
                     ).map(aUser => (
-                        <FriendListItem key={aUser.id} name={<Button onClick={sendFriendRequest(user.id)}>{aUser.name}</Button>} avatar={aUser.avatar} status={aUser.status}/>
+                        <FriendListItem key={aUser.id} name={<Button onClick={()=>{sendFriendRequest(user.id)}}>{aUser.name}</Button>} avatar={aUser.avatar} status={aUser.status}/>
                     ))}
                 </Modal.Body>
                 <Modal.Footer>
