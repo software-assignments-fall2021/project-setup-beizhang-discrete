@@ -13,7 +13,7 @@ const axios = require('axios');
 
 const App = (props) => {
   const [user, setUser] = useState({});
-
+  
   /* generic helper function to fetch data */
   /* 
     api: path of data
@@ -29,8 +29,9 @@ const App = (props) => {
   }
 
   const [friendList, modifyFriendList] = useState([]);
-
   const [allUsersList, modifyAllUsersList] = useState([]);
+  const [friendRequests, modifyFriendRequests] = useState([]);
+  // const [sentFriendRequests, modifySentFriendRequests] = useState([]);
 
   //determines whether or not user profile button should be rendered in header
   const [showUserProfileButton, toggleShowUserProfileButton] = useState(true);
@@ -62,7 +63,9 @@ const App = (props) => {
           <Route exact path="/user">
             <UserPage title="User Profile | All In Poker" updateUserProfileButton={updateUserProfileButton} 
               user={user} setUser={setUser} friendList={friendList} modifyFriendList={modifyFriendList}
-              allUsersList={allUsersList} modifyAllUsersList={modifyAllUsersList} fetchData={fetchData}/>
+              allUsersList={allUsersList} modifyAllUsersList={modifyAllUsersList}
+              friendRequests={friendRequests} modifyFriendRequests={modifyFriendRequests}
+              fetchData={fetchData}/>
           </Route>
 
           {/*join table page*/}
