@@ -71,13 +71,13 @@ const UserPage = (props) => {
     }
 
     //Implement in DB Sprint
-    const sendFriendRequest = async (userID) => {
+    const sendFriendRequest = async (senderID, receiverID) => {
         const response = await axios({
             method: "post",
             url: "/sendFriendRequest",
-            data: {'_id' : userID}
+            data: {'senderID' : senderID, 'receiverID' : receiverID}
           }); 
-        return response;
+        alert(response);
     }
 
     return (
@@ -140,7 +140,7 @@ const UserPage = (props) => {
                 {allUsersList.filter(
                         aUser => aUser.name.toLowerCase().includes(usernameToSearch.toLowerCase())
                     ).map(aUser => (
-                        <FriendListItem key={aUser.id} name={<Button onClick={sendFriendRequest(user.id)}>{aUser.name}</Button>} avatar={aUser.avatar} status={aUser.status}/>
+                        <FriendListItem key={aUser.id} name={<Button onClick={() => sendFriendRequest(user.id, aUser.id)}>{aUser.name}</Button>} avatar={aUser.avatar} status={aUser.status}/>
                     ))}
                 </Modal.Body>
                 <Modal.Footer>
