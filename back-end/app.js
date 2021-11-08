@@ -78,6 +78,15 @@ const User = require('./schemae/User').User;
 /* --------------------------- TODO: create table --------------------------- */
 
 /* ---------------------------- TODO: add friend ---------------------------- */
+app.get("/friendRequests", (req, res) => {
+    //send back friend requests in db
+    res.send('Not implemented without db');
+})
+
+app.post("/sendFriendRequest", (req, res) => {
+    //add new friend request into db
+    res.send('Not implemented without db');
+})
 
 /* ----------------------------- get friend list ---------------------------- */
 const mockFriendListAPI = "/friendList.json";
@@ -189,37 +198,34 @@ app.get('*', (req, res) => {
 
 
 //Routes for fetching all user list, friend list and user profile info, not yet implemented
-// app.get('/all-users-list', (req, res) => {
-//     allUsersList= await User.find({}, (err, result) => {
+// app.get('/allUsersList', (req, res) => {
+//     await User.find({}, (err, result) => {
 //         if (err) {
-//             return 'haha'
+//             throw err
 //         } else {
-//             return result
+//             res.json(result)
 //         }       
 //     }).lean()
-//     res.json(allUsersList)
 // })
 
-// app.get('/user-profile', (req, res) => {
-//     userProfile=await User.findById(req.query.id, (err, result) => {
+// app.get('/user', (req, res) => {
+//     await User.findById(req.query.id, (err, result) => {
 //         if (err) {
 //             throw err
 //         } else {
-//             return result
+//             res.json(result)
 //         }
 //     }).lean()
-//     res.json(userProfile)
 // })
 
-// app.get('/friend-list', (req, res) => {
-//     friendList=await User.find({_id: {$in : req.query.friends}}, (err, result) => {
+// app.get('/friendList', (req, res) => {
+//     await User.find({_id: {$in : req.query.friends}}, (err, result) => {
 //         if (err) {
 //             throw err
 //         } else {
-//             return result
+//             res.json(result)
 //         }
 //     }).lean()
-//     res.json(friendList)
 // })
 
 module.exports = app;
