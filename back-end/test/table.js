@@ -8,10 +8,10 @@ chai.use(chaiHttp);
 
 describe('table create system API', () => {
     //test post table route
-    describe("POST /tableCreate", () => {
+    describe("POST /createTable", () => {
         it("Should successfully post to database and receive JSON", (done) => {
             chai.request(app)
-                .post("/tableCreate")
+                .post("/createTable")
                 .end((err, response) => {
                     if (err) throw err;
                     response.should.have.status(200);
@@ -19,13 +19,13 @@ describe('table create system API', () => {
                 });
             done();
         });
-        it("Response body should have user properties tableName, numPlayers, startingValue, smallBlind, bigBlind, and success", (done) => {
+        it("Response body should have appropriate table properties", (done) => {
             chai.request(app)
-                .post("/login")
+                .post("/createTable")
                 .end((err, response) => {
                     if (err) throw err;
                     response.body.should.have.keys([
-                        'tableName','numPlayers','startingValue','smallBlind','bigBlind','success'
+                        'id','name','curPlayers','numPlayers','startingValue','smallBlind','bigBlind','status'
                     ]);
                 });
             done();
@@ -43,12 +43,25 @@ describe('table create system API', () => {
                 });
             done();
         });
-        it("Response body should empty object, as there is not yet database integration", (done) => {
+        it("Response body should be an array", (done) => {
             chai.request(app)
-                .get("/user")
+                .get("/tableList")
                 .end((err, response) => {
                     if (err) throw err;
-                    response.body.should.satisfy(obj => Object.keys(obj).length === 0);
+                    response.body.should.be.an('array');
+                });
+            done();
+        });
+        it("Array items should be objects representing a table", (done) => {
+            chai.request(app)
+                .post("/createTable")
+                .end((err, response) => {
+                    if (err) throw err;
+                    for (let i = 0; i < response.body.length; i++) {
+                        response.body[i].should.have.keys([
+                            'id','name','curPlayers','numPlayers','startingValue','smallBlind','bigBlind','status'
+                        ]);
+                    }
                 });
             done();
         });
