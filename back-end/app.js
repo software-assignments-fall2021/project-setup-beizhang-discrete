@@ -73,10 +73,6 @@ const User = require('./schemae/User').User;
 //     console.log("Mongoose is connected.");
 // });
 
-/* -------------------------- TODO: get/join table -------------------------- */
-
-/* --------------------------- TODO: create table --------------------------- */
-
 /* ---------------------------- TODO: add friend ---------------------------- */
 app.get("/friendRequests", (req, res) => {
     //send back friend requests in db
@@ -118,7 +114,8 @@ app.post("/uploadAvatar", upload.single("avatar"), (req, res) => {
     //     if(err) throw err;
     //     res.send(user.avatar)
     // });
-    res.send('https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg')
+    //res.send('https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg')
+    res.sendFile(path.join(__dirname, '../front-end', 'public', 'defaultAvatar.jpg'))
 });
 
 /* ----------------------------- authentication ----------------------------- */
@@ -177,6 +174,29 @@ app.post("/signUp", (req, res, next) => {
     //should do client-side validation for these and confirmPassword
     const username = req.username, password = req.password;
     axios.post(`${dbURL}${mockSignUpAPI}?key=${mockarooAPIKey}`)
+    .then(axiosResponse => {
+        res.send(axiosResponse.data);
+    }).catch(err => {
+        console.log(err);
+    });
+});
+
+/* --------------------------- TODO: create table --------------------------- */
+const mockCreateTableAPI = "/createTable.json";
+app.post("/createTable", (req, res) => {
+    const numPlayers = req.body.numPlayers, tableName = req.body.tableName, startingValue = req.body.startingValue, smallBlind = req.body.smallBlind, bigBlind = req.body.bigBlind;
+    axios.post(`${dbURL}${mockCreateTableAPI}?key=${mockarooAPIKey}`)
+    .then(axiosResponse => {
+        res.send(axiosResponse.data);
+    }).catch(err => {
+        console.log(err);
+    });
+});
+
+/* -------------------------- TODO: get/join table -------------------------- */
+const mockTableListAPI = "/tableList.json";
+app.get("/tableList", (req, res) => {
+    axios.get(`${dbURL}${mockTableListAPI}?key=${mockarooAPIKey}`)
     .then(axiosResponse => {
         res.send(axiosResponse.data);
     }).catch(err => {
