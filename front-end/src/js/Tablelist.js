@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Component, useEffect } from 'react';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import TableBlock from './TableBlock';
@@ -7,20 +7,42 @@ import Button from 'react-bootstrap/Button';
 import { Container } from 'react-bootstrap';
 // import Header from '../Header'
 
-const Tablelist = (props) => {
-    useEffect(() => {
-        props.updateUserProfileButton(true);
-    }, [props]);
+class Tablelist extends Component {
+    // useEffect(() => {
+    //     props.updateUserProfileButton(true);
+    // }, [props]);
 
-    const fetchData = props.fetchData;
+    
+
+
     /*fetch table list */
-    const mockTableListAPI = "tableList.json";
-    const [tableList, modifyTableList] = useState([]);
-    useEffect(() => {
-      fetchData(mockTableListAPI, modifyTableList);
-    }, []);
 
-    return (
+
+    constructor() {
+        super();
+        this.state = {tables: []};
+    }
+
+    componentDidMount() {
+        fetch('/tableList')
+        .then(res=> {
+            console.log(res);
+            return res.json()
+        })
+        .then(tables => {
+            console.log(tables);
+            this.setState({ tables })
+        })
+    }
+
+    
+    // const mockTableListAPI = "tableList.json";
+    // const [tableList, modifyTableList] = useState([]);
+    // useEffect(() => {
+    //   fetchData(mockTableListAPI, modifyTableList);
+    // }, []);
+    render() {
+        return (
         <div className='container'>
                 
             <h1>Tables List</h1>
@@ -34,7 +56,7 @@ const Tablelist = (props) => {
             {/* </Button> */}
 
             <Container className = "bg-gray border">
-                {tableList.map((table) => (
+                {this.state.tables.map((table) => (
                     <TableBlock key={table.id} table={table}> </TableBlock>
                 ))}
 
@@ -42,6 +64,8 @@ const Tablelist = (props) => {
             {/* <TableBlock tables = {tables}></TableBlock> */}
         </div>
     )
+    }
+    
 }
 
-export default Tablelist
+export default Tablelist;

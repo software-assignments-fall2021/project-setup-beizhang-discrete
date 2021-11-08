@@ -73,10 +73,6 @@ const User = require('./schemae/User').User;
 //     console.log("Mongoose is connected.");
 // });
 
-/* -------------------------- TODO: get/join table -------------------------- */
-
-/* --------------------------- TODO: create table --------------------------- */
-
 /* ---------------------------- TODO: add friend ---------------------------- */
 
 /* ----------------------------- get friend list ---------------------------- */
@@ -168,6 +164,29 @@ app.post("/signUp", (req, res, next) => {
     //should do client-side validation for these and confirmPassword
     const username = req.username, password = req.password;
     axios.post(`${dbURL}${mockSignUpAPI}?key=${mockarooAPIKey}`)
+    .then(axiosResponse => {
+        res.send(axiosResponse.data);
+    }).catch(err => {
+        console.log(err);
+    });
+});
+
+/* --------------------------- TODO: create table --------------------------- */
+const mockCreateTableAPI = "/createTable.json";
+app.post("/createTable", (req, res) => {
+    const numPlayers = req.body.numPlayers, tableName = req.body.tableName, startingValue = req.body.startingValue, smallBlind = req.body.smallBlind, bigBlind = req.body.bigBlind;
+    axios.post(`${dbURL}${mockCreateTableAPI}?key=${mockarooAPIKey}`)
+    .then(axiosResponse => {
+        res.send(axiosResponse.data);
+    }).catch(err => {
+        console.log(err);
+    });
+});
+
+/* -------------------------- TODO: get/join table -------------------------- */
+const mockTableListAPI = "/tableList.json";
+app.get("/tableList", (req, res) => {
+    axios.get(`${dbURL}${mockTableListAPI}?key=${mockarooAPIKey}`)
     .then(axiosResponse => {
         res.send(axiosResponse.data);
     }).catch(err => {
