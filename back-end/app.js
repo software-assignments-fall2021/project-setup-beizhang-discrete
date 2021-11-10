@@ -1,4 +1,5 @@
 /* --------------------------------- imports -------------------------------- */
+require('dotenv').config()
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -66,7 +67,7 @@ const mockarooAPIKey = '428573d0';
 // schema imports
 const User = require('./schemae/User').User;
 const Table = require('./schemae/Table').Table;
-const dbURL = "mongodb+srv://thomashuang02:admin@all-in-poker.bsbwv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+const dbURL = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@all-in-poker.bsbwv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
 mongoose.connect(dbURL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
