@@ -1,7 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import { Redirect } from "react-router-dom";
+import { GoogleLogin } from 'react-google-login'
 import '../css/Login.css';
 const axios = require('axios');
+
+const googleClientId = '';
 
 const Login = (props) => {
     useEffect(() => {
@@ -116,6 +119,14 @@ const Login = (props) => {
                         </label>
                         <input type="submit" value="Log In" />
                     </form>
+
+                    <div style={{padding: '3vh'}}>
+                      <GoogleLogin
+                      clientId={googleClientId}
+                      buttonText="Login with Google"
+                      cookiePolicy={'single_host_origin'}
+                      />
+                    </div>
 
 
                     <h4 className="header4">Create Account</h4>
