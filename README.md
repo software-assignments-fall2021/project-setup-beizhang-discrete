@@ -18,13 +18,15 @@ There are other features not listed above: Chat functionality, Friends systems, 
 
 #### Sprint 0-1 Roles
 Product Owner: [Ben Pasteelnick](https://github.com/B-Pasteelnick)
-
 Scrum Master: [Thomas Huang](https://github.com/thomashuang02)
 
 #### Sprint 2 Roles
 Product Owner: [Owen Wahlgren](https://github.com/owendoteth)
-
 Scrum Master: [Eric Wang](https://github.com/EricXiaoYang)
+
+#### Sprint 3 Roles
+Product Owner: [Oscar Xue](https://github.com/oooscarrr)
+Scrum Master: [Ben Pasteelnick](https://github.com/B-Pasteelnick)
 
 ## How the project came to be
 
@@ -34,8 +36,9 @@ You can find out how to contribute on [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ## How to build and test
 
-Install node and npm.
-React front-end: clone repository -> change to `front-end` directory -> `npm install --legacy-peer-deps` -> `npm start`
+Install node.
+React front-end: in `front-end` directory -> `npm install --legacy-peer-deps` -> `npm start`
+Express back-end: in `back-end` directory -> `npm install --legacy-peer-deps` -> `npm start`
 
 ## Any Relevant Documents
 
