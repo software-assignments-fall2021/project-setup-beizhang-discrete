@@ -18,13 +18,15 @@ There are other features not listed above: Chat functionality, Friends systems, 
 
 #### Sprint 0-1 Roles
 Product Owner: [Ben Pasteelnick](https://github.com/B-Pasteelnick)
-
 Scrum Master: [Thomas Huang](https://github.com/thomashuang02)
 
 #### Sprint 2 Roles
 Product Owner: [Owen Wahlgren](https://github.com/owendoteth)
-
 Scrum Master: [Eric Wang](https://github.com/EricXiaoYang)
+
+#### Sprint 3 Roles
+Product Owner: [Oscar Xue](https://github.com/oooscarrr)
+Scrum Master: [Ben Pasteelnick](https://github.com/B-Pasteelnick)
 
 ## How the project came to be
 
