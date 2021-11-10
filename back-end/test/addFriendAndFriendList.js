@@ -23,7 +23,11 @@ describe('Get Friend List and Default route', () => {
                 .get("/friendList")
                 .end((err, response) => {
                     if (err) throw err;
-                    response.body.should.have.property('username')
+                    response.body[0].should.have.property('name')
+                    response.body[1].should.have.property('avatar')
+                    response.body[2].should.have.property('status')
+                    response.body[3].should.have.property('id')
+                    // response.body.should.have.keys(['name', 'avatar', 'status', 'id'])
                 });
             done();
         });
