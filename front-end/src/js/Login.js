@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import { Redirect } from "react-router-dom";
 import '../css/Login.css';
 const axios = require('axios');
@@ -17,73 +17,66 @@ const Login = (props) => {
     useEffect(() => {
         props.updateUserProfileButton(false);
     }, [props]);
-
-    // create state variables to hold username and password
-    const [status, setStatus] = useState({});
   
-    useEffect(() => {
-      // if the login was a success, call the setUser function that was passed to this component as a prop
-      if (status.success) {
-        console.log(`User successfully logged in: ${status.username}`);
-        props.setUser(status);
-      }
-    }, [status]);
-  
-    const handleSubmit = async e => {
+    const handleLogin = async e => {
       e.preventDefault()
   
       // get the username and password from the form fields
       const username = e.target.username.value
       const password = e.target.password.value
   
-      // send form data to API to authenticate
-      const formData = new FormData()
-      formData.append("username", username)
-      formData.append("password", password)
-  
       try {
         // send the request to the server api to authenticate
         const response = await axios({
           method: "post",
-          url: "login",
-          data: formData,
-          headers: { "Content-Type": "multipart/form-data" },
+          url: "/login",
+          data: {
+            username: username,
+            password: password
+          },
         });
-        // store the response data into the data state variable
-        console.log(response.data);
-        setStatus(response.data);
+        if(response.data.auth){
+          props.setUser(response.data.user);
+        }
+        else {
+          alert(response.data.message);
+        }
       } catch (err) {
-        throw new Error(err);
+        console.log(err);
       }
     }
 
-    const handleCreate = async e => {
+    const handleSignUp = async e => {
         e.preventDefault()
     
         // get the username and password from the form fields
         const username = e.target.username.value;
         const password = e.target.password.value;
-        const confirmPassword = e.target.password.confirmPassword;
-    
-        // send form data to API to authenticate
-        const formData = new FormData()
-        formData.append("username", username)
-        formData.append("password", password)
-        formData.append("confirmPassword", confirmPassword)
+        const confirmPassword = e.target.confirmPassword.value;
+
+        if(password !== confirmPassword) {
+          alert("Passwords must match!");
+          return;
+        }
     
         try {
           // send the request to the server api to authenticate
           const response = await axios({
             method: "post",
-            url: "/signUp",
-            data: formData,
-            headers: { "Content-Type": "multipart/form-data" },
+            url: "/register",
+            data: {
+              username: username,
+              password: password
+            },
           });
-          // store the response data into the data state variable
-          console.log(response.data);
-          setStatus(response.data);
+          if(response.data.auth){
+            props.setUser(response.data.user);
+          }
+          else {
+            alert(response.data.message);
+          }
         } catch (err) {
-          throw new Error(err);
+          console.log(err);
         }
       }
     
@@ -92,22 +85,13 @@ const Login = (props) => {
         return (
             <div>
                 <div className="UserProfile">
-                    <p>
-                        <br />
-                        Server response (for debugging purposes):
-                        <br />
-                        Login successful: {status.success ? "True" : "False"} 
-                        <br />
-                        {JSON.stringify(status, null, 2)}
-                    </p>
-                    
                     <form className="loginForm" action="/">
                         <input type="submit" value="Continue as Guest" />
                     </form>
 
                     <h4 className="header4">Login to Existing Account</h4>
         
-                    <form className="loginForm" onSubmit={handleSubmit}>
+                    <form className="loginForm" onSubmit={handleLogin}>
                         <label className="formLabel">    
                             <input type="text" placeholder={'Username'} name="username"/>
                         </label>
@@ -120,7 +104,7 @@ const Login = (props) => {
 
                     <h4 className="header4">Create Account</h4>
 
-                    <form className="loginForm" onSubmit={handleCreate}>
+                    <form className="loginForm" onSubmit={handleSignUp}>
                         <label className="formLabel">    
                             <input type="text" placeholder={'Username'} name="username"/>
                         </label>
@@ -139,7 +123,7 @@ const Login = (props) => {
             </div>
         )
     }
-    return(!status.success ? returnLoginOrCreate() : returnProfile())
+    return(props.user ? returnProfile() : returnLoginOrCreate())
 }
 
 export default Login;
