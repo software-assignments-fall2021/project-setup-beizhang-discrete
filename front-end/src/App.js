@@ -12,7 +12,7 @@ import UserPage from './js/UserPage';
 const axios = require('axios');
 
 const App = (props) => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   
   /* generic helper function to fetch data */
   /* 
@@ -45,7 +45,7 @@ const App = (props) => {
     <div className="App">
       <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
       <Router>
-        <Header showUserProfileButton={showUserProfileButton} isLoggedIn={user.success}/>
+        <Header showUserProfileButton={showUserProfileButton} isLoggedIn={user ? true : false}/>
         <Switch>
           {/*home page*/}
           <Route exact path="/">
@@ -62,10 +62,7 @@ const App = (props) => {
           {/*user profile page*/}
           <Route exact path="/user">
             <UserPage title="User Profile | All In Poker" updateUserProfileButton={updateUserProfileButton} 
-              user={user} setUser={setUser} friendList={friendList} modifyFriendList={modifyFriendList}
-              allUsersList={allUsersList} modifyAllUsersList={modifyAllUsersList}
-              friendRequests={friendRequests} modifyFriendRequests={modifyFriendRequests}
-              fetchData={fetchData}/>
+              user={user} setUser={setUser}/>
           </Route>
 
           {/*join table page*/}
