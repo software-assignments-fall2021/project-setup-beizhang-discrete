@@ -56,22 +56,24 @@ const Tablecreate = (props) => {
         const startingValue = e.target.startingValue.value;
         const smallBlind = e.target.smallBlind.value;
         const bigBlind = e.target.bigBlind.value;
+        const status = e.target.status.value;
 
-        const formInput = {
-            numPlayers: e.target.numPlayers.value,
-            tableName: e.target.tableName.value,
-            startingValue: e.target.startingValue.value,
-            smallBlind: e.target.smallBlind.value,
-            bigBlind: e.target.bigBlind.value,
-        }
+        // const formInput = {
+        //     numPlayers: e.target.numPlayers.value,
+        //     tableName: e.target.tableName.value,
+        //     startingValue: e.target.startingValue.value,
+        //     smallBlind: e.target.smallBlind.value,
+        //     bigBlind: e.target.bigBlind.value,
+        // }
 
         console.log("players", numPlayers)
         console.log("name", tableName)
         console.log("value", startingValue)
         console.log("small blind", smallBlind)
         console.log("big blind", bigBlind)
+        console.log("status", status)
 
-        if (formInput.numPlayers == 0) {
+        if (numPlayers == 0) {
             console.log("players empty")
         }
         else if (tableName === "") {
@@ -92,19 +94,19 @@ const Tablecreate = (props) => {
 
 
             //send form data to API to authenticate
-            // const formData = new FormData()
-            // formData.append("numPlayers", numPlayers)
-            // formData.append("tableName", tableName)
-            // formData.append("startingValue", startingValue)
-            // formData.append("smallBlind", smallBlind)
-            // formData.append("bigBlind", bigBlind)
+            const formData = new FormData()
+            formData.append("numPlayers", numPlayers)
+            formData.append("tableName", tableName)
+            formData.append("startingValue", startingValue)
+            formData.append("smallBlind", smallBlind)
+            formData.append("bigBlind", bigBlind)
             
             try {
               // send the request to the server api to authenticate
               const response = await axios({
                 method: "post",
                 url: "/createTable",
-                data: formInput,
+                data: formData,
                 headers: { "Content-Type": "multipart/form-data" },
               });
               // store the response data into the data state variable
@@ -114,7 +116,7 @@ const Tablecreate = (props) => {
                 throw new Error(err);
             }
 
-            this.context.history.push('/Game')
+            // this.context.history.push('/Game')
 
             //history.push("/Game")
 
@@ -184,20 +186,39 @@ const Tablecreate = (props) => {
                         type="number"
                         name="bigBlind"/>
                     </Col>
-
+                    
                     
                 </Row>
-                
+                <Row>
+                    <p className="text-center">Table Status</p>
+                </Row>
                 <Row className = "align-items-center">
-                    <Col className = "align-items-center">
+                    {/* <Col className = "align-items-center">
                     <Form.Check
                     type="switch"
                     id="custom-switch"
                     label="Private"
+                    name="status"
+                    value="private"
                     />
-                    </Col>
+                    </Col> */}
+
+                        <Col>
+                            <Form.Select className="me-sm-2"
+                                id="inlineFormCustomSelect"
+                                name="status">
+                                <option value="public">Public</option>
+                                <option value="private">Private</option>
+                            </Form.Select>
+                        </Col>
                 </Row>
                 
+                <Row>
+                    <p>
+                        
+                    </p>
+                </Row>
+
                 <Row>
                         <a href='/game' className = "text-center">
                             <Button variant="primary" type="submit">

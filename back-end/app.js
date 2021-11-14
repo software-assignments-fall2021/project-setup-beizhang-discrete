@@ -186,7 +186,7 @@ app.post("/signUp", (req, res, next) => {
 /* --------------------------- TODO: create table --------------------------- */
 const mockCreateTableAPI = "/createTable.json";
 app.post("/createTable", (req, res) => {
-    const numPlayers = req.body.numPlayers, tableName = req.body.tableName, startingValue = req.body.startingValue, smallBlind = req.body.smallBlind, bigBlind = req.body.bigBlind;
+    const numPlayers = req.body.numPlayers, tableName = req.body.tableName, startingValue = req.body.startingValue, smallBlind = req.body.smallBlind, bigBlind = req.body.bigBlind, status = req.body.status;
     axios.post(`${mockarooURL}${mockCreateTableAPI}?key=${mockarooAPIKey}`)
     .then(axiosResponse => {
         res.send(axiosResponse.data);
