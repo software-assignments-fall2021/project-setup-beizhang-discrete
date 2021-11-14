@@ -3,17 +3,16 @@
     text-align: center;
 }
 .header4 { 
-    color: white;
-    margin: 6vh;
+    color: IndianRed;
+    margin: 10px;
     font-weight: bold;
-    -webkit-text-stroke-width: 0.5px;
-    -webkit-text-stroke-color: black;
 }
 .loginForm {
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin-top: 6vh;
+    margin-top: 20px;
+    margin-bottom: 60px;
 }
 .formLabel {
     padding: 10px;

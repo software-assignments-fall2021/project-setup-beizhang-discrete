@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import { Redirect } from "react-router-dom";
 import '../css/Login.css';
 const axios = require('axios');
@@ -25,24 +25,24 @@ const Login = (props) => {
       const username = e.target.username.value
       const password = e.target.password.value
   
-      // send form data to API to authenticate
-      const formData = new FormData()
-      formData.append("username", username)
-      formData.append("password", password)
-  
       try {
         // send the request to the server api to authenticate
         const response = await axios({
           method: "post",
-          url: "login",
-          data: formData,
-          headers: { "Content-Type": "multipart/form-data" },
+          url: "/login",
+          data: {
+            username: username,
+            password: password
+          },
         });
-        // store the response data into the data state variable
-        console.log(response.data);
-        props.setUser(response.data);
+        if(response.data.auth){
+          props.setUser(response.data.user);
+        }
+        else {
+          alert(response.data.message);
+        }
       } catch (err) {
-        throw new Error(err);
+        console.log(err);
       }
     }
 
@@ -63,17 +63,17 @@ const Login = (props) => {
           // send the request to the server api to authenticate
           const response = await axios({
             method: "post",
-            url: "/signUp",
+            url: "/register",
             data: {
               username: username,
               password: password
             },
           });
-          if(response.data.error){
-            alert(response.data.message);
+          if(response.data.auth){
+            props.setUser(response.data.user);
           }
           else {
-            props.setUser(response.data);
+            alert(response.data.message);
           }
         } catch (err) {
           console.log(err);

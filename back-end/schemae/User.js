@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcryptjs');
 
-const friendSchema = new Schema({
+const FriendSchema = new Schema({
     username: String,
     avatar: String,
     status: String
@@ -22,8 +22,8 @@ const UserSchema = new Schema({
     },
     avatar: String,
     status: String,
-    friends: [friendSchema],
-    friendRequests: [friendSchema],
+    friends: [FriendSchema],
+    friendRequests: [FriendSchema],
     joined_since: Date,
     games_played: Number,
     games_won: Number,

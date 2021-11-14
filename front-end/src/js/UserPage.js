@@ -11,7 +11,7 @@ const FriendListItem = (props) => {
     return(
         <div className='FriendItem'>
             <img className='FriendPhoto' src={props.avatar} alt={'Friend'} />
-            <p className='FriendName'>{props.name}</p>
+            <p className='FriendName'>{props.username}</p>
             <p className='FriendStatus'>{props.status}</p>
         </div>
     )
@@ -21,7 +21,7 @@ const FriendRequestItem = (props) => {
     return(
         <div className='FriendRequestItem'>
             <img className='FriendPhoto' src={props.avatar} alt={'Friend'} />
-            <p className='FriendName'>{props.name}</p>
+            <p className='FriendName'>{props.username}</p>
             <p className='AcceptButton'>{props.accept}</p>
             <p className='DeclineButton'>{props.decline}</p>
         </div>
@@ -33,21 +33,38 @@ const UserPage = (props) => {
         document.title = props.title || "";
     }, [props.title]);
     const [showModal, setModal] = useState(false)
-    const openModal = () => setModal(true)
+    const openModal = () => {
+        getAllUsers();
+        setModal(true)
+    }
     const closeModal = () => setModal(false)
     
     const [usernameToSearch, setSearchUsername] = useState('');
 
     const user = props.user;
-    const allUsersList = []; //GET THIS FROM API
+    const [allUsersList, setAllUsersList] = useState([]); //GET THIS FROM API
+
+    const getAllUsers = async () => {
+        const response = await axios({
+            method: "post",
+            url: "/userSearch",
+            data: {'searched' : usernameToSearch}
+        }); 
+        if(response.data) {
+            setAllUsersList(response.data);
+        }
+        else {
+            console.log("failed to get all users");
+        }
+    }
 
     useEffect(() => {
         props.updateUserProfileButton(false);
     }, [props]);
 
-    const handleLogout = () => {
-        props.setUser({});
-        return (<Redirect to="/"/>)
+    const handleLogout = async () => {
+        axios.get("/logout");
+        props.setUser(null);
     }
 
     //Implement in DB Sprint
@@ -60,7 +77,6 @@ const UserPage = (props) => {
         alert(response);
     }
     if(user) {
-        console.log("BEANS");
         return (
             <div className="UserPage">
                 <div className='PhotoName'>
@@ -74,7 +90,7 @@ const UserPage = (props) => {
     
                 <h2 className='UserStats'>User Stats</h2>
                 <div className='StatsBox'>
-                    <p>Joined since: {user['joined_since']}</p>
+                    <p>Joined since: {user['joined_since'].slice(0,10)}</p>
                     <p>Games played: {user['games_played']}</p>
                     <p>Games won: {user['games_won']}</p>
                 </div>
@@ -115,13 +131,10 @@ const UserPage = (props) => {
                     </p>
                     </Modal.Title>
                     </Modal.Header>
-                    <Modal.Body></Modal.Body>
                     <Modal.Body>
                     {/*filter all users by those whose names match the one in the search box*/}
-                    {allUsersList.filter(
-                            aUser => aUser.name.toLowerCase().includes(usernameToSearch.toLowerCase())
-                        ).map(aUser => (
-                            <FriendListItem key={aUser.id} name={<Button onClick={() => sendFriendRequest(user.id, aUser.id)}>{aUser.name}</Button>} avatar={aUser.avatar} status={aUser.status}/>
+                    {allUsersList.map(aUser => (
+                        <FriendListItem key={aUser._id} username={<Button onClick={() => sendFriendRequest(user._id, aUser._id)}>{aUser.username}</Button>} avatar={aUser.avatar} status={aUser.status}/>
                         ))}
                     </Modal.Body>
                     <Modal.Footer>
@@ -136,7 +149,6 @@ const UserPage = (props) => {
         )
     }
     else {
-        console.log("NOPE");
         return (
             <Redirect to="/login"/>
         )

@@ -13,12 +13,21 @@ const axios = require('axios');
 
 const App = (props) => {
   const [user, setUser] = useState(null);
+
+  const verifyUser = async () => {
+    const response = await axios.get("/user");
+    if(response.data) {
+      setUser(response.data);
+    }
+    else {
+      setUser(null);
+    }
+  }
+  useEffect(() => {
+    verifyUser();
+  }, []);
   
-  /* generic helper function to fetch data */
-  /* 
-    api: path of data
-    setState: function to modify relevant state variable 
-  */
+  //this can go once table-list fetching is integrated with db!!
   const fetchData = (path, setState) => {
     axios.get(`/${path}`).then(res => {
       console.log(res.data);
@@ -27,11 +36,6 @@ const App = (props) => {
       console.log(err);
     });
   }
-
-  const [friendList, modifyFriendList] = useState([]);
-  const [allUsersList, modifyAllUsersList] = useState([]);
-  const [friendRequests, modifyFriendRequests] = useState([]);
-  // const [sentFriendRequests, modifySentFriendRequests] = useState([]);
 
   //determines whether or not user profile button should be rendered in header
   const [showUserProfileButton, toggleShowUserProfileButton] = useState(true);
@@ -75,7 +79,7 @@ const App = (props) => {
           {/*create table page*/}
           <Route exact path="/tablecreate">
             <Tablecreate title="Create Table | All In Poker" updateUserProfileButton={updateUserProfileButton}
-              friendList={friendList}
+              friendList={user ? user.friends : []}
             />
           </Route>
 
