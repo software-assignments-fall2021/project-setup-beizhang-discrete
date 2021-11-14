@@ -43,9 +43,9 @@ class Tablelist extends Component {
     // }, []);
     render() {
         return (
-        <div className='container'>
+        <Container className = "bg-white border">
                 
-            <h1>Tables List</h1>
+            <h1 className = "text-center">Tables List</h1>
 
             <Button> Search for a Game </Button>
             
@@ -62,7 +62,7 @@ class Tablelist extends Component {
 
             </Container>
             {/* <TableBlock tables = {tables}></TableBlock> */}
-        </div>
+        </Container>
     )
     }
     
