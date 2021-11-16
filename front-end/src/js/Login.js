@@ -1,12 +1,24 @@
 import React, {useEffect, useState} from 'react';
 import { Redirect } from "react-router-dom";
-import { GoogleLogin } from 'react-google-login'
+import { GoogleLogin } from 'react-google-login';
+import { refreshToken } from './utils/refreshToken';
 import '../css/Login.css';
 const axios = require('axios');
 
-const googleClientId = '';
+const googleClientId = '863174738597-ddgpkjo6dklvjj60sret1qi6rckc54b4.apps.googleusercontent.com';
+
 
 const Login = (props) => {
+
+    const onSuccess = (res) => {
+      console.log(`Success, current user: `, res.profileObj);
+      refreshToken(res)
+    }
+    const onFailure = (res) => {
+      console.log(`Login failed: `, res);
+      alert('Invalid login (must be NYU account)')
+    }
+
     useEffect(() => {
         document.title = props.title || "";
     }, [props.title]);
@@ -124,7 +136,9 @@ const Login = (props) => {
                       <GoogleLogin
                       clientId={googleClientId}
                       buttonText="Login with Google"
-                      cookiePolicy={'single_host_origin'}
+                      onSuccess={onSuccess}
+                      onFailure={onFailure}
+                      isSignedIn={true}
                       />
                     </div>
 
