@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import './Header.css';
+import '../css/Header.css';
 
 function Header(props) {
     return (
@@ -9,7 +9,7 @@ function Header(props) {
                 <tr>
                     <td className='LogoHolder'>
                         <NavLink to='/'>
-                            <img className='Logo' src={'../logo.png'} alt={'logo'} />
+                            <img className='Logo' src={'./logo.png'} alt={'logo'} />
                         </NavLink>
                     </td>
                     <td>

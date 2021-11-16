@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import './UserPage.css';
+import '../css/UserPage.css';
 import Button from 'react-bootstrap/Button';
 import {Modal} from 'react-bootstrap';
 import { Redirect } from 'react-router';
+import AvatarUpload from './AvatarUpload';
+const axios = require('axios');
 
 //A row in friend list
 const FriendListItem = (props) => {
@@ -11,6 +13,17 @@ const FriendListItem = (props) => {
             <img className='FriendPhoto' src={props.avatar} alt={'Friend'} />
             <p className='FriendName'>{props.name}</p>
             <p className='FriendStatus'>{props.status}</p>
+        </div>
+    )
+}
+
+const FriendRequestItem = (props) => {
+    return(
+        <div className='FriendRequestItem'>
+            <img className='FriendPhoto' src={props.avatar} alt={'Friend'} />
+            <p className='FriendName'>{props.name}</p>
+            <p className='AcceptButton'>{props.accept}</p>
+            <p className='DeclineButton'>{props.decline}</p>
         </div>
     )
 }
@@ -25,10 +38,23 @@ const UserPage = (props) => {
     
     const [usernameToSearch, setSearchUsername] = useState('');
 
+    const fetchData = props.fetchData;
     const user = props.user;
-    const friendList = props.friendList;
-    const allUsersList = props.allUsersList;
+    const friendList = props.friendList, modifyFriendList = props.modifyFriendList;
+    const allUsersList = props.allUsersList, modifyAllUsersList = props.modifyAllUsersList;
+    const friendRequests=props.friendRequests, modifyFriendRequests=props.modifyFriendRequests;
+
     
+    useEffect(() => {
+        fetchData("friendList", modifyFriendList);
+    }, [user]);
+    useEffect(() => {
+         fetchData("allUsersList", modifyAllUsersList);
+    }, []);
+    // useEffect(() => {
+    //     fetchData("friendRequests", modifyAllUsersList);
+    // }, []);
+
     useEffect(() => {
         props.updateUserProfileButton(false);
     }, [props]);
@@ -44,13 +70,24 @@ const UserPage = (props) => {
         return (<Redirect to="/"/>)
     }
 
+    //Implement in DB Sprint
+    const sendFriendRequest = async (senderID, receiverID) => {
+        const response = await axios({
+            method: "post",
+            url: "/sendFriendRequest",
+            data: {'senderID' : senderID, 'receiverID' : receiverID}
+          }); 
+        alert(response);
+    }
+
     return (
         <div className="UserPage">
-
             <div className='PhotoName'>
                 {/* Placeholders for photo and username */}
-                <img className='ProfilePhoto' src={user.avatar} alt={'Profile Icon'} />
-                &nbsp;&nbsp;&nbsp;&nbsp;
+                <div className='avatar-container'>
+                    <img className='ProfilePhoto' src={user.avatar} alt={'Profile Icon'} />
+                    <AvatarUpload/>
+                </div>
                 <h1 className='Username'>{user.username}</h1>
             </div>
 
@@ -66,6 +103,14 @@ const UserPage = (props) => {
                 {friendList.map(friendInfo => (
                     <FriendListItem key={friendInfo.id} name={<Button>{friendInfo.name}</Button>} avatar={friendInfo.avatar} status={friendInfo.status}/>
                 ))}
+            </div>
+
+            <h4 className='NewFriends'>New Friends</h4>
+            <div className='FriendRequestBox'>
+                {friendRequests ? friendRequests.map(friendRequest => (
+                    <FriendRequestItem name={friendRequest.name} avatar={friendRequest.avatar}
+                    accept={<Button>Accept</Button>} decline={<Button>Decline</Button>}/>
+                )) : <p>No Request</p>}
             </div>
 
             <div className='AddFriend'>
@@ -93,9 +138,9 @@ const UserPage = (props) => {
                 <Modal.Body>
                 {/*filter all users by those whose names match the one in the search box*/}
                 {allUsersList.filter(
-                        user => user.name.toLowerCase().includes(usernameToSearch.toLowerCase())
-                    ).map(user => (
-                        <FriendListItem key={user.id} name={<Button>{user.name}</Button>} avatar={user.avatar} status={user.status}/>
+                        aUser => aUser.name.toLowerCase().includes(usernameToSearch.toLowerCase())
+                    ).map(aUser => (
+                        <FriendListItem key={aUser.id} name={<Button onClick={() => sendFriendRequest(user.id, aUser.id)}>{aUser.name}</Button>} avatar={aUser.avatar} status={aUser.status}/>
                     ))}
                 </Modal.Body>
                 <Modal.Footer>
@@ -105,7 +150,7 @@ const UserPage = (props) => {
                 </Modal.Footer>
             </Modal>
 
-            <Button onClick={() => handleLogout()}>Log Out</Button>
+            <Button className="logout" onClick={() => handleLogout()}>Log Out</Button>
         </div>
     )
 }

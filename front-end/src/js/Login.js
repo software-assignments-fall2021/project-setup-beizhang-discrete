@@ -1,9 +1,24 @@
 import React, {useEffect, useState} from 'react';
 import { Redirect } from "react-router-dom";
-import './Login.css';
+import { GoogleLogin } from 'react-google-login';
+import { refreshToken } from './utils/refreshToken';
+import '../css/Login.css';
 const axios = require('axios');
 
+const googleClientId = '863174738597-ddgpkjo6dklvjj60sret1qi6rckc54b4.apps.googleusercontent.com';
+
+
 const Login = (props) => {
+
+    const onSuccess = (res) => {
+      console.log(`Success, current user: `, res.profileObj);
+      refreshToken(res)
+    }
+    const onFailure = (res) => {
+      console.log(`Login failed: `, res);
+      alert('Invalid login (must be NYU account)')
+    }
+
     useEffect(() => {
         document.title = props.title || "";
     }, [props.title]);
@@ -45,7 +60,7 @@ const Login = (props) => {
         // send the request to the server api to authenticate
         const response = await axios({
           method: "post",
-          url: "https://my.api.mockaroo.com/login.json?key=1e756d10",
+          url: "login",
           data: formData,
           headers: { "Content-Type": "multipart/form-data" },
         });
@@ -75,7 +90,7 @@ const Login = (props) => {
           // send the request to the server api to authenticate
           const response = await axios({
             method: "post",
-            url: "https://my.api.mockaroo.com/createAccount.json?key=1e756d10",
+            url: "/signUp",
             data: formData,
             headers: { "Content-Type": "multipart/form-data" },
           });
@@ -116,6 +131,16 @@ const Login = (props) => {
                         </label>
                         <input type="submit" value="Log In" />
                     </form>
+
+                    <div style={{padding: '3vh'}}>
+                      <GoogleLogin
+                      clientId={googleClientId}
+                      buttonText="Login with Google"
+                      onSuccess={onSuccess}
+                      onFailure={onFailure}
+                      isSignedIn={true}
+                      />
+                    </div>
 
 
                     <h4 className="header4">Create Account</h4>

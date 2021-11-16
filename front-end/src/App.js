@@ -2,58 +2,36 @@ import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { useState } from 'react';
 import './App.css';
-import Home from './Home';
-import Header from './Header';
-import Login from './Login'
-import Tablelist from './TableList/Tablelist';
-import Tablecreate from './TableList/Tablecreate';
-import Game from './Game'
-import UserPage from './UserPage';
+import Home from './js/Home';
+import Header from './js/Header';
+import Login from './js/Login'
+import Tablelist from './js/Tablelist';
+import Tablecreate from './js/Tablecreate';
+import Game from './js/Game'
+import UserPage from './js/UserPage';
 const axios = require('axios');
 
 const App = (props) => {
   const [user, setUser] = useState({});
-
+  
   /* generic helper function to fetch data */
   /* 
     api: path of data
     setState: function to modify relevant state variable 
   */
-  const fetchData = async (api, setState) => {
-    const mockarooURL = "https://my.api.mockaroo.com/";
-    //mockaroo keys: 428573d0, 1e756d10
-    const mockarooAPIKey = '428573d0';
-    try {
-        const fetched = await axios.get(`${mockarooURL}${api}?key=${mockarooAPIKey}`);
-        setState(fetched.data);
-    } catch (err) {
-        console.log(err);
-    }
+  const fetchData = (path, setState) => {
+    axios.get(`/${path}`).then(res => {
+      console.log(res.data);
+      setState(res.data);
+    }).catch(err => {
+      console.log(err);
+    });
   }
 
-  /* fetching mock friend list data */
-  /* each friend object follow this schema: 
-  {
-      name: String,
-      avatar: Image (png),
-      status: random choice from [Playing, Online, Away, Offline]
-      id: GUID
-  }*/
-  const mockFriendListAPI = "friendList.json";
   const [friendList, modifyFriendList] = useState([]);
-  useEffect(() => {
-      fetchData(mockFriendListAPI, modifyFriendList);
-  }, [user]);
-  /* end fetching mock friend list data */
-
-  /* fetching mock all users list data */
-  /* objects identical in structure to friends */
-  const mockAllUsersListAPI = "allUsersList.json";
-  const [allUsersList, modifyallUsersList] = useState([]);
-  useEffect(() => {
-      fetchData(mockAllUsersListAPI, modifyallUsersList);
-  }, []);
-  /* end fetching mock all users list data */
+  const [allUsersList, modifyAllUsersList] = useState([]);
+  const [friendRequests, modifyFriendRequests] = useState([]);
+  // const [sentFriendRequests, modifySentFriendRequests] = useState([]);
 
   //determines whether or not user profile button should be rendered in header
   const [showUserProfileButton, toggleShowUserProfileButton] = useState(true);
@@ -84,7 +62,10 @@ const App = (props) => {
           {/*user profile page*/}
           <Route exact path="/user">
             <UserPage title="User Profile | All In Poker" updateUserProfileButton={updateUserProfileButton} 
-            user={user} setUser={setUser} friendList={friendList} allUsersList={allUsersList}/>
+              user={user} setUser={setUser} friendList={friendList} modifyFriendList={modifyFriendList}
+              allUsersList={allUsersList} modifyAllUsersList={modifyAllUsersList}
+              friendRequests={friendRequests} modifyFriendRequests={modifyFriendRequests}
+              fetchData={fetchData}/>
           </Route>
 
           {/*join table page*/}
