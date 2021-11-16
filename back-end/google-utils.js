@@ -1,18 +1,18 @@
-import { google } from 'googleapis';
+const { OAuth2Client} = require('google-auth-library')
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
-const googleConfig = {
-  clientId: '<GOOGLE_CLIENT_ID>', // e.g. asdfghjkljhgfdsghjk.apps.googleusercontent.com
-  clientSecret: '<GOOGLE_CLIENT_SECRET>', // e.g. _ASDFA%DFASDFASDFASD#FAD-
-  redirect: 'https://your-website.com/google-auth' // this must match your google api settings
-};
+const googleAuth = async (token) => {
 
-/**
- * Create the google auth object which gives us access to talk to google's apis.
- */
-function createConnection() {
-  return new google.auth.OAuth2(
-    googleConfig.clientId,
-    googleConfig.clientSecret,
-    googleConfig.redirect
-  );
+  const ticket = await client.verifyIdToken({
+    idToken: token,
+    audience: process.env.GOOGLE_CLIENT_ID
+  })
+  const payload = ticket.getPayload()
+
+  const { sub, email, name, picture } = payload;
+  const userId = sub;
+  return {userId, email, fullName: name, photoUrl: picture}
+
 }
+
+module.exports = googleAuth
