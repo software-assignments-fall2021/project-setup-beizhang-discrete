@@ -13,16 +13,16 @@ const axios = require('axios');
 
 
 
-const FriendListItem= (props) => {
-    return(
+const FriendListItem = (props) => {
+    return (
         <div className='FriendItem'>
             <img className='FriendPhoto' src={'./profileicon.png'} alt={'Friend'} />
             <p className='FriendName'>{props.name}</p>
             <p className='FriendStatus'>{props.status}</p>
             <div className='Invitablility'>
-                {props.status==='Online'
-                ? <Button>Invite</Button>
-                : <p>Unavailable</p>}
+                {props.status === 'Online'
+                    ? <Button>Invite</Button>
+                    : <p>Unavailable</p>}
             </div>
         </div>
     )
@@ -48,9 +48,9 @@ const Tablecreate = (props) => {
 
     const handleCreateTable = async e => {
         e.preventDefault()
-    
+
         // get the table info from the form fields
-        
+
         const numPlayers = e.target.numPlayers.value;
         const tableName = e.target.tableName.value;
         const startingValue = e.target.startingValue.value;
@@ -94,27 +94,36 @@ const Tablecreate = (props) => {
 
 
             //send form data to API to authenticate
-            const formData = new FormData()
-            formData.append("numPlayers", numPlayers)
-            formData.append("tableName", tableName)
-            formData.append("startingValue", startingValue)
-            formData.append("smallBlind", smallBlind)
-            formData.append("bigBlind", bigBlind)
-            
+            // const formData = new FormData()
+            // formData.append("numPlayers", numPlayers)
+            // formData.append("tableName", tableName)
+            // formData.append("startingValue", startingValue)
+            // formData.append("smallBlind", smallBlind)
+            // formData.append("bigBlind", bigBlind)
+            // formData.append("status", status)
+
             try {
-              // send the request to the server api to authenticate
-              const response = await axios({
-                method: "post",
-                url: "/createTable",
-                data: formData,
-                headers: { "Content-Type": "multipart/form-data" },
-              });
-              // store the response data into the data state variable
-              console.log(response.data);
-              setStatus(response.data);
+                // send the request to the server api to authenticate
+                const response = await axios({
+                    method: "post",
+                    url: "/createTable",
+                    data: {
+                        numPlayers: numPlayers,
+                        tableName: tableName,
+                        startingValue: startingValue,
+                        smallBlind: smallBlind,
+                        bigBlind: bigBlind,
+                        status: status,
+                    },
+                    // headers: { "Content-Type": "multipart/form-data" },
+                });
+                // store the response data into the data state variable
+                console.log(response.data);
+                setStatus(response.data);
             } catch (err) {
                 throw new Error(err);
             }
+
 
             // this.context.history.push('/Game')
 
@@ -129,71 +138,78 @@ const Tablecreate = (props) => {
             //     pathname: '/Game',
             //     state: formData
             // })
-            
-        }    
-      }
-    return (       
-        <div>
-        <Container className="bg-white border" fluid="md">
-            
-            <h1 className="text-center"> Create Table</h1>
-            <h4 className="text-center"> # of Players</h4>
+            //formData.push("/Game")
+            // return (
+            //     <Route exact path="/">
+            //         <Redirect to="/Game"/>
+            //     </Route>
 
-            <Form onSubmit={handleCreateTable}>
-                <Row className="align-items-center">
-                    <Col>
-                        <Form.Select className="me-sm-2" 
-                        id="inlineFormCustomSelect"
-                        name="numPlayers">
-                            <option value="0">Choose # of Players</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                        </Form.Select>
-                    </Col>
-                </Row>
-                <Row>
-                    <h4 className="text-center">Table Name</h4>
-                </Row>
-                <Row>
-                    <Col>
-                    <Form.Control type="text" 
-                    placeholder="Enter Table Name"
-                    name="tableName">      
-                    </Form.Control>
-                    </Col>
-                    
-                </Row>
-                <Row className="align-items-center">
-                    <Col>
-                        <Form.Label>Starting Value</Form.Label>
-                        <Form.Control placeholder="Starting Value" 
-                        type="number"
-                        name = "startingValue" />
-                    </Col>
-                    <Col>
-                        <Form.Label>Small Blind</Form.Label>
-                        <Form.Control placeholder="Small Blind" 
-                        type="number"
-                        name="smallBlind"/>
-                    </Col>
-                    <Col>
-                        <Form.Label>Big Blind</Form.Label>
-                        <Form.Control placeholder="Big Blind" 
-                        type="number"
-                        name="bigBlind"/>
-                    </Col>
-                    
-                    
-                </Row>
-                <Row>
-                    <p className="text-center">Table Status</p>
-                </Row>
-                <Row className = "align-items-center">
-                    {/* <Col className = "align-items-center">
+            // )
+
+        }
+    }
+    return (
+        <div>
+            <Container className="bg-white border" fluid="md">
+
+                <h1 className="text-center"> Create Table</h1>
+                <h4 className="text-center"> # of Players</h4>
+
+                <Form onSubmit={handleCreateTable}>
+                    <Row className="align-items-center">
+                        <Col>
+                            <Form.Select className="me-sm-2"
+                                id="inlineFormCustomSelect"
+                                name="numPlayers">
+                                <option value="0">Choose # of Players</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                            </Form.Select>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <h4 className="text-center">Table Name</h4>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Form.Control type="text"
+                                placeholder="Enter Table Name"
+                                name="tableName">
+                            </Form.Control>
+                        </Col>
+
+                    </Row>
+                    <Row className="align-items-center">
+                        <Col>
+                            <Form.Label>Starting Value</Form.Label>
+                            <Form.Control placeholder="Starting Value"
+                                type="number"
+                                name="startingValue" />
+                        </Col>
+                        <Col>
+                            <Form.Label>Small Blind</Form.Label>
+                            <Form.Control placeholder="Small Blind"
+                                type="number"
+                                name="smallBlind" />
+                        </Col>
+                        <Col>
+                            <Form.Label>Big Blind</Form.Label>
+                            <Form.Control placeholder="Big Blind"
+                                type="number"
+                                name="bigBlind" />
+                        </Col>
+
+
+                    </Row>
+                    <Row>
+                        <p className="text-center">Table Status</p>
+                    </Row>
+                    <Row className="align-items-center">
+                        {/* <Col className = "align-items-center">
                     <Form.Check
                     type="switch"
                     id="custom-switch"
@@ -211,16 +227,16 @@ const Tablecreate = (props) => {
                                 <option value="private">Private</option>
                             </Form.Select>
                         </Col>
-                </Row>
-                
-                <Row>
-                    <p>
-                        
-                    </p>
-                </Row>
+                    </Row>
 
-                <Row>
-                        <a href='/game' className = "text-center">
+                    <Row>
+                        <p>
+
+                        </p>
+                    </Row>
+
+                    <Row>
+                        <a href='/game' className="text-center">
                             <Button variant="primary" type="submit">
                                 Create Table
                             </Button>
@@ -229,36 +245,36 @@ const Tablecreate = (props) => {
                         variant="primary" type="submit">
                             Create Table
                         </Button> */}
-                </Row>
-                    
-                   
-            </Form>
+                    </Row>
+
+
+                </Form>
                 <Button onClick={() => openModal()}>
                     Invite Friend
                 </Button>
 
-        </Container>
+            </Container>
 
-        <Modal show={showModal} onHide={() => closeModal()} >
+            <Modal show={showModal} onHide={() => closeModal()} >
                 <Modal.Header>
-                <Modal.Title>
-                <p>
-                Invite Friends to Your Table
-                </p>
-                </Modal.Title>
+                    <Modal.Title>
+                        <p>
+                            Invite Friends to Your Table
+                        </p>
+                    </Modal.Title>
                 </Modal.Header>
                 <Modal.Body></Modal.Body>
                 <Modal.Body>
-                {friendList.map(friendInfo => (
-                    <FriendListItem key={friendInfo.id} name={<Button>{friendInfo.name}</Button>} avatar={friendInfo.avatar} status={friendInfo.status}/>
-                ))}
+                    {friendList.map(friendInfo => (
+                        <FriendListItem key={friendInfo.id} name={<Button>{friendInfo.name}</Button>} avatar={friendInfo.avatar} status={friendInfo.status} />
+                    ))}
                 </Modal.Body>
                 <Modal.Footer>
-                <Button variant="secondary" onClick={() => closeModal()}>
-                Close
-                </Button>
+                    <Button variant="secondary" onClick={() => closeModal()}>
+                        Close
+                    </Button>
                 </Modal.Footer>
-        </Modal>
+            </Modal>
 
         </div>
     )
