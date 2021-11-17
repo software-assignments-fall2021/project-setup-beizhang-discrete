@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 
 const FriendSchema = new Schema({
     username: String,
-    avatar: String,
+    avatar: Buffer,
     status: String
 });
 
@@ -20,7 +20,7 @@ const UserSchema = new Schema({
         required: [true, 'Please enter a password.'],
         minLength: [6, 'Password must be at least 6 characters long']
     },
-    avatar: String,
+    avatar: Buffer,
     status: String,
     friends: [FriendSchema],
     friendRequests: [FriendSchema],

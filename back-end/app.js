@@ -51,7 +51,6 @@ app.use(userRoutes);
 
 /* ------------------------------ avatar upload ----------------------------- */
 const avatarUploadRoutes = require('./routes/avatarUploadRoutes');
-const { Router } = require('express');
 app.use(avatarUploadRoutes);
 
 /* ---------------------------- TODO: add friend ---------------------------- */
