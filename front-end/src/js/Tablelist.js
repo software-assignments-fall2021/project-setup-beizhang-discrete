@@ -43,9 +43,9 @@ class Tablelist extends Component {
     // }, []);
     render() {
         return (
-        <div className='container'>
+        <Container className = "bg-white border">
                 
-            <h1>Tables List</h1>
+            <h1 className = "text-center">Tables List</h1>
 
             <Button> Search for a Game </Button>
             
@@ -57,12 +57,12 @@ class Tablelist extends Component {
 
             <Container className = "bg-gray border">
                 {this.state.tables.map((table) => (
-                    <TableBlock key={table.id} table={table}> </TableBlock>
+                    <TableBlock key={table._id} table={table}> </TableBlock>
                 ))}
 
             </Container>
             {/* <TableBlock tables = {tables}></TableBlock> */}
-        </div>
+        </Container>
     )
     }
     
