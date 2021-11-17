@@ -11,7 +11,7 @@ const FriendListItem = (props) => {
     return(
         <div className='FriendItem'>
             <img className='FriendPhoto' src={props.avatar} alt={'Friend'} />
-            <p className='FriendName'>{props.username}</p>
+            <p className='FriendName'>{props.name}</p>
             <p className='FriendStatus'>{props.status}</p>
         </div>
     )
@@ -21,7 +21,7 @@ const FriendRequestItem = (props) => {
     return(
         <div className='FriendRequestItem'>
             <img className='FriendPhoto' src={props.avatar} alt={'Friend'} />
-            <p className='FriendName'>{props.username}</p>
+            <p className='FriendName'>{props.name}</p>
             <p className='AcceptButton'>{props.accept}</p>
             <p className='DeclineButton'>{props.decline}</p>
         </div>
@@ -67,15 +67,32 @@ const UserPage = (props) => {
         props.setUser(null);
     }
 
-    //Implement in DB Sprint
-    const sendFriendRequest = async (senderID, receiverID) => {
+    //Handle friend requests, specify two users involved
+    const sendFriendRequest = async (senderUsername, receiverUsername) => {
         const response = await axios({
             method: "post",
             url: "/sendFriendRequest",
-            data: {'senderID' : senderID, 'receiverID' : receiverID}
+            data: {'sender' : senderUsername, 'receiver' : receiverUsername}
           }); 
-        alert(response);
+        alert(response.data);
     }
+    const acceptFriendRequest = async (accepterUsername, senderUsername) => {
+        const response = await axios({
+            method: "post",
+            url: "/acceptFriendRequest",
+            data: {'accepter' : accepterUsername, 'sender' : senderUsername}
+          }); 
+        alert(response.data);
+    }
+    const declineFriendRequest = async (declinerUsername, senderUsername) => {
+        const response = await axios({
+            method: "post",
+            url: "/declineFriendRequest",
+            data: {'decliner' : declinerUsername, 'sender' : senderUsername}
+          }); 
+        alert(response.data);
+    }
+
     if(user) {
         return (
             <div className="UserPage">
@@ -106,7 +123,8 @@ const UserPage = (props) => {
                 <div className='FriendRequestBox'>
                     {user.friendRequests.length > 0 ? user.friendRequests.map(friendRequest => (
                         <FriendRequestItem name={friendRequest.username} avatar={friendRequest.avatar}
-                        accept={<Button>Accept</Button>} decline={<Button>Decline</Button>}/>
+                        accept={<Button onClick={() => acceptFriendRequest(user.username, friendRequest.username)}>Accept</Button>}
+                        decline={<Button onClick={() => declineFriendRequest(user.username, friendRequest.username)}>Decline</Button>}/>
                     )) : <p>No Friend Requests</p>}
                 </div>
     
@@ -134,7 +152,7 @@ const UserPage = (props) => {
                     <Modal.Body>
                     {/*filter all users by those whose names match the one in the search box*/}
                     {allUsersList.map(aUser => (
-                        <FriendListItem key={aUser._id} username={<Button onClick={() => sendFriendRequest(user._id, aUser._id)}>{aUser.username}</Button>} avatar={aUser.avatar} status={aUser.status}/>
+                        <FriendListItem key={aUser._id} name={<Button onClick={() => sendFriendRequest(user.username, aUser.username)}>{aUser.username}</Button>} avatar={aUser.avatar} status={aUser.status}/>
                         ))}
                     </Modal.Body>
                     <Modal.Footer>
