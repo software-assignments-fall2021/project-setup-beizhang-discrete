@@ -51,7 +51,6 @@ app.use(userRoutes);
 
 /* ------------------------------ avatar upload ----------------------------- */
 const avatarUploadRoutes = require('./routes/avatarUploadRoutes');
-const { Router } = require('express');
 app.use(avatarUploadRoutes);
 
 /* ------------------------------ add friend ----------------------------- */
@@ -69,59 +68,14 @@ app.get("/friendList", (req, res) => {
     });
 });
 
-/* --------------------------- TODO: create table --------------------------- */
+/* --------------------------- table routes --------------------------- */
 const tableRoutes = require('./routes/tableRoutes');
 app.use(tableRoutes);
-
-// const mockCreateTableAPI = "/createTable.json";
-// app.post("/createTable", (req, res) => {
-//     const numPlayers = req.body.numPlayers, tableName = req.body.tableName, startingValue = req.body.startingValue, smallBlind = req.body.smallBlind, bigBlind = req.body.bigBlind, status = req.body.status;
-//     axios.post(`${mockarooURL}${mockCreateTableAPI}?key=${mockarooAPIKey}`)
-//     .then(axiosResponse => {
-//         res.send(axiosResponse.data);
-//     }).catch(err => {
-//         console.log(err);   
-//     });
-// });
-
-// const mockCreateTableAPI = "/createTable.json";
-// router.post("/createTable", async (req, res) => {
-//     const table = ({
-//         numPlayers: req.body.numPlayers,
-//         tableName: req.body.tableName,
-//         startingValue: req.body.startingValue,
-//         smallBlind: req.body.smallBlind,
-//         bigBlind: req.body.bigBlind, 
-//         status: req.body.status,
-
-//     })
-//     // await table.save()
-//     res.send(table)
-// });
-
-/* -------------------------- TODO: get/join table -------------------------- */
-// const mockTableListAPI = "/tableList.json";
-// app.get("/tableList", (req, res) => {
-//     axios.get(`${mockarooURL}${mockTableListAPI}?key=${mockarooAPIKey}`)
-//     .then(axiosResponse => {
-//         res.send(axiosResponse.data);
-//     }).catch(err => {
-//         console.log(err);
-//     });
-// });
-
-// const mockTableListAPI = "/tableList.json";
-// router.get("/tableList", async (req, res) => {
-//     const tables = await Table.find()
-//     res.send(tables)
-// });
-
 
 /* ------------------------------ default route ----------------------------- */
 app.get('*', (req, res) => {
     //res.sendFile(path.join(__dirname, '../front-end/build/index.html'));
     res.sendFile(path.join(__dirname, '../front-end/public/index.html'));
 });
-
 
 module.exports = app;

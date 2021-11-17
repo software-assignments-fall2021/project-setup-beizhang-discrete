@@ -3,6 +3,8 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const User = require('../schemae/User').User;
 const jwt = require('jsonwebtoken');
+const fs = require("fs");
+const path = require("path");
 
 //token lives for 3 days
 const maxAge = 3*24*60*60;
@@ -44,11 +46,14 @@ router.post("/login", async (req, res) => {
 router.post("/register", async (req, res) => {
     const [username, password] = [req.body.username, req.body.password];
     const hashedPassword = await bcrypt.hash(password, 10);
+    const avatar = fs.readFileSync(path.join(__dirname, "../public/defaultavatar.png"));
+    const encoded_avatar = avatar.toString('base64');
+    const final_avatar = Buffer.from(encoded_avatar, 'base64');
     try {
         const newUser = await User.create({
             username: username,
             password: hashedPassword,
-            avatar: "https://t4.ftcdn.net/jpg/03/32/59/65/360_F_332596535_lAdLhf6KzbW6PWXBWeIFTovTii1drkbT.jpg",
+            avatar: final_avatar,
             status: "Online",
             friends: [],
             friendRequests: [],

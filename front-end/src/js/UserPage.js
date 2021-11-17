@@ -99,7 +99,9 @@ const UserPage = (props) => {
                 <div className='PhotoName'>
                     {/* Placeholders for photo and username */}
                     <div className='avatar-container'>
-                        <img className='ProfilePhoto' src={user.avatar} alt={'Profile Icon'} />
+                        <img className='ProfilePhoto' 
+                            src={`data:image/png;base64,${Buffer.from(user.avatar.data).toString('base64')}`}
+                            alt={'Profile Icon'} />
                         <AvatarUpload/>
                     </div>
                     <h1 className='Username'>{user.username}</h1>

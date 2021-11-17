@@ -20,7 +20,7 @@ const UserSchema = new Schema({
         required: [true, 'Please enter a password.'],
         minLength: [6, 'Password must be at least 6 characters long']
     },
-    avatar: String,
+    avatar: Buffer,
     status: String,
     friends: [{username: String, avatar: String, status: String}],
     friendRequests: [{username: String, avatar: String, status: String}],
