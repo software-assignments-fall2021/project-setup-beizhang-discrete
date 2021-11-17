@@ -57,7 +57,7 @@ class Tablelist extends Component {
 
             <Container className = "bg-gray border">
                 {this.state.tables.map((table) => (
-                    <TableBlock key={table.id} table={table}> </TableBlock>
+                    <TableBlock key={table._id} table={table}> </TableBlock>
                 ))}
 
             </Container>

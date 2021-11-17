@@ -25,7 +25,6 @@ router.post("/createTable", async (req, res) => {
         res.json ({
             auth: true,
             Table: newTable,
-
         });
     }
     catch (err) {
@@ -45,6 +44,31 @@ router.get("/tableList", async (req, res) => {
     const tables = await Table.find()
     res.send(tables)
 });
+
+router.get("/tableGet/:id", async (req, res) => {
+    try {
+        const table = await Table.findOne({ _id: req.params.id });
+        res.send(table)
+    }
+    catch {
+        res.status(404)
+        res.send({error: "Table doesn't exist"});
+    }
+})
+
+router.delete("/tableDelete/:id", async (req, res) => {
+    
+    console.log(req.params.id)
+    try {
+        
+        await Table.deleteOne({ _id: req.params.id })
+        res.status(204).send();
+    }
+    catch {
+        res.status(404)
+        res.send({ error: "Table doesn't exist"})
+    }
+})
 
 
 
