@@ -56,8 +56,11 @@ router.get("/tableGet/:id", async (req, res) => {
     }
 })
 
-router.delete("tableDelete/:id", async (req, res) => {
+router.delete("/tableDelete/:id", async (req, res) => {
+    
+    console.log(req.params.id)
     try {
+        
         await Table.deleteOne({ _id: req.params.id })
         res.status(204).send();
     }
