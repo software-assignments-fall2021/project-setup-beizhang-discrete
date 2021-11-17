@@ -84,7 +84,7 @@ const App = (props) => {
           </Route>
 
           {/*game page*/}
-          <Route path="/game">
+          <Route path="/game/:id">
             <Game title="Game | All In Poker" updateUserProfileButton={updateUserProfileButton}/>
           </Route>
         </Switch>
