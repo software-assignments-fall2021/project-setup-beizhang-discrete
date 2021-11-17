@@ -9,7 +9,7 @@ function Header(props) {
                 <tr>
                     <td className='LogoHolder'>
                         <NavLink to='/'>
-                            <img className='Logo' src={'./logo.png'} alt={'logo'} />
+                            <img className='Logo' src={'../logo.png'} alt={'logo'} />
                         </NavLink>
                     </td>
                     <td>
