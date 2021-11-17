@@ -1,9 +1,14 @@
 const express = require('express');
 const multer = require("multer");
 const router = express.Router();
+const path = require('path');
+const {v4: uuidv4} = require("uuid");
+const User = require('../schemae/User').User;
+const fs = require('fs');
+const jwt = require('jsonwebtoken');
 
 // save file uploads to disk at 'public/uploads'
-const uploadDir = '../public/uploads';
+const uploadDir = path.join(__dirname, '../public/uploads');
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, uploadDir)
@@ -26,14 +31,27 @@ const upload = multer({
 });
 
 router.post("/uploadAvatar", upload.single("avatar"), (req, res) => {
-    // const query = { "_id" : req.body._id };
-    // const setAvatar = { $set: { avatar: '/uploads' + req.file.filename } };
-    // User.findOneAndUpdate(query, setAvatar, async (err, user) => {
-    //     if(err) throw err;
-    //     res.send(user.avatar)
-    // });
-    //res.send('https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg')
-    res.sendFile(path.join(__dirname, '../../front-end', 'public', 'defaultAvatar.jpg'))
+    const avatar = fs.readFileSync(req.file.path);
+    const encoded_avatar = avatar.toString('base64');
+    const final_avatar = Buffer.from(encoded_avatar, 'base64');
+    const token = req.cookies.Bearer;
+    if(token) {
+        jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, decoded) => {
+            if(err) {
+                res.send(null);
+            } else {
+                const query = { _id : decoded._id };
+                const setAvatar = { $set: { avatar: final_avatar } };
+                User.findOneAndUpdate(query, setAvatar, async (err, user) => {
+                    if(err) throw err;
+                    res.send(user.avatar.buffer)
+                });
+            }
+        });
+    }
+    else {
+        res.send(null);
+    }
 });
 
 module.exports = router;
