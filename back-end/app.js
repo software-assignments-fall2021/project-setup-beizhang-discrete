@@ -53,16 +53,9 @@ app.use(userRoutes);
 const avatarUploadRoutes = require('./routes/avatarUploadRoutes');
 app.use(avatarUploadRoutes);
 
-/* ---------------------------- TODO: add friend ---------------------------- */
-app.get("/friendRequests", (req, res) => {
-    //send back friend requests in db
-    res.send('Not implemented without db, should return list of pending friend requests');
-})
-
-app.post("/sendFriendRequest", (req, res) => {
-    //add new friend request into db
-    res.send(`${req.body.senderID} wants to be friend with ${req.body.receiverID}`);
-})
+/* ------------------------------ add friend ----------------------------- */
+const addFriendRoutes = require('./routes/addFriendRoutes');
+app.use(addFriendRoutes);
 
 /* ----------------------------- get friend list ---------------------------- */
 const mockFriendListAPI = "/friendList.json";
