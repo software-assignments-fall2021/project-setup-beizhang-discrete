@@ -42,9 +42,9 @@ router.post("/uploadAvatar", upload.single("avatar"), (req, res) => {
             } else {
                 const query = { _id : decoded._id };
                 const setAvatar = { $set: { avatar: final_avatar } };
-                User.findOneAndUpdate(query, setAvatar, async (err, user) => {
+                User.findOneAndUpdate(query, setAvatar, {new: true}, (err, user) => {
                     if(err) throw err;
-                    res.send(user.avatar.buffer)
+                    res.send(user);
                 });
             }
         });

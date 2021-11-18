@@ -12,7 +12,7 @@ const axios = require('axios');
 
 const TableBlock = (props) => {
 
-    const [status, setStatus] = useState({});
+    //const [status, setStatus] = useState({});
     
     const deleteTable = async e => {
         console.log("Delete Table", props.table._id)

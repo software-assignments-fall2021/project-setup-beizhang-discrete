@@ -4,7 +4,6 @@ import Container from 'react-bootstrap/Container'
 import { Col, Form, Row, Modal } from 'react-bootstrap'
 //import Button from '@restart/ui/esm/Button'
 import Button from 'react-bootstrap/Button'
-import useHistory from 'react-router'
 const axios = require('axios');
 
 
@@ -73,7 +72,7 @@ const Tablecreate = (props) => {
         console.log("big blind", bigBlind)
         console.log("status", status)
 
-        if (numPlayers == 0) {
+        if (numPlayers === 0) {
             console.log("players empty")
         }
         else if (tableName === "") {

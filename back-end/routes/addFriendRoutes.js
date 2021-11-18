@@ -4,14 +4,16 @@ const User = require('../schemae/User').User;
 
 router.post("/sendFriendRequest", async (req, res) => {
     const [senderName, receiverName] = [req.body.sender, req.body.receiver];
+    if (senderName===receiverName) {
+        res.send('This is yourself!');
+        return;
+    }
     const sender = await User.findOne({username: senderName});
     const receiver = await User.findOne({username: receiverName});
     //If you try to be friend with yourself
-    if (senderName===receiverName) {
-        res.send('This is yourself!');
-    }
+
     //If the other user has already been your friend
-    else if (sender.friends.find(friend => friend.username===receiverName)) {
+    if (sender.friends.find(friend => friend.username===receiverName)) {
         res.send("You have already been friends");
     }
     //If you have already sent request to this user waiting for response

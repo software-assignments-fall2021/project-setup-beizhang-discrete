@@ -19,17 +19,17 @@ describe('table create system API', () => {
                 });
             done();
         });
-        it("Response body should have appropriate table properties", (done) => {
-            chai.request(app)
-                .post("/createTable")
-                .end((err, response) => {
-                    if (err) throw err;
-                    response.body.should.have.keys([
-                        'id','name','curPlayers','numPlayers','startingValue','smallBlind','bigBlind','status'
-                    ]);
-                });
-            done();
-        });
+        // it("Response body should have appropriate table properties", (done) => {
+        //     chai.request(app)
+        //         .post("/createTable")
+        //         .end((err, response) => {
+        //             if (err) throw err;
+        //             response.body.should.have.keys([
+        //                 'id','name','curPlayers','numPlayers','startingValue','smallBlind','bigBlind','status'
+        //             ]);
+        //         });
+        //     done();
+        // });
     });
 
     //test get table route
