@@ -10,7 +10,7 @@ const axios = require('axios');
 const FriendListItem = (props) => {
     return(
         <div className='FriendItem'>
-            <img className='FriendPhoto' src={props.avatar} alt={'Friend'} />
+            <img className='FriendPhoto' src={`data:image/png;base64,${Buffer.from(props.avatar.data).toString('base64')}`} alt={'Friend'} />
             <p className='FriendName'>{props.name}</p>
             <p className='FriendStatus'>{props.status}</p>
         </div>
@@ -20,7 +20,7 @@ const FriendListItem = (props) => {
 const FriendRequestItem = (props) => {
     return(
         <div className='FriendRequestItem'>
-            <img className='FriendPhoto' src={props.avatar} alt={'Friend'} />
+            <img className='FriendPhoto' src={`data:image/png;base64,${Buffer.from(props.avatar.data).toString('base64')}`} alt={'Friend'} />
             <p className='FriendName'>{props.name}</p>
             <p className='AcceptButton'>{props.accept}</p>
             <p className='DeclineButton'>{props.decline}</p>
@@ -41,7 +41,7 @@ const UserPage = (props) => {
     
     const [usernameToSearch, setSearchUsername] = useState('');
 
-    const user = props.user;
+    const user = props.user, setUser = props.setUser;
     const [allUsersList, setAllUsersList] = useState([]); //GET THIS FROM API
 
     const getAllUsers = async () => {
@@ -102,29 +102,29 @@ const UserPage = (props) => {
                         <img className='ProfilePhoto' 
                             src={`data:image/png;base64,${Buffer.from(user.avatar.data).toString('base64')}`}
                             alt={'Profile Icon'} />
-                        <AvatarUpload/>
+                        <AvatarUpload user={user} setUser={setUser}/>
                     </div>
                     <h1 className='Username'>{user.username}</h1>
                 </div>
     
-                <h2 className='UserStats'>User Stats</h2>
+                <h2 className='UserStats'>Your Stats</h2>
                 <div className='StatsBox'>
                     <p>Joined since: {user['joined_since'].slice(0,10)}</p>
                     <p>Games played: {user['games_played']}</p>
                     <p>Games won: {user['games_won']}</p>
                 </div>
     
-                <h3 className='FriendList'>Friend List</h3>
+                <h3 className='FriendList'>Your Friends</h3>
                 <div className='FriendListBox'>
                     {user.friends.map(friendInfo => (
                         <FriendListItem key={friendInfo._id} name={<Button>{friendInfo.username}</Button>} avatar={friendInfo.avatar} status={friendInfo.status}/>
                     ))}
                 </div>
     
-                <h4 className='NewFriends'>New Friends</h4>
+                <h4 className='NewFriends'>Incoming Friend Requests</h4>
                 <div className='FriendRequestBox'>
-                    {user.friendRequests.length > 0 ? user.friendRequests.map(friendRequest => (
-                        <FriendRequestItem name={friendRequest.username} avatar={friendRequest.avatar}
+                    {user.friendRequests.length > 0 ? user.friendRequests.map((friendRequest, i) => (
+                        <FriendRequestItem key={i} name={friendRequest.username} avatar={friendRequest.avatar}
                         accept={<Button onClick={() => acceptFriendRequest(user.username, friendRequest.username)}>Accept</Button>}
                         decline={<Button onClick={() => declineFriendRequest(user.username, friendRequest.username)}>Decline</Button>}/>
                     )) : <p>No Friend Requests</p>}

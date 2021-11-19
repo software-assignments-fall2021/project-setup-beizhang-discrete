@@ -1,6 +1,7 @@
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const app = require("../app");
+const faker = require('faker');
 
 //assertion style
 chai.should();
@@ -16,44 +17,46 @@ describe('login system API', () => {
                     if (err) throw err;
                     response.should.have.status(200);
                     response.should.to.be.json;
+                    done();
                 });
-            done();
         });
-        it("Response body should have user properties username, avatar, joined_since, games_played, games_won, and success", (done) => {
+        it("Response body should have user properties auth, message if no JWT", (done) => {
             chai.request(app)
                 .post("/login")
                 .end((err, response) => {
                     if (err) throw err;
                     response.body.should.have.keys([
-                        'username','avatar','joined_since','games_played','games_won','success'
+                        'auth', 'message'
                     ]);
+                    done();
                 });
-            done();
         });
     });
 
     //test post signUp route
-    describe("POST /signUp", () => {
+    describe("POST /register", () => {
         it("Should successfully post to database and receive JSON", (done) => {
             chai.request(app)
-                .post("/signUp")
+                .post("/register")
+                .send({ username: faker.internet.userName(), password: faker.internet.password() })
                 .end((err, response) => {
                     if (err) throw err;
                     response.should.have.status(200);
                     response.should.to.be.json;
+                    done();
                 });
-            done();
         });
-        it("Response body should have user properties username, avatar, joined_since, games_played, games_won, and success", (done) => {
+        it("Response body should have user properties auth, user, and token", (done) => {
             chai.request(app)
-                .post("/signUp")
+                .post("/register")
+                .send({ username: faker.internet.userName(), password: faker.internet.password() })
                 .end((err, response) => {
                     if (err) throw err;
                     response.body.should.have.keys([
-                        'username','avatar','joined_since','games_played','games_won','success'
+                        'auth','user','token'
                     ]);
+                    done();
                 });
-            done();
         });
     });
 
@@ -65,8 +68,8 @@ describe('login system API', () => {
                 .end((err, response) => {
                     if (err) throw err;
                     response.should.have.status(200);
+                    done();
                 });
-            done();
         });
         it("Response body should empty object, as there is not yet database integration", (done) => {
             chai.request(app)
@@ -74,22 +77,8 @@ describe('login system API', () => {
                 .end((err, response) => {
                     if (err) throw err;
                     response.body.should.satisfy(obj => Object.keys(obj).length === 0);
+                    done();
                 });
-            done();
-        });
-    });
-
-    //test logout route
-    describe("GET /logout", () => {
-        it("Should logout (not yet implemented) and redirect successfully to home page", (done) => {
-            chai.request(app)
-                .get("/logout")
-                .redirects(0)
-                .end((err, response) => {
-                    if (err) throw err;
-                    response.should.have.status(302);
-                });
-            done();
         });
     });
 });
