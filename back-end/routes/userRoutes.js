@@ -54,8 +54,7 @@ router.post("/register", async (req, res) => {
         if (doesUserExist(username)) {
             res.json({
                 auth: false,
-                user: false,
-                token: false,
+                message: 'Username taken',
             })
         } else {
             const newUser = await User.create({
@@ -123,5 +122,62 @@ router.get("/user", (req, res) => {
         res.send(null);
     }
 });
+
+router.post("/changeUsername", (req, res) => {
+    const [username, newUsername, password] = [req.body.username, req.body.newusername, req.body.password];
+    const user = User.findOne({username: username})
+    if(user) {
+        const auth = await bcrypt.compare(password, user.password);
+        if(auth) {
+            if(doesUserExist(newUsername)) {
+                res.json({
+                    auth: false,
+                    message: 'Username taken'
+                })
+            } else {
+                user.update({username: newUsername})
+                const token = createToken(user._id);
+                res.cookie("Bearer", token, { httpOnly: true, maxAge: maxAge*1000 });
+                res.json({
+                    auth: true,
+                    user: user,
+                    token: token
+                });
+            }
+        }
+        else {
+            res.json({
+                auth: false,
+                message: "Incorrect password."
+            });
+        }
+    }
+})
+
+router.post("/changePassword", (req, res) => {
+    const [username, newPassword, password] = [req.body.username, req.body.newpassword, req.body.password];
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const user = User.findOne({username: username})
+    if(user) {
+        const auth = await bcrypt.compare(password, user.password);
+        if(auth) {
+            user.update({password: hashedPassword})
+            const token = createToken(user._id);
+            res.cookie("Bearer", token, { httpOnly: true, maxAge: maxAge*1000 });
+            res.json({
+                auth: true,
+                user: user,
+                token: token
+            });
+            
+        }
+        else {
+            res.json({
+                auth: false,
+                message: "Incorrect password."
+            });
+        }
+    } 
+})
 
 module.exports = router;
