@@ -5,6 +5,7 @@ const User = require('../schemae/User').User;
 const jwt = require('jsonwebtoken');
 const fs = require("fs");
 const path = require("path");
+const doesUserExist  = require('../utils/doesUserExist');
 
 //token lives for 3 days
 const maxAge = 3*24*60*60;
@@ -50,24 +51,32 @@ router.post("/register", async (req, res) => {
     const encoded_avatar = avatar.toString('base64');
     const final_avatar = Buffer.from(encoded_avatar, 'base64');
     try {
-        const newUser = await User.create({
-            username: username,
-            password: hashedPassword,
-            avatar: final_avatar,
-            status: "Online",
-            friends: [],
-            friendRequests: [],
-            joined_since: new Date(),
-            games_played: 0,
-            games_won: 0,
-        });
-        const token = createToken(newUser._id);
-        res.cookie("Bearer", token, { httpOnly: true, maxAge: maxAge*1000 });
-        res.json({
-            auth: true,
-            user: newUser,
-            token: token
-        });
+        if (doesUserExist(username)) {
+            res.json({
+                auth: false,
+                user: false,
+                token: false,
+            })
+        } else {
+            const newUser = await User.create({
+                username: username,
+                password: hashedPassword,
+                avatar: final_avatar,
+                status: "Online",
+                friends: [],
+                friendRequests: [],
+                joined_since: new Date(),
+                games_played: 0,
+                games_won: 0,
+            });
+            const token = createToken(newUser._id);
+            res.cookie("Bearer", token, { httpOnly: true, maxAge: maxAge*1000 });
+            res.json({
+                auth: true,
+                user: newUser,
+                token: token
+            });
+        }
         // res.json({ user: newUser._id });
     } catch(err) {
         console.log(err.toString());
