@@ -37,7 +37,7 @@ const TableBlock = (props) => {
     return (
         <Row>
             <Col className="bg-gray border">
-                <a href='/game'>{props.table.tableName}</a> </Col>
+                <a href={'/game/'+props.table._id}>{props.table.tableName}</a> </Col>
             <Col className="bg-gray border">
                 {props.table.curPlayers}/{props.table.numPlayers} </Col>
             <Col className="bg-gray border">

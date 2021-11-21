@@ -8,7 +8,7 @@ router.post("/createTable", async (req, res) => {
     const numPlayers = req.body.numPlayers, tableName = req.body.tableName, startingValue = req.body.startingValue, smallBlind = req.body.smallBlind, bigBlind = req.body.bigBlind, status = req.body.status;
     console.log(numPlayers)
     
-    try {
+     try {
         const newTable = await Table.create({
             
             numPlayers: numPlayers,
@@ -25,8 +25,8 @@ router.post("/createTable", async (req, res) => {
         res.json ({
             auth: true,
             Table: newTable,
-        });
-    }
+        }); 
+     }
     catch (err) {
         console.log(err.toString());
         res.json({
