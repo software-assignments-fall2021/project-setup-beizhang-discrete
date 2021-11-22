@@ -8,7 +8,7 @@ chai.should();
 chai.use(chaiHttp);
 
 describe('Change profile information API', () => {
-    //test changeUsername login route
+    // //test changeUsername login route
     // describe("POST /changeUsername", () => {
     //     it("Should successfully post to database and receive JSON", (done) => {
     //         chai.request(app)
