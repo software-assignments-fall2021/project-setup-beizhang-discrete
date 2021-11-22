@@ -169,6 +169,37 @@ const UserPage = (props) => {
                             </span>
                     </form>
                 </div>
+
+                {/* <Modal show={showModalFriend} onHide={() => closeModalFriend()} >
+                    <Modal.Header>
+                    <Modal.Title>
+                    <p>
+                    {friendDetail.username}
+                    </p>
+                    </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                    <div className='PhotoName'>
+                        <div className='avatar-container'>
+                            <img className='ProfilePhoto' 
+                                src={`data:image/png;base64,${Buffer.from(friendDetail.avatar.data).toString('base64')}`}
+                                alt={'Profile Icon'} />
+                        </div>
+                        <h1 className='Username'>{user.username}</h1>
+                    </div>
+        
+                    <h2 className='UserStats'>Friend Stats</h2>
+                    <div className='StatsBox'>
+                        <p>Joined since: {friendDetail.joined_since.slice(0,10)}</p>
+                        <p>Games played: {friendDetail.games_played}</p>
+                        <p>Games won: {friendDetail.games_won}</p>
+                    </div>
+
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={() => closeModal()}>Close</Button>
+                    </Modal.Footer>
+                </Modal> */}
     
                 <Modal show={showModal} onHide={() => closeModal()} >
                     <Modal.Header>

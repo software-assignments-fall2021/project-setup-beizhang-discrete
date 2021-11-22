@@ -46,14 +46,14 @@ router.post("/uploadAvatar", upload.single("avatar"), (req, res) => {
                     if(err) throw err;
                     res.send(user);
                 });
-                const user = await User.findOne(query);
-                user.friends.forEach(async friend => {
-                    const aFriend = await User.findOne({ username : friend.username });
-                    aFriend.friends.find(friendFriend => friendFriend.username===user.username).avatar = final_avatar;
-                    aFriend.save((err) => {
-                        if (err) console.log(err);
-                    });
-                })
+                // const user = await User.findOne(query);
+                // user.friends.forEach(async friend => {
+                //     const aFriend = await User.findOne({ username : friend.username });
+                //     aFriend.friends.find(friendFriend => friendFriend.username===user.username).avatar = final_avatar;
+                //     aFriend.save((err) => {
+                //         if (err) console.log(err);
+                //     });
+                // })
             }
         });
     }
