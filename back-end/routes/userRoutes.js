@@ -55,14 +55,14 @@ router.post("/register", body("username").isLength({min: 3}), body("password").i
             message: "Username must be at least 3 characters long, and password must be at least 6."
         });
     }
-
     const [username, password] = [req.body.username, req.body.password];
     const hashedPassword = await bcrypt.hash(password, 10);
     const avatar = fs.readFileSync(path.join(__dirname, "../public/defaultavatar.png"));
     const encoded_avatar = avatar.toString('base64');
     const final_avatar = Buffer.from(encoded_avatar, 'base64');
     try {
-        if (doesUserExist(username)) {
+        //if (doesUserExist(username)) {
+        if(await User.findOne({ username : username })) {
             res.json({
                 auth: false,
                 message: 'Username taken',
