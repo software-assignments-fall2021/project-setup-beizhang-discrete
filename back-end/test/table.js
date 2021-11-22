@@ -16,8 +16,8 @@ describe('table create system API', () => {
                     if (err) throw err;
                     response.should.have.status(200);
                     response.should.to.be.json;
+                    done();
                 });
-            done();
         });
         // it("Response body should have appropriate table properties", (done) => {
         //     chai.request(app)
@@ -40,8 +40,8 @@ describe('table create system API', () => {
                 .end((err, response) => {
                     if (err) throw err;
                     response.should.have.status(200);
+                    done();
                 });
-            done();
         });
         it("Response body should be an array", (done) => {
             chai.request(app)
@@ -49,8 +49,8 @@ describe('table create system API', () => {
                 .end((err, response) => {
                     if (err) throw err;
                     response.body.should.be.an('array');
+                    done();
                 });
-            done();
         });
         it("Array items should be objects representing a table", (done) => {
             chai.request(app)
@@ -62,8 +62,8 @@ describe('table create system API', () => {
                             'id','name','curPlayers','numPlayers','startingValue','smallBlind','bigBlind','status'
                         ]);
                     }
+                    done();
                 });
-            done();
         });
     });
 });

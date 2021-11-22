@@ -80,7 +80,6 @@ router.post("/register", body("username").isLength({min: 3}), body("password").i
         });
         // res.json({ user: newUser._id });
     } catch(err) {
-        console.log(err.toString());
         res.json({
             auth: false,
             message: err.toString()
@@ -95,7 +94,6 @@ router.get("/logout", (req, res) => {
 
 router.post("/userSearch", async (req, res) => {
     const searched = req.body.searched;
-    console.log(searched);
     const users = await User.find({ username: { $regex: '.*' + searched + '.*', $options : 'i'}});
     if(users) {
         res.send(users);
@@ -111,7 +109,6 @@ router.get("/user", (req, res) => {
             if(err) {
                 res.send(null);
             } else {
-                console.log(decoded._id);
                 const user = await User.findOne({ _id : decoded._id });
                 if(user) {
                     res.send(user);
