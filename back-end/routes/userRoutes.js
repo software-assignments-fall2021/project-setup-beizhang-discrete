@@ -124,4 +124,20 @@ router.get("/user", (req, res) => {
     }
 });
 
+// router.post("/getFriendDetail", async (req, res) => {
+//     const friend = await User.findOne({ username : req.body.name });
+//     if (friend) {
+//         res.send({
+//             username: friend.username,
+//             avatar: friend.avatar,
+//             joined_since: friend.joined_since,
+//             games_played: friend.games_played,
+//             games_won: friend.games_won,
+//         });
+//     }
+//     else {
+//         res.send(null);
+//     }
+// })
+
 module.exports = router;
