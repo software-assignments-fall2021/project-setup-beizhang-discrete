@@ -31,8 +31,13 @@ const TableBlock = (props) => {
             throw new Error(err);
         }
     }
-
-    return (
+    if (props.table.status == "private") {
+        return (
+            <blank></blank>
+        )
+    }
+    else {
+        return (
         <Row>
             <Col className="table-border">
                 <a href={'/game/'+props.table._id}><strong>{props.table.tableName}</strong></a> </Col>
@@ -47,6 +52,6 @@ const TableBlock = (props) => {
             </Col>
         </Row>
     )
-}
+    }
 
 export default TableBlock
