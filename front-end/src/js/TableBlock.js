@@ -53,5 +53,5 @@ const TableBlock = (props) => {
         </Row>
     )
     }
-
+}
 export default TableBlock
