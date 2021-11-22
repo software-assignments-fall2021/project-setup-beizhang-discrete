@@ -234,6 +234,7 @@ router.post("/googleLogin", async (req, res) => {
         })
     }
 })
+
 // router.post("/getFriendDetail", async (req, res) => {
 //     const friend = await User.findOne({ username : req.body.name });
 //     if (friend) {
