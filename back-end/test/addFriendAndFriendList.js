@@ -20,8 +20,8 @@ describe('friend request and default routes', () => {
                 .end((err, response) => {
                     if (err) throw err;
                     response.should.have.status(200);
+                    done();
                 });
-            done();
         });
         it("Trying to add someone already in friend list responded with 'You have already been friends'", (done) => {
             chai.request(app)
@@ -29,9 +29,9 @@ describe('friend request and default routes', () => {
                 .send({'sender' : 'Oscar', 'receiver' : 'Oscar2'})
                 .end((err, response) => {
                     if (err) throw err;
-                    response.should.equal("You have already been friends")
+                    response.text.should.equal("You have already been friends");
+                    done();
                 });
-            done();
         });
         it("Trying to send multiple requests to the same user responded with 'You have already requested'", (done) => {
             chai.request(app)
@@ -39,9 +39,9 @@ describe('friend request and default routes', () => {
                 .send({'sender' : 'Oscar2', 'receiver' : 'Oscar3'})
                 .end((err, response) => {
                     if (err) throw err;
-                    response.should.equal("You have already requested")
+                    response.text.should.equal("You have already requested");
+                    done();
                 });
-            done();
         });
         it("Trying to send request to someone who has sent you one responded with 'Look into your friend requests!'", (done) => {
             chai.request(app)
@@ -49,9 +49,9 @@ describe('friend request and default routes', () => {
                 .send({'sender' : 'Oscar3', 'receiver' : 'Oscar2'})
                 .end((err, response) => {
                     if (err) throw err;
-                    response.should.equal("Look into your friend requests!")
+                    response.text.should.equal("Look into your friend requests!")
+                    done();
                 });
-            done();
         });
     });
 
@@ -79,8 +79,8 @@ describe('friend request and default routes', () => {
                 .end((err, response) => {
                     if (err) throw err;
                     response.should.have.status(200);
+                    done();
                 });
-            done();
         });
         it("Response should be a html file", (done) => {
             chai.request(app)
@@ -88,8 +88,8 @@ describe('friend request and default routes', () => {
                 .end((err, response) => {
                     if (err) throw err;
                     response.should.to.be.html;
+                    done();
                 });
-            done();
         });
     });
 });

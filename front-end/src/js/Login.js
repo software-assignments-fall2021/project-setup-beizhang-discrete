@@ -130,7 +130,7 @@ const Login = (props) => {
                         <input type="submit" value="Log In" />
                     </form>
 
-                    <div style={{padding: '3vh'}}>
+                    {/* <div style={{padding: '3vh'}}>
                       <GoogleLogin
                       clientId={googleClientId}
                       buttonText="Login with Google"
@@ -138,7 +138,7 @@ const Login = (props) => {
                       onFailure={onFailure}
                       isSignedIn={true}
                       />
-                    </div>
+                    </div> */}
 
 
                     <h4 className="header4">Create Account</h4>

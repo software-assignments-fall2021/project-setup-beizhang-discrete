@@ -4,13 +4,14 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const mongoose = require('mongoose');
+const morgan = require('morgan');
 require("dotenv").config({ silent: true });
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
 /* ------------------------------- middleware ------------------------------- */
-//app.use(morgan("dev"));
+app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/static", express.static(path.join(__dirname, "public")));
