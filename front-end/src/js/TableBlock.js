@@ -1,9 +1,7 @@
 import Button from '@restart/ui/esm/Button'
 import React from 'react'
-import { Row } from 'react-bootstrap'
-//import Container from 'react-bootstrap/Container'
-import Col from 'react-bootstrap/Col'
-import { useState } from 'react'
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const axios = require('axios');
 
@@ -33,23 +31,27 @@ const TableBlock = (props) => {
             throw new Error(err);
         }
     }
-
-    return (
+    if (props.table.status == "private") {
+        return (
+            <blank></blank>
+        )
+    }
+    else {
+        return (
         <Row>
-            <Col className="bg-gray border">
-                <a href={'/game/'+props.table._id}>{props.table.tableName}</a> </Col>
-            <Col className="bg-gray border">
+            <Col className="table-border">
+                <a href={'/game/'+props.table._id}><strong>{props.table.tableName}</strong></a> </Col>
+            <Col className="table-border">
                 {props.table.curPlayers}/{props.table.numPlayers} </Col>
-            <Col className="bg-gray border">
+            <Col className="table-border">
                 {props.table.startingValue} </Col>
-            <Col className="bg-gray border">
+            <Col className="table-border">
                 {props.table.status} </Col>
-            <Col className="bg-gray border">
+            {/*<Col className="table-border">
                 <Button onClick={deleteTable}>delete</Button>
-            </Col>
+            </Col>*/}
         </Row>
-        // </Container>
     )
+    }
 }
-
 export default TableBlock

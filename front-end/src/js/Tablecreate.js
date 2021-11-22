@@ -16,7 +16,7 @@ const axios = require('axios');
 const FriendListItem = (props) => {
     return (
         <div className='FriendItem'>
-            <img className='FriendPhoto' src={'./profileicon.png'} alt={'Friend'} />
+            <img className='FriendPhoto' src={`data:image/png;base64,${Buffer.from(props.avatar.data).toString('base64')}`} alt={'Friend'} />
             <p className='FriendName'>{props.name}</p>
             <p className='FriendStatus'>{props.status}</p>
             <div className='Invitablility'>
@@ -179,63 +179,64 @@ const Tablecreate = (props) => {
     }
     return (
         <div>
-            <Container className="bg-white border" fluid="md">
+            <Container fluid="md">
 
-                <h1 className="text-center"> Create Table</h1>
-                <h4 className="text-center"> # of Players</h4>
+                <h1 className="text-center top-margin">Create Table</h1>
 
-                <Form onSubmit={handleCreateTable}>
+                <form onSubmit={handleCreateTable}>
                     <Row className="align-items-center">
                         <Col>
-                            <Form.Select className="me-sm-2"
-                                id="inlineFormCustomSelect"
-                                name="numPlayers">
-                                <option value="0">Choose # of Players</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                            </Form.Select>
+                            <div className='centered-container'>
+                                <h4 className="text-center top-margin inline-block">Number of Players</h4>
+                                &nbsp;&nbsp;
+                                <select required className="me-sm-2 inline-block"
+                                    id="inlineFormCustomSelect"
+                                    name="numPlayers">
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option selected value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option selected value="7">7</option>
+                                </select>
+                            </div>
                         </Col>
                     </Row>
                     <Row>
-                        <h4 className="text-center">Table Name</h4>
+                        <h4 className="text-center top-margin">Table Name</h4>
                     </Row>
                     <Row>
                         <Col>
-                            <Form.Control type="text"
-                                placeholder="Enter Table Name"
-                                name="tableName">
-                            </Form.Control>
+                            <div className='centered-container'>
+                                <input required type="text"
+                                    placeholder="Enter Table Name..."
+                                    name="tableName">
+                                </input>
+                            </div>
                         </Col>
 
                     </Row>
                     <Row className="align-items-center">
                         <Col>
-                            <Form.Label>Starting Value</Form.Label>
-                            <Form.Control placeholder="Starting Value"
+                            <label className="top-margin">Starting Value</label><br/>
+                            <input required className="small-input" placeholder="Enter a #..."
                                 type="number"
                                 name="startingValue" />
                         </Col>
                         <Col>
-                            <Form.Label>Small Blind</Form.Label>
-                            <Form.Control placeholder="Small Blind"
+                            <label className="top-margin">Small Blind</label><br/>
+                            <input required className="small-input" placeholder="Enter a #..."
                                 type="number"
                                 name="smallBlind" />
                         </Col>
                         <Col>
-                            <Form.Label>Big Blind</Form.Label>
-                            <Form.Control placeholder="Big Blind"
+                            <label className="top-margin">Big Blind</label><br/>
+                            <input required className="small-input" placeholder="Enter a #..."
                                 type="number"
                                 name="bigBlind" />
                         </Col>
 
 
-                    </Row>
-                    <Row>
-                        <p className="text-center">Table Status</p>
                     </Row>
                     <Row className="align-items-center">
                         {/* <Col className = "align-items-center">
@@ -247,14 +248,16 @@ const Tablecreate = (props) => {
                     value="private"
                     />
                     </Col> */}
-
+                        <label className="top-margin">Table Status</label>
                         <Col>
-                            <Form.Select className="me-sm-2"
-                                id="inlineFormCustomSelect"
-                                name="status">
-                                <option value="public">Public</option>
-                                <option value="private">Private</option>
-                            </Form.Select>
+                            <div className='centered-container'>
+                                <select required className="me-sm-2"
+                                    id="inlineFormCustomSelect"
+                                    name="status">
+                                    <option value="public">Public</option>
+                                    <option value="private">Private</option>
+                                </select>
+                            </div>
                         </Col>
                     </Row>
 
@@ -265,11 +268,14 @@ const Tablecreate = (props) => {
                     </Row>
 
                     <Row>
-                        <a className="text-center">
-                            <Button variant="primary" type="submit">
-                                Create Table
-                            </Button>
-                        </a>
+                        <div className="bottom-buttons centered-container">
+                            <div className="button-block button" onClick={() => openModal()}>
+                                Invite Friend
+                            </div>
+                            <div className="button-block button" variant="primary" type="submit">
+                                <strong>Create Table</strong>
+                            </div>
+                        </div>
                         {/* <Button className = "text-center" 
                         variant="primary" type="submit">
                             Create Table
@@ -277,10 +283,7 @@ const Tablecreate = (props) => {
                     </Row>
 
 
-                </Form>
-                <Button onClick={() => openModal()}>
-                    Invite Friend
-                </Button>
+                </form>
 
             </Container>
 
@@ -295,7 +298,7 @@ const Tablecreate = (props) => {
                 <Modal.Body></Modal.Body>
                 <Modal.Body>
                     {friendList.map(friendInfo => (
-                        <FriendListItem key={friendInfo.id} name={<Button>{friendInfo.name}</Button>} avatar={friendInfo.avatar} status={friendInfo.status} />
+                        <FriendListItem key={friendInfo._id} name={<Button>{friendInfo.username}</Button>} avatar={friendInfo.avatar} status={friendInfo.status}/>
                     ))}
                 </Modal.Body>
                 <Modal.Footer>
