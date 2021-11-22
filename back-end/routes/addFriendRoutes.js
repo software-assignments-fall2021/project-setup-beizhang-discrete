@@ -20,6 +20,9 @@ router.post("/sendFriendRequest", async (req, res) => {
     else if (receiver.friendRequests.find(requester => requester.username===senderName)) {
         res.send("You have already requested");
     }
+    else if (sender.friendRequests.find(requester => requester.username===receiverName)) {
+        res.send("Look into your friend requests!");
+    }
     else {
         //Push request to the receiver's list
         receiver.friendRequests.push({

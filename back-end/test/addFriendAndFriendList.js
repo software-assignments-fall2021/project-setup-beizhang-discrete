@@ -1,57 +1,95 @@
-// const chai = require("chai");
-// const chaiHttp = require("chai-http");
-// const app = require("../app");
+const chai = require("chai");
+const chaiHttp = require("chai-http");
+const app = require("../app");
 
-// //assertion style
-// chai.should();
-// chai.use(chaiHttp);
+//assertion style
+chai.should();
+chai.use(chaiHttp);
 
-// describe('Get Friend List and Default route', () => {
-//     //Test get friend list route
-//     describe("GET /friendList", () => {
-//         it("Should respond with status 200", (done) => {
-//             chai.request(app)
-//                 .get("/friendList")
-//                 .end((err, response) => {
-//                     if (err) throw err;
-//                     response.should.have.status(200);
-//                 });
-//             done();
-//         });
-//         it("Friend list response should contain the specified keys", (done) => {
-//             chai.request(app)
-//                 .get("/friendList")
-//                 .end((err, response) => {
-//                     if (err) throw err;
-//                     response.body[0].should.have.property('name')
-//                     response.body[1].should.have.property('avatar')
-//                     response.body[2].should.have.property('status')
-//                     response.body[3].should.have.property('id')
-//                     // response.body.should.have.keys(['name', 'avatar', 'status', 'id'])
-//                 });
-//             done();
-//         });
-//     });
+// describe('add friend routes', () => {
 
-//     //Test default route
-//     describe("GET /", () => {
-//         it("Should respond with status 200", (done) => {
-//             chai.request(app)
-//                 .get("/")
-//                 .end((err, response) => {
-//                     if (err) throw err;
-//                     response.should.have.status(200);
-//                 });
-//             done();
-//         });
-//         it("Response should be a html file", (done) => {
-//             chai.request(app)
-//                 .get("/")
-//                 .end((err, response) => {
-//                     if (err) throw err;
-//                     response.should.to.be.html;
-//                 });
-//             done();
-//         });
-//     });
-// });
+
+describe('friend request and default routes', () => {
+
+    //Test send friend request route
+    describe("POST /sendFriendRequest", () => {
+        it("Should respond with status 200", (done) => {
+            chai.request(app)
+                .post("/sendFriendRequest")
+                .send({'sender' : 'Oscar', 'receiver' : 'Oscar2'})
+                .end((err, response) => {
+                    if (err) throw err;
+                    response.should.have.status(200);
+                });
+            done();
+        });
+        it("Trying to add someone already in friend list responded with 'You have already been friends'", (done) => {
+            chai.request(app)
+                .post("/sendFriendRequest")
+                .send({'sender' : 'Oscar', 'receiver' : 'Oscar2'})
+                .end((err, response) => {
+                    if (err) throw err;
+                    response.should.equal("You have already been friends")
+                });
+            done();
+        });
+        it("Trying to send multiple requests to the same user responded with 'You have already requested'", (done) => {
+            chai.request(app)
+                .post("/sendFriendRequest")
+                .send({'sender' : 'Oscar2', 'receiver' : 'Oscar3'})
+                .end((err, response) => {
+                    if (err) throw err;
+                    response.should.equal("You have already requested")
+                });
+            done();
+        });
+        it("Trying to send request to someone who has sent you one responded with 'Look into your friend requests!'", (done) => {
+            chai.request(app)
+                .post("/sendFriendRequest")
+                .send({'sender' : 'Oscar3', 'receiver' : 'Oscar2'})
+                .end((err, response) => {
+                    if (err) throw err;
+                    response.should.equal("Look into your friend requests!")
+                });
+            done();
+        });
+    });
+
+    //Test accept friend request route
+    // describe("POST /acceptFriendRequest", () => {
+    //     it("Should respond with status 200 and a specific string", (done) => {
+    //         chai.request(app)
+    //             .post("/")
+    //             .send({'sender' : "Oscar3", 'receiver' : "Oscar"})
+    //             .end((err, response) => {
+    //                 if (err) throw err;
+    //                 response.should.have.status(200);
+    //                 expect(response).to.equal("Friend added")
+    //             });
+    //         done();
+    //     });
+    // });
+
+
+    //Test default route
+    describe("GET /", () => {
+        it("Should respond with status 200", (done) => {
+            chai.request(app)
+                .get("/")
+                .end((err, response) => {
+                    if (err) throw err;
+                    response.should.have.status(200);
+                });
+            done();
+        });
+        it("Response should be a html file", (done) => {
+            chai.request(app)
+                .get("/")
+                .end((err, response) => {
+                    if (err) throw err;
+                    response.should.to.be.html;
+                });
+            done();
+        });
+    });
+});
