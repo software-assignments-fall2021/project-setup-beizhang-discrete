@@ -1,9 +1,16 @@
 import React from 'react';
 import '../css/AvatarUpload.css';
 import axios from 'axios';
+import {useState} from 'react';
 
 const AvatarUpload = (props) => {
     const [user, setUser] = [props.user, props.setUser];
+    const [fileToUpload, setFileToUpload] = useState(null);
+
+    const handleFile = e => {
+        setFileToUpload(e.target.files[0]);
+    }
+
     const handleSubmit = async e => {
         e.preventDefault();
 
@@ -30,8 +37,8 @@ const AvatarUpload = (props) => {
     return (
         <div className='container'>
             <form className='upload-form' onSubmit={e=>handleSubmit(e)}>
-                <input id="avatar-file" name="avatar" type="file" accept="image"/>
-                <input type="submit" value="Upload" />
+                <input id="avatar-file" name="avatar" type="file" accept="image" onChange={e=>handleFile(e)}/>
+                {fileToUpload ? <input className="upload-button" type="submit" value="Upload" /> : null}
             </form>
         </div>
     )

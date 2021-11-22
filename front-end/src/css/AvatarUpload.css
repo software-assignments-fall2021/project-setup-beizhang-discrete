@@ -2,8 +2,9 @@
     font-size: 14px;
     width: 30vw;
     max-width: 200px;
-    display: flex;
-    flex-direction: column;
-    text-align: left;
     margin-top: 20px;
+}
+.upload-button {
+    width: 80px;
+    margin-top: 10px;
 }
