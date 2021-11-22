@@ -19,8 +19,14 @@ const Login = (props) => {
           token: res.tokenId,
         },
       });
+      if(response.data.auth){
+        props.setUser(response.data.user);
+      }
+      else {
+        alert(response.data.message);
+      }
       console.log(`Poker API response: `, response)
-      refreshToken(res)
+      // refreshToken(res)
     }
     const onFailure = (res) => {
       console.log(`Login failed: `, res);

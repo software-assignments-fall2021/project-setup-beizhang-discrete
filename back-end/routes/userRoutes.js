@@ -184,17 +184,44 @@ router.post("/changePassword", async (req, res) => {
 router.post("/googleLogin", async (req, res) => {
     try {
         const response = await googleAuth(req.body.token)
-        console.log(response)
-        res.status(200)
-        res.json({
-            auth: true,
-            message: response
-        })
+        const {userId, email, fullName, photoUrl} = response;
+        const user = await User.findOne({ googleId : userId });
+        
+        if (user) { // google user exists, logem in
+            const token = createToken(user._id);
+            res.cookie("Bearer", token, { httpOnly: true, maxAge: maxAge*1000 });
+            res.json({
+                auth: true,
+                user: user,
+                token: token
+            });
+        }
+        else { // create account w google info
+            const newUser = await User.create({
+                googleId: userId,
+                email: email,
+                username: fullName,
+                avatar: photoUrl,
+                status: "Online",
+                friends: [],
+                friendRequests: [],
+                joined_since: new Date(),
+                games_played: 0,
+                games_won: 0,
+            });
+            const token = createToken(newUser._id);
+            res.cookie("Bearer", token, { httpOnly: true, maxAge: maxAge*1000 });
+            res.json({
+                auth: true,
+                user: newUser,
+                token: token
+            });
+        }
     }
     catch (error) {
         res.json({
             auth: false,
-            message: error
+            message: "Could not authenticate Google token"
         })
     }
 })
