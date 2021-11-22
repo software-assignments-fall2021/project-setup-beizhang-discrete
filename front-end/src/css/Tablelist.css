@@ -30,3 +30,6 @@ h1 {
 .col {
     padding: 5px 5px 5px 5px !important;
 }
+.no-text-decoration {
+    text-decoration: none;
+}

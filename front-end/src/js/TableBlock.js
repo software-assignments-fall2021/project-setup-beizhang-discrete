@@ -47,9 +47,9 @@ const TableBlock = (props) => {
                 {props.table.startingValue} </Col>
             <Col className="table-border">
                 {props.table.status} </Col>
-            <Col className="table-border">
+            {/*<Col className="table-border">
                 <Button onClick={deleteTable}>delete</Button>
-            </Col>
+            </Col>*/}
         </Row>
     )
     }

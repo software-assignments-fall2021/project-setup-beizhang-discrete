@@ -5,6 +5,7 @@ const User = require('../schemae/User').User;
 const jwt = require('jsonwebtoken');
 const fs = require("fs");
 const path = require("path");
+const { body, validationResult } = require('express-validator');
 
 //token lives for 3 days
 const maxAge = 3*24*60*60;
@@ -43,7 +44,16 @@ router.post("/login", async (req, res) => {
         });
     }
 });
-router.post("/register", async (req, res) => {
+
+router.post("/register", body("username").isLength({min: 3}), body("password").isLength({min: 6}), async (req, res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        return res.json({
+            auth: false,
+            message: "Username must be at least 3 characters long, and password must be at least 6."
+        });
+    }
+
     const [username, password] = [req.body.username, req.body.password];
     const hashedPassword = await bcrypt.hash(password, 10);
     const avatar = fs.readFileSync(path.join(__dirname, "../public/defaultavatar.png"));
@@ -77,10 +87,12 @@ router.post("/register", async (req, res) => {
         });
     }
 });
+
 router.get("/logout", (req, res) => {
     res.cookie('Bearer', '', { maxAge: 1 });
     res.send('logged out');
 });
+
 router.post("/userSearch", async (req, res) => {
     const searched = req.body.searched;
     console.log(searched);

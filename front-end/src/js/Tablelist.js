@@ -48,9 +48,9 @@ class Tablelist extends Component {
                 
             <h1 className = "text-center">Tables List</h1>
             <div className="search-container">
-                <Button> Search for a Game </Button>
-                <NavLink to='/tablecreate'>
-                    <h2 className = 'text-center'>Create a Table</h2>
+                {/*<Button> Search for a Game </Button>*/}
+                <NavLink className="no-text-decoration" to='/tablecreate'>
+                    <h2 className='text-center button'>Create a Table</h2>
                 </NavLink>
             </div>
 
@@ -64,9 +64,9 @@ class Tablelist extends Component {
                         Start Value </Col>
                     <Col className="table-header table-border">
                         Status </Col>
-                    <Col className="table-header table-border">
+                    {/*<Col className="table-header table-border">
                         ?
-                    </Col>
+                    </Col>*/}
                 </Row>
                 {this.state.tables.map((table) => (
                     <TableBlock key={table._id} table={table}> </TableBlock>
