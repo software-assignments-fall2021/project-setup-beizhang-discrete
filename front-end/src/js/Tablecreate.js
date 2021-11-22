@@ -272,9 +272,7 @@ const Tablecreate = (props) => {
                             <div className="button-block button" onClick={() => openModal()}>
                                 Invite Friend
                             </div>
-                            <div className="button-block button" variant="primary" type="submit">
-                                <strong>Create Table</strong>
-                            </div>
+                            <input className="button-block button" variant="primary" type="submit" value="Create Table"/>
                         </div>
                         {/* <Button className = "text-center" 
                         variant="primary" type="submit">
