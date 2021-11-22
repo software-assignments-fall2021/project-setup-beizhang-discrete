@@ -4,6 +4,8 @@ import TableBlock from './TableBlock';
 import '../css/Tablelist.css';
 import Button from 'react-bootstrap/Button';
 import { Container } from 'react-bootstrap';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 // import Header from '../Header'
 
 class Tablelist extends Component {
@@ -42,19 +44,30 @@ class Tablelist extends Component {
     // }, []);
     render() {
         return (
-        <Container className = "bg-white border">
+        <Container>
                 
             <h1 className = "text-center">Tables List</h1>
+            <div className="search-container">
+                {/*<Button> Search for a Game </Button>*/}
+                <NavLink className="no-text-decoration" to='/tablecreate'>
+                    <h2 className='text-center button'>Create a Table</h2>
+                </NavLink>
+            </div>
 
-            <Button> Search for a Game </Button>
-            
-            {/* <Button> */}
-            <NavLink className = "bg-dark" to='/tablecreate'>
-                <h2 className = 'text-center'>Create a Table</h2>
-            </NavLink>
-            {/* </Button> */}
-
-            <Container className = "bg-gray border">
+            <Container>
+                <Row>
+                    <Col className="table-header table-border">
+                        Name </Col>
+                    <Col className="table-header table-border">
+                        Players </Col>
+                    <Col className="table-header table-border">
+                        Start Value </Col>
+                    <Col className="table-header table-border">
+                        Status </Col>
+                    {/*<Col className="table-header table-border">
+                        ?
+                    </Col>*/}
+                </Row>
                 {this.state.tables.map((table) => (
                     <TableBlock key={table._id} table={table}> </TableBlock>
                 ))}

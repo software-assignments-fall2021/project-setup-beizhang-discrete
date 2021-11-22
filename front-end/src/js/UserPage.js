@@ -96,38 +96,42 @@ const UserPage = (props) => {
     if(user) {
         return (
             <div className="UserPage">
+                <h1 className='Username'>{user.username}</h1>
                 <div className='PhotoName'>
-                    {/* Placeholders for photo and username */}
                     <div className='avatar-container'>
                         <img className='ProfilePhoto' 
                             src={`data:image/png;base64,${Buffer.from(user.avatar.data).toString('base64')}`}
                             alt={'Profile Icon'} />
                         <AvatarUpload user={user} setUser={setUser}/>
                     </div>
-                    <h1 className='Username'>{user.username}</h1>
+                </div>
+                <div className="section-container">
+                    <div className='info-box'>
+                        <h4 className='UserStats'>Stats</h4>
+                        <p>Joined since: {user['joined_since'].slice(0,10)}</p>
+                        <p>Games played: {user['games_played']}</p>
+                        <p>Games won: {user['games_won']}</p>
+                    </div>
                 </div>
     
-                <h2 className='UserStats'>Your Stats</h2>
-                <div className='StatsBox'>
-                    <p>Joined since: {user['joined_since'].slice(0,10)}</p>
-                    <p>Games played: {user['games_played']}</p>
-                    <p>Games won: {user['games_won']}</p>
+                <div className="section-container">
+                    <div className='info-box'>
+                        <h4 className='FriendList'>Friends</h4>
+                        {user.friends.map(friendInfo => (
+                            <FriendListItem key={friendInfo._id} name={<span className="button">{friendInfo.username}</span>} avatar={friendInfo.avatar} status={friendInfo.status}/>
+                        ))}
+                    </div>
                 </div>
-    
-                <h3 className='FriendList'>Your Friends</h3>
-                <div className='FriendListBox'>
-                    {user.friends.map(friendInfo => (
-                        <FriendListItem key={friendInfo._id} name={<Button>{friendInfo.username}</Button>} avatar={friendInfo.avatar} status={friendInfo.status}/>
-                    ))}
-                </div>
-    
-                <h4 className='NewFriends'>Incoming Friend Requests</h4>
-                <div className='FriendRequestBox'>
-                    {user.friendRequests.length > 0 ? user.friendRequests.map((friendRequest, i) => (
-                        <FriendRequestItem key={i} name={friendRequest.username} avatar={friendRequest.avatar}
-                        accept={<Button onClick={() => acceptFriendRequest(user.username, friendRequest.username)}>Accept</Button>}
-                        decline={<Button onClick={() => declineFriendRequest(user.username, friendRequest.username)}>Decline</Button>}/>
-                    )) : <p>No Friend Requests</p>}
+
+                <div className="section-container">
+                    <div className='info-box'>
+                        <h4 className='NewFriends'>Incoming Requests</h4>
+                        {user.friendRequests.length > 0 ? user.friendRequests.map((friendRequest, i) => (
+                            <FriendRequestItem key={i} name={friendRequest.username} avatar={friendRequest.avatar}
+                            accept={<span className="button" onClick={() => acceptFriendRequest(user.username, friendRequest.username)}>Accept</span>}
+                            decline={<span className="button" onClick={() => declineFriendRequest(user.username, friendRequest.username)}>Decline</span>}/>
+                        )) : <p>None... yet</p>}
+                    </div>
                 </div>
     
                 <div className='AddFriend'>
@@ -136,10 +140,10 @@ const UserPage = (props) => {
                             openModal();
                             event.preventDefault(); /*prevent page reload*/
                         }}>
-                        <input type="SearchUsername" placeholder={'Username'} onChange={(e) => setSearchUsername(e.target.value)}/> 
-                        <Button onClick={openModal}>
+                        <input id="user-search-box" type="SearchUsername" placeholder={'Search by username...'} onChange={(e) => setSearchUsername(e.target.value)}/> 
+                        <span className="search-button button" onClick={openModal}>
                             Search
-                            </Button>
+                            </span>
                     </form>
                 </div>
     
@@ -163,8 +167,9 @@ const UserPage = (props) => {
                     </Button>
                     </Modal.Footer>
                 </Modal>
-    
-                <Button className="logout" onClick={() => handleLogout()}>Log Out</Button>
+                <div className="logout-holder">
+                    <div className="logout button" onClick={() => handleLogout()}>Log Out</div>
+                </div>
             </div>
         )
     }
