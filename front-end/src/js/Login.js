@@ -10,8 +10,16 @@ const googleClientId = '863174738597-ddgpkjo6dklvjj60sret1qi6rckc54b4.apps.googl
 
 const Login = (props) => {
 
-    const onSuccess = (res) => {
+    const onSuccess = async (res) => {
       console.log(`Success, current user: `, res.profileObj);
+      const response = await axios({
+        method: "post",
+        url: "/googleLogin",
+        data: {
+          token: res.tokenId,
+        },
+      });
+      console.log(`Poker API response: `, response)
       refreshToken(res)
     }
     const onFailure = (res) => {

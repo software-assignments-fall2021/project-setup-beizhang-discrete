@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const fs = require("fs");
 const path = require("path");
 const doesUserExist  = require('../utils/doesUserExist');
+const googleAuth = require('../utils/google-utils')
 
 //token lives for 3 days
 const maxAge = 3*24*60*60;
@@ -178,6 +179,24 @@ router.post("/changePassword", async (req, res) => {
             });
         }
     } 
+})
+
+router.post("/googleLogin", async (req, res) => {
+    try {
+        const response = await googleAuth(req.body.token)
+        console.log(response)
+        res.status(200)
+        res.json({
+            auth: true,
+            message: response
+        })
+    }
+    catch (error) {
+        res.json({
+            auth: false,
+            message: error
+        })
+    }
 })
 
 module.exports = router;
