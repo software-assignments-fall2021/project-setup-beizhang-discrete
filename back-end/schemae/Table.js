@@ -9,6 +9,7 @@ const CardSchema = new Schema({
 
 const PlayerSchema = new Schema({
     userID: String,
+    username: String,
     chips: Number,
     action: String,
     cardOne: CardSchema,

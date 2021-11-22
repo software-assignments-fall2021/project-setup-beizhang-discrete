@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container'
 import { Col, Form, Row, Modal } from 'react-bootstrap'
 //import Button from '@restart/ui/esm/Button'
 import Button from 'react-bootstrap/Button'
+import { useHistory } from "react-router-dom";
 const axios = require('axios');
 
 
@@ -29,6 +30,7 @@ const FriendListItem = (props) => {
 
 const Tablecreate = (props) => {
     //const history = useHistory();
+    let history = useHistory();
 
 
 
@@ -89,7 +91,10 @@ const Tablecreate = (props) => {
         }
         else {
             // this.props.history.push('/Game')
+            
+            
             console.log("Info filled")
+
 
 
             //send form data to API to authenticate
@@ -118,6 +123,7 @@ const Tablecreate = (props) => {
                 });
                 // store the response data into the data state variable
                 console.log(response.data);
+                history.push('/game/'+response.data.Table._id)
                 setStatus(response.data);
             } catch (err) {
                 throw new Error(err);
@@ -235,7 +241,7 @@ const Tablecreate = (props) => {
                     </Row>
 
                     <Row>
-                        <a href='/game' className="text-center">
+                        <a className="text-center">
                             <Button variant="primary" type="submit">
                                 Create Table
                             </Button>
