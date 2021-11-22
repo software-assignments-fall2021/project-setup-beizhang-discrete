@@ -2,6 +2,7 @@ const chai = require("chai");
 const chaiHttp = require("chai-http");
 const app = require("../app");
 const faker = require('faker');
+const { expect } = require("chai");
 
 //assertion style
 chai.should();
@@ -60,6 +61,22 @@ describe('login system API', () => {
         });
     });
 
+    //test post userSearch route
+    describe("POST /userSearch", () => {
+        it("Should send searched username to database and return array of results", (done) => {
+            chai.request(app)
+                .post("/userSearch")
+                .send({ searched: faker.internet.userName() })
+                .end((err, response) => {
+                    if (err) throw err;
+                    response.should.have.status(200);
+                    response.should.to.be.json;
+                    expect(response.body).to.be.an('array');
+                    done();
+                });
+        });
+    });
+
     //test get user route
     describe("GET /user", () => {
         it("Should respond with status 200", (done) => {
@@ -71,7 +88,7 @@ describe('login system API', () => {
                     done();
                 });
         });
-        it("Response body should empty object, as there is not yet database integration", (done) => {
+        it("Response body should be falsy (empty object) if there is no valid JWT", (done) => {
             chai.request(app)
                 .get("/user")
                 .end((err, response) => {

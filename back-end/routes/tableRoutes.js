@@ -1,14 +1,28 @@
 const express = require('express');
 const router = express.Router();
 const Table = require('../schemae/Table').Table;
+const { body, validationResult } = require('express-validator');
 
-
-router.post("/createTable", async (req, res) => {
-
+router.post(
+    "/createTable",
+    body('numPlayers').isInt({min:2, max:7}),
+    body('tableName').isAscii(),
+    body('startingValue').isInt({min:0}),
+    body('smallBlind').isInt({min:0}),
+    body('bigBlind').isInt({min:0}),
+    body('status').isIn(["public", "private"]),
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()){
+            return res.json({
+                auth: false,
+                errors: errors.array()})
+        }
+    
     const numPlayers = req.body.numPlayers, tableName = req.body.tableName, startingValue = req.body.startingValue, smallBlind = req.body.smallBlind, bigBlind = req.body.bigBlind, status = req.body.status;
     console.log(numPlayers)
     
-    try {
+     try {
         const newTable = await Table.create({
             
             numPlayers: numPlayers,
@@ -25,8 +39,8 @@ router.post("/createTable", async (req, res) => {
         res.json ({
             auth: true,
             Table: newTable,
-        });
-    }
+        }); 
+     }
     catch (err) {
         console.log(err.toString());
         res.json({
