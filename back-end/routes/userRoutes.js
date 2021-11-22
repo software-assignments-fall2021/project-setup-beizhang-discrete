@@ -123,7 +123,7 @@ router.get("/user", (req, res) => {
     }
 });
 
-router.post("/changeUsername", (req, res) => {
+router.post("/changeUsername", async (req, res) => {
     const [username, newUsername, password] = [req.body.username, req.body.newusername, req.body.password];
     const user = User.findOne({username: username})
     if(user) {
@@ -154,7 +154,7 @@ router.post("/changeUsername", (req, res) => {
     }
 })
 
-router.post("/changePassword", (req, res) => {
+router.post("/changePassword", async (req, res) => {
     const [username, newPassword, password] = [req.body.username, req.body.newpassword, req.body.password];
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     const user = User.findOne({username: username})

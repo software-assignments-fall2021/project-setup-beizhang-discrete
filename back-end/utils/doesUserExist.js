@@ -1,6 +1,6 @@
 const User = require('../schemae/User').User;
 
-export const doesUserExist = (username) => {
+const doesUserExist = (username) => {
     const query = User.findOne({username: username});
     if (query) {
         return true;
@@ -10,3 +10,5 @@ export const doesUserExist = (username) => {
     }
 
 }
+
+module.exports = doesUserExist
