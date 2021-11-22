@@ -74,28 +74,23 @@ const Tablecreate = (props) => {
         console.log("big blind", bigBlind)
         console.log("status", status)
 
-        if (numPlayers === 0) {
-            console.log("players empty")
-        }
-        else if (tableName === "") {
-            console.log("name empty")
-        }
-        else if (!startingValue) {
-            console.log("value empty")
-        }
-        else if (!smallBlind) {
-            console.log("small empty")
-        }
-        else if (!bigBlind) {
-            console.log("big empty")
-        }
-        else {
-            // this.props.history.push('/Game')
-            
-            
+        // if (numPlayers === 0) {
+        //     console.log("players empty")
+        // }
+        // else if (tableName === "") {
+        //     console.log("name empty")
+        // }
+        // else if (!startingValue) {
+        //     console.log("value empty")
+        // }
+        // else if (!smallBlind) {
+        //     console.log("small empty")
+        // }
+        // else if (!bigBlind) {
+        //     console.log("big empty")
+        // }
+        // else {
             console.log("Info filled")
-
-
 
             //send form data to API to authenticate
             // const formData = new FormData()
@@ -121,12 +116,42 @@ const Tablecreate = (props) => {
                     },
                     // headers: { "Content-Type": "multipart/form-data" },
                 });
+                //manage invalid form data
+                if(response.data.auth === false){
+                    let errString =""
+                    for (let i = 0; i < response.data.errors.length; i++){
+                        let field = response.data.errors[i].param
+                        switch(field){
+                            case "numPlayers":
+                                errString += "Select a # of players.\n"
+                                break;
+                            case "tableName":
+                                errString += "Invalid Table Name.\n"
+                                break;
+                            case "startingValue":
+                                errString += "Starting Value must be a positive integer.\n"
+                                break;
+                            case "smallBlind":
+                                errString += "Small Blind must be a positive integer.\n"
+                                break;
+                            case "bigBlind":
+                                errString += "Big Blind must be a positive integer.\n"
+                                break;
+                            case "status:":
+                                errString += "Table Status invalid.\n"
+                                break;
+                        }
+                    }
+                    alert(errString)
+                }
                 // store the response data into the data state variable
-                console.log(response.data);
                 history.push('/game/'+response.data.Table._id)
                 setStatus(response.data);
+                
             } catch (err) {
-                throw new Error(err);
+                console.log(err)
+                //alert(response.data)
+                //throw new Error(err);
             }
 
 
@@ -151,7 +176,6 @@ const Tablecreate = (props) => {
 
             // )
 
-        }
     }
     return (
         <div>
