@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import { Redirect } from "react-router-dom";
 import { GoogleLogin } from 'react-google-login';
-import { refreshToken } from './utils/refreshToken';
+//import { refreshToken } from './utils/refreshToken';
 import '../css/Login.css';
 const axios = require('axios');
 
@@ -136,7 +136,6 @@ const Login = (props) => {
                       buttonText="Login with Google"
                       onSuccess={onSuccess}
                       onFailure={onFailure}
-                      isSignedIn={true}
                       />
                     </div>
 
