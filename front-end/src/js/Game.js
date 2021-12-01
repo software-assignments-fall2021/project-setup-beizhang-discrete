@@ -1,9 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import '../css/Game.css';
-import Chat from './Chat'
+import Chat from './Chat';
+import diamonds from '../suits/diamonds.png'
+import hearts from '../suits/hearts.png'
+import spades from '../suits/spades.png'
+import clubs from '../suits/clubs.png'
 
 const cardValues = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
-const cardSuits = ['../hearts.png','../diamonds.png','../spades.png','../clubs.png']
+const cardSuits = [clubs,diamonds,spades,hearts]
 
 //to be passed in from table making screen
 const startingChips = 1000
