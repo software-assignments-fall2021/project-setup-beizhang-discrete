@@ -316,7 +316,7 @@ function Game(props) {
                     Username here
                 </div>
             </center>
-            <Chat />
+            <Chat user={props.user} />
         </div>
         </div>
     )
