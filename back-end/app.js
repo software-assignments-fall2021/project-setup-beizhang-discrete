@@ -10,21 +10,39 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
+const server = require('http').Server(app);
+const io = require('socket.io')(server, {
+    cors: {
+      origin: '*',
+      methods: ['GET', 'POST']
+    }
+});
+
 /* ------------------------------- middleware ------------------------------- */
-app.use(morgan("dev"));
+//app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/static", express.static(path.join(__dirname, "public")));
-app.use(cors({
-    origin: "http://localhost:3000", //location of react app we're connecting to
-    credentials: true,
-}));
+// app.use(cors({
+//     origin: "http://localhost:3000", //location of react app we're connecting to
+//     credentials: true,
+// }));
+app.use(cors());
 app.use(session({
     secret: "secret",
     resave: true,
     saveUninitialized: true,
 }));
 app.use(cookieParser("secret"));
+
+/* ------------------------------ chat sockets ------------------------------ */
+io.on('connection', socket => {
+    console.log(socket.id, 'has connected');
+    socket.on("sendMessage", message => {
+        console.log(message);
+        socket.broadcast.emit("newMessage", {...message, author:"them"});
+    });
+});
 
 /* ------------------------------- api routes ------------------------------ */
 const dbURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@all-in-poker.bsbwv.mongodb.net/allInPoker?retryWrites=true&w=majority`;
@@ -59,4 +77,4 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../front-end/public/index.html'));
 });
 
-module.exports = app;
+module.exports = server;
