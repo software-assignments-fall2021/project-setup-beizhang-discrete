@@ -28,6 +28,10 @@ Scrum Master: [Eric Wang](https://github.com/EricXiaoYang)
 Product Owner: [Oscar Xue](https://github.com/oooscarrr)
 Scrum Master: [Ben Pasteelnick](https://github.com/B-Pasteelnick)
 
+#### Sprint 3 Roles
+Product Owner: [Eric Wang](https://github.com/EricXiaoYang)
+Scrum Master: [Owen Wahlgren](https://github.com/owendoteth)
+
 ## How the project came to be
 
 This project was initially started by [Ben Pasteelnick]() to serve as a platform for people to play poker for the simple fun of the game, instead of for gambling money. 
@@ -36,9 +40,8 @@ You can find out how to contribute on [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ## How to build and test
 
-Install node.
 React front-end: in `front-end` directory -> `npm install --legacy-peer-deps` -> `npm start`
-Express back-end: in `back-end` directory -> `npm install --legacy-peer-deps` -> `npm start`
+Express back-end: in `back-end` directory -> add `.env` file containing secrets -> `npm install --legacy-peer-deps` -> `npm start`
 
 ## Any Relevant Documents
 
