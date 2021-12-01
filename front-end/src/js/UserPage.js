@@ -65,21 +65,42 @@ const UserPage = (props) => {
     // }
     // const closeModalFriend = () => setModalFriend(false)
 
-    // const [friendDetail, setFriendDetail] = useState(null)
+    const [friendList, setFriendList] = useState([])
+    const getFriendList = async (friendIDs) => {
+        const response = await axios({
+            method: "post",
+            url: "/getFriendList",
+            data: {'IDs' : friendIDs}
+        }); 
+        if(response.data) {
+            setFriendList(response.data);
+        }
+        else {
+            console.log("failed to get friends list");
+        }
+    }
 
-    // const getFriendDetail = async (friendUsername) => {
-    //     const response = await axios({
-    //         method: "post",
-    //         url: "/getFriendDetail",
-    //         data: {'name' : friendUsername}
-    //     }); 
-    //     if(response.data) {
-    //         setFriendDetail(response.data);
-    //     }
-    //     else {
-    //         console.log("failed to get friend detail");
-    //     }
-    // }
+    const [requestList, setRequestList] = useState([])
+    const getRequestList = async (requesterIDs) => {
+        const response = await axios({
+            method: "post",
+            url: "/getRequestList",
+            data: {'IDs' : requesterIDs}
+        }); 
+        if(response.data) {
+            setRequestList(response.data);
+        }
+        else {
+            console.log("failed to get friend request List");
+        }
+    }
+
+    useEffect(() => {
+        if (user) {
+            getFriendList(user.friends);
+            getRequestList(user.friendRequests);
+        }
+    }, [user]);
 
     useEffect(() => {
         props.updateUserProfileButton(false);
@@ -91,27 +112,27 @@ const UserPage = (props) => {
     }
 
     //Handle friend requests, specify two users involved
-    const sendFriendRequest = async (senderUsername, receiverUsername) => {
+    const sendFriendRequest = async (senderID, receiverID) => {
         const response = await axios({
             method: "post",
             url: "/sendFriendRequest",
-            data: {'sender' : senderUsername, 'receiver' : receiverUsername}
+            data: {'sender' : senderID, 'receiver' : receiverID}
           }); 
         alert(response.data);
     }
-    const acceptFriendRequest = async (accepterUsername, senderUsername) => {
+    const acceptFriendRequest = async (accepterID, senderID) => {
         const response = await axios({
             method: "post",
             url: "/acceptFriendRequest",
-            data: {'accepter' : accepterUsername, 'sender' : senderUsername}
+            data: {'accepter' : accepterID, 'sender' : senderID}
           }); 
         alert(response.data);
     }
-    const declineFriendRequest = async (declinerUsername, senderUsername) => {
+    const declineFriendRequest = async (declinerID, senderID) => {
         const response = await axios({
             method: "post",
             url: "/declineFriendRequest",
-            data: {'decliner' : declinerUsername, 'sender' : senderUsername}
+            data: {'decliner' : declinerID, 'sender' : senderID}
           }); 
         alert(response.data);
     }
@@ -140,19 +161,19 @@ const UserPage = (props) => {
                 <div className="section-container">
                     <div className='info-box'>
                         <h4 className='FriendList'>Friends</h4>
-                        {user.friends.map(friendInfo => (
-                            <FriendListItem key={friendInfo._id} name={<span className="button">{friendInfo.username}</span>} avatar={friendInfo.avatar} status={friendInfo.status}/>
-                        ))}
+                        {user.friends.length > 0 ? friendList.map(friend => (
+                            <FriendListItem key={friend._id} name={<span className="button">{friend.username}</span>} avatar={friend.avatar} status={friend.status}/>
+                        )) : <p>No friend... yet</p>}
                     </div>
                 </div>
 
                 <div className="section-container">
                     <div className='info-box'>
                         <h4 className='NewFriends'>Incoming Requests</h4>
-                        {user.friendRequests.length > 0 ? user.friendRequests.map((friendRequest, i) => (
-                            <FriendRequestItem key={i} name={friendRequest.username} avatar={friendRequest.avatar}
-                            accept={<span className="button" onClick={() => acceptFriendRequest(user.username, friendRequest.username)}>Accept</span>}
-                            decline={<span className="button" onClick={() => declineFriendRequest(user.username, friendRequest.username)}>Decline</span>}/>
+                        {user.friendRequests.length > 0 ? requestList.map((requester, i) => (
+                            <FriendRequestItem key={i} name={requester.username} avatar={requester.avatar}
+                            accept={<span className="button" onClick={() => acceptFriendRequest(user._id.toString(), requester._id.toString())}>Accept</span>}
+                            decline={<span className="button" onClick={() => declineFriendRequest(user._id.toString(), requester._id.toString())}>Decline</span>}/>
                         )) : <p>None... yet</p>}
                     </div>
                 </div>
@@ -212,7 +233,7 @@ const UserPage = (props) => {
                     <Modal.Body>
                     {/*filter all users by those whose names match the one in the search box*/}
                     {allUsersList.map(aUser => (
-                        <FriendListItem key={aUser._id} name={<Button onClick={() => sendFriendRequest(user.username, aUser.username)}>{aUser.username}</Button>} avatar={aUser.avatar} status={aUser.status}/>
+                        <FriendListItem key={aUser._id} name={<Button onClick={() => sendFriendRequest(user._id.toString(), aUser._id.toString())}>{aUser.username}</Button>} avatar={aUser.avatar} status={aUser.status}/>
                         ))}
                     </Modal.Body>
                     <Modal.Footer>

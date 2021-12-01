@@ -162,7 +162,7 @@ router.post("/changeUsername", async (req, res) => {
             });
         }
     }
-})
+});
 
 router.post("/changePassword", async (req, res) => {
     const [username, newPassword, password] = [req.body.username, req.body.newpassword, req.body.password];
@@ -188,7 +188,7 @@ router.post("/changePassword", async (req, res) => {
             });
         }
     } 
-})
+});
 
 router.post("/googleLogin", async (req, res) => {
     try {
@@ -233,22 +233,38 @@ router.post("/googleLogin", async (req, res) => {
             message: "Could not authenticate Google token"
         })
     }
-})
+});
 
-// router.post("/getFriendDetail", async (req, res) => {
-//     const friend = await User.findOne({ username : req.body.name });
-//     if (friend) {
-//         res.send({
-//             username: friend.username,
-//             avatar: friend.avatar,
-//             joined_since: friend.joined_since,
-//             games_played: friend.games_played,
-//             games_won: friend.games_won,
-//         });
-//     }
-//     else {
-//         res.send(null);
-//     }
-// })
+router.post("/getFriendList", async (req, res) => {
+    const friendIDs = req.body.IDs;
+    try {
+        const result = await User.find({ "_id": { $in: friendIDs }});
+        if (result) {
+            res.send(result);
+        }
+        else {
+            res.send(null);
+        }
+    }
+    catch (err) {
+        console.log(err);
+    }
+});
+
+router.post("/getRequestList", async (req, res) => {
+    const requesterIDs = req.body.IDs;
+    try {
+        const result = await User.find({ "_id": { $in: requesterIDs }});
+        if (result) {
+            res.send(result);
+        }
+        else {
+            res.send(null);
+        }
+    }
+    catch (err) {
+        console.log(err);
+    }
+});
 
 module.exports = router;

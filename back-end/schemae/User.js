@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const FriendSchema = new Schema({
-    username: String,
-    avatar: Buffer,
-    status: String
-});
+// const FriendSchema = new Schema({
+//     username: String,
+//     avatar: Buffer,
+//     status: String
+// });
 
 const UserSchema = new Schema({
     username: {
@@ -21,8 +21,8 @@ const UserSchema = new Schema({
     },
     avatar: Buffer,
     status: String,
-    friends: [FriendSchema],
-    friendRequests: [FriendSchema],
+    friends: [String],
+    friendRequests: [String],
     joined_since: Date,
     games_played: Number,
     games_won: Number,
