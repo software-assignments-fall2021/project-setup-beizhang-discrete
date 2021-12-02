@@ -131,7 +131,6 @@ const UserPage = (props) => {
 
         console.log(newProfileDetails)
         editProfileDetails({})
-        //submit to backend
     }
 
     //Handle friend requests, specify two users involved
