@@ -118,18 +118,41 @@ const UserPage = (props) => {
     const closeEditProfileModal = () => setEditProfileModal(false)
     const handleEditProfile = () => setEditProfileModal(true)
        
-    const submitEditProfile = () => {
-        if (newProfileDetails.password == null) {
-            //username change req
+    const submitEditProfile = async () => {
+        //update username
+        if (newProfileDetails.username != null) {
+            const response = await axios({
+                method: "post",
+                url: "/changeUsername",
+                data: {'username' : newProfileDetails.username}
+            });
+            if(response.data.auth == false) {
+                alert(response.data.message)
+            }
+            else {
+                alert("Username successfully changed!")
+            }
         }
-        else if (newProfileDetails.password != newProfileDetails.confirmpassword) {
-            alert("New passwords do not match!")
-        }
-        if (newProfileDetails.username == null ) {
-            //password change req
+        if (newProfileDetails.password != null) {
+            if (newProfileDetails.password != newProfileDetails.confirmpassword) {
+                alert("New passwords do not match!")
+            }
+            else {
+                const response = await axios({
+                    method: "post",
+                    url: "/changePassword",
+                    data: {'password' : newProfileDetails.password}
+                }); 
+                if(response.data.auth == false) {
+                    alert(response.data.message)
+                }
+                else {
+                    alert("Password successfully changed!")
+                }
+            }
         }
 
-        console.log(newProfileDetails)
+        closeEditProfileModal()
         editProfileDetails({})
     }
 

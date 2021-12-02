@@ -143,22 +143,25 @@ router.post("/changeUsername",  body("username").isLength({min: 3}), async (req,
                 const user = await User.findOne({ _id : decoded._id });
                 const newUsername = req.body.username
                 if(user) { //valid user is found given cookie, update username
-                    if(doesUserExist(newUsername)) {
-                        res.json({
-                            auth: false,
-                            message: 'Username taken'
-                        })
-                    }
-                    else {
-                        user.update({username: newUsername})
-                        const token = createToken(user._id);
-                        res.cookie("Bearer", token, { httpOnly: true, maxAge: maxAge*1000 });
-                        res.json({
-                            auth: true,
-                            user: user,
-                            token: token
-                        });
-                    }
+                    User.updateOne({ _id : decoded._id }, {"$set": {username: newUsername}}, { returnNewDocument: true },
+                    async function(error, result) {
+                        if (error) {
+                            res.json({
+                                auth: false,
+                                message: "Error updating username",
+                            });
+                        }
+                        else {
+                            const user = await User.findOne({ _id : decoded._id });
+                            const token = createToken(user._id);
+                            res.cookie("Bearer", token, { httpOnly: true, maxAge: maxAge*1000 });
+                            res.json({
+                                auth: true,
+                                user: user,
+                                token: token
+                            });
+                        }
+                    })
                 }
                 else {
                     res.send(null);
@@ -182,14 +185,25 @@ router.post("/changePassword", body("password").isLength({min: 6}), async (req, 
                 const newPassword = req.body.password
                 const hashedPassword = await bcrypt.hash(newPassword, 10);
                 if(user) { //valid user is found given cookie, update password
-                    user.update({password: hashedPassword})
-                    const token = createToken(user._id);
-                    res.cookie("Bearer", token, { httpOnly: true, maxAge: maxAge*1000 });
-                    res.json({
-                        auth: true,
-                        user: user,
-                        token: token
-                    });
+                    User.updateOne({ _id : decoded._id }, {"$set": {password: hashedPassword}}, { returnNewDocument: true },
+                    async function(error, result) {
+                        if (error) {
+                            res.json({
+                                auth: false,
+                                message: "Error updating password",
+                            });
+                        }
+                        else {
+                            const user = await User.findOne({ _id : decoded._id });
+                            const token = createToken(user._id);
+                            res.cookie("Bearer", token, { httpOnly: true, maxAge: maxAge*1000 });
+                            res.json({
+                                auth: true,
+                                user: user,
+                                token: token
+                            });
+                        }
+                    })
                 }
                 else {
                     res.send(null);
@@ -207,9 +221,8 @@ router.post("/googleLogin", async (req, res) => {
         const response = await googleAuth(req.body.token)
         const {userId, email, fullName, photoUrl} = response;
         const user = await User.findOne({ googleId : userId });
-        
+    
         if (user) { // google user exists, logem in
-            console.log(user)
             const token = createToken(user._id);
             res.cookie("Bearer", token, { httpOnly: true, maxAge: maxAge*1000 });
             res.json({
