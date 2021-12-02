@@ -197,6 +197,7 @@ router.post("/googleLogin", async (req, res) => {
         const user = await User.findOne({ googleId : userId });
         
         if (user) { // google user exists, logem in
+            console.log(user)
             const token = createToken(user._id);
             res.cookie("Bearer", token, { httpOnly: true, maxAge: maxAge*1000 });
             res.json({

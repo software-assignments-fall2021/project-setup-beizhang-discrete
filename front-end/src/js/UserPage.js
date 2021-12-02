@@ -43,6 +43,7 @@ const UserPage = (props) => {
 
     const user = props.user, setUser = props.setUser;
     const [allUsersList, setAllUsersList] = useState([]); //GET THIS FROM API
+    // console.log(user)
 
     const getAllUsers = async () => {
         const response = await axios({
@@ -161,7 +162,7 @@ const UserPage = (props) => {
                 <div className="section-container">
                     <div className='info-box'>
                         <h4 className='FriendList'>Friends</h4>
-                        {user.friends.length > 0 ? friendList.map(friend => (
+                        {user.friends ? friendList.map(friend => (
                             <FriendListItem key={friend._id} name={<span className="button">{friend.username}</span>} avatar={friend.avatar} status={friend.status}/>
                         )) : <p>No friend... yet</p>}
                     </div>
