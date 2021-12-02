@@ -111,6 +111,9 @@ const UserPage = (props) => {
         axios.get("/logout");
         props.setUser(null);
     }
+    const handleEditProfile = () => {
+        //popup modal for editing profile
+    }
 
     //Handle friend requests, specify two users involved
     const sendFriendRequest = async (senderID, receiverID) => {
@@ -243,8 +246,9 @@ const UserPage = (props) => {
                     </Button>
                     </Modal.Footer>
                 </Modal>
-                <div className="logout-holder">
+                <div className="button-holder">
                     <div className="logout button" onClick={() => handleLogout()}>Log Out</div>
+                    <div className="editprofile button" onClick={() => handleEditProfile()}>Edit Profile</div>
                 </div>
             </div>
         )
