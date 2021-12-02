@@ -111,8 +111,20 @@ const UserPage = (props) => {
         axios.get("/logout");
         props.setUser(null);
     }
-    const handleEditProfile = () => {
-        //popup modal for editing profile
+
+    const [showEditProfileModal, setEditProfileModal] = useState(false)
+    const [newProfileDetails, editProfileDetails] = useState({})
+    
+    const closeEditProfileModal = () => setEditProfileModal(false)
+    const handleEditProfile = () => setEditProfileModal(true)
+       
+    const submitEditProfile = ()=> {
+        if (newProfileDetails.password != newProfileDetails.confirmpassword) {
+            alert("Passwords do not match!")
+        }
+        
+        console.log(newProfileDetails)
+        //submit to backend
     }
 
     //Handle friend requests, specify two users involved
@@ -226,6 +238,7 @@ const UserPage = (props) => {
                     </Modal.Footer>
                 </Modal> */}
     
+                {/* Friend search modal */}
                 <Modal show={showModal} onHide={() => closeModal()} >
                     <Modal.Header>
                     <Modal.Title>
@@ -246,6 +259,33 @@ const UserPage = (props) => {
                     </Button>
                     </Modal.Footer>
                 </Modal>
+
+                {/* Edit Profile Modal */}
+                <Modal show={showEditProfileModal} onHide={() => closeEditProfileModal()} >
+                    <Modal.Header>
+                    <Modal.Title>
+                    <p>
+                    Edit Profile Details (leave entry blank for no change)
+                    </p>
+                    </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <form onSubmit={submitEditProfile}>
+                            <label for="username">New Username:</label><br/>
+                            <input type="text" onChange={e => editProfileDetails({...newProfileDetails, username: e.target.value})}/><br/>
+                            <label for="password">New Password:</label><br/>
+                            <input type="password" onChange={e => editProfileDetails({...newProfileDetails, password: e.target.value})}/><br/>
+                            <label for="confirmpassword">Confirm New Password:</label><br/>
+                            <input type="confirmpassword"  onChange={e => editProfileDetails({...newProfileDetails, confirmpassword: e.target.value})}/>
+                        </form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={() => submitEditProfile()}>
+                    Submit
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
+
                 <div className="button-holder">
                     <div className="logout button" onClick={() => handleLogout()}>Log Out</div>
                     <div className="editprofile button" onClick={() => handleEditProfile()}>Edit Profile</div>
