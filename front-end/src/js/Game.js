@@ -14,6 +14,7 @@ const startingChips = 1000
 const bigBlind = 10
 const smallBlind = 5
 
+const tableID = window.location.href.split('/').at(-1)
 const deck = []
 for (const val of cardValues){
     for (const suit of cardSuits){
@@ -142,8 +143,6 @@ function Game(props) {
         }
     }
 
-
-
     const call = () => {
         setAction("Called")
         if (gamePhase < 4){
@@ -200,6 +199,7 @@ function Game(props) {
     }
     
     return (
+        <div>
         
         <div>
             <div className="bet">Current Bet: {bet}</div>
@@ -210,9 +210,9 @@ function Game(props) {
                 <div className="opponentChips">{player2Chips}</div>
                 
                 <div className="opponentFirstCard">{player2First.val}
-                <img className='suit' src={player2First.suit} alt="suit"/></div>
+                <img className='suit' src={player2First.suit} alt = "" onError={(event) => event.target.style.display = 'none'}/></div>
                 <div className="opponentSecondCard">{player2Second.val}
-                <img className='suit' src={player2Second.suit} alt="suit"/></div>
+                <img className='suit' src={player2Second.suit} alt = "" onError={(event) => event.target.style.display = 'none'}/></div>
                 
             </div>
 
@@ -221,9 +221,9 @@ function Game(props) {
                 <div className="opponentName">p3 UName</div>
                 <div className="opponentChips">{player3Chips}</div>
                 <div className="opponentFirstCard">{player3First.val}
-                <img className='suit' src={player3First.suit} alt="suit"/></div>
+                <img className='suit' src={player3First.suit} alt = "" onError={(event) => event.target.style.display = 'none'}/></div>
                 <div className="opponentSecondCard">{player3Second.val}
-                <img className='suit' src={player3Second.suit} alt="suit"/></div>
+                <img className='suit' src={player3Second.suit} alt = "" onError={(event) => event.target.style.display = 'none'}/></div>
                 
             </div>
 
@@ -232,9 +232,9 @@ function Game(props) {
                 <div className="opponentName">p4 UName</div>
                 <div className="opponentChips">{player4Chips}</div>
                 <div className="opponentFirstCard">{player4First.val}
-                <img className='suit' src={player4First.suit} alt="suit"/></div>
+                <img className='suit' src={player4First.suit} alt = "" onError={(event) => event.target.style.display = 'none'}/></div>
                 <div className="opponentSecondCard">{player4Second.val}
-                <img className='suit' src={player4Second.suit} alt="suit"/></div>
+                <img className='suit' src={player4Second.suit} alt = "" onError={(event) => event.target.style.display = 'none'}/></div>
                 
             </div>
 
@@ -243,9 +243,9 @@ function Game(props) {
                 <div className="opponentName">p5 UName</div>
                 <div className="opponentChips">{player5Chips}</div>
                 <div className="opponentFirstCard">{player5First.val}
-                <img className='suit' src={player5First.suit} alt="suit"/></div>
+                <img className='suit' src={player5First.suit} alt = "" onError={(event) => event.target.style.display = 'none'}/></div>
                 <div className="opponentSecondCard">{player5Second.val}
-                <img className='suit' src={player5Second.suit} alt="suit"/></div>
+                <img className='suit' src={player5Second.suit} alt = "" onError={(event) => event.target.style.display = 'none'}/></div>
                 
             </div>
 
@@ -254,9 +254,9 @@ function Game(props) {
                 <div className="opponentName">p6 UName</div>
                 <div className="opponentChips">{player6Chips}</div>
                 <div className="opponentFirstCard">{player6First.val}
-                <img className='suit' src={player6First.suit} alt="suit"/></div>
+                <img className='suit' src={player6First.suit} alt = "" onError={(event) => event.target.style.display = 'none'}/></div>
                 <div className="opponentSecondCard">{player6Second.val}
-                <img className='suit' src={player6Second.suit} alt="suit"/></div>
+                <img className='suit' src={player6Second.suit} alt = "" onError={(event) => event.target.style.display = 'none'}/></div>
                 
             </div>
 
@@ -265,9 +265,9 @@ function Game(props) {
                 <div className="opponentName">p7 UName</div>
                 <div className="opponentChips">{player7Chips}</div>
                 <div className="opponentFirstCard">{player7First.val}
-                <img className='suit' src={player7First.suit} alt="suit"/></div>
+                <img className='suit' src={player7First.suit} alt = "" onError={(event) => event.target.style.display = 'none'}/></div>
                 <div className="opponentSecondCard">{player7Second.val}
-                <img className='suit' src={player7Second.suit} alt="suit"/></div>
+                <img className='suit' src={player7Second.suit} alt = "" onError={(event) => event.target.style.display = 'none'}/></div>
                 
             </div>
             <div>
@@ -275,18 +275,19 @@ function Game(props) {
                     <div className="pot"><br />{pot}</div>
                     <div>
                         <div className="centerCards">{flopFirst.val}
-                            <img className='suit' src={flopFirst.suit} alt="suit"/></div>
+                            <img className='suit' src={flopFirst.suit} alt = "" onError={(event) => event.target.style.display = 'none'}/></div>
                         <div className="centerCards">{flopSecond.val}
-                            <img className='suit' src={flopSecond.suit} alt="suit"/></div>
+                            <img className='suit' src={flopSecond.suit} alt = "" onError={(event) => event.target.style.display = 'none'}/></div>
                         <div className="centerCards">{flopThird.val}
-                            <img className='suit' src={flopThird.suit} alt="suit"/></div>
+                            <img className='suit' src={flopThird.suit} alt = "" onError={(event) => event.target.style.display = 'none'}/></div>
                         <div className="centerCards">{turn.val}
-                            <img className='suit' src={turn.suit} alt="suit"/></div>
+                            <img className='suit' src={turn.suit} alt = "" onError={(event) => event.target.style.display = 'none'}/></div>
                         <div className="centerCards">{river.val}
-                            <img className='suit' src={river.suit} alt="suit"/></div>
+                            <img className='suit' src={river.suit} alt = "" onError={(event) => event.target.style.display = 'none'}/></div>
                     </div>
                 </center>
             </div>
+        </div>
         <div className="playerElements">
             <center>
                 <button className="playerOption" onClick={call}>Call</button>
@@ -301,11 +302,11 @@ function Game(props) {
                 <div>
                     <div className="playerCards">
                         {handFirst.val} 
-                        <img className='suit' src={handFirst.suit} alt="suit"/>
+                        <img className='suit' src={handFirst.suit} alt = "" onError={(event) => event.target.style.display = 'none'}/>
                     </div>
                     <div className="playerCards">
                         {handSecond.val} 
-                        <img className='suit' src={handSecond.suit} alt="suit"/>
+                        <img className='suit' src={handSecond.suit} alt = "" onError={(event) => event.target.style.display = 'none'}/>
                     </div> 
                 </div>
                 
