@@ -118,12 +118,19 @@ const UserPage = (props) => {
     const closeEditProfileModal = () => setEditProfileModal(false)
     const handleEditProfile = () => setEditProfileModal(true)
        
-    const submitEditProfile = ()=> {
-        if (newProfileDetails.password != newProfileDetails.confirmpassword) {
-            alert("Passwords do not match!")
+    const submitEditProfile = () => {
+        if (newProfileDetails.password == null) {
+            //username change req
         }
-        
+        else if (newProfileDetails.password != newProfileDetails.confirmpassword) {
+            alert("New passwords do not match!")
+        }
+        if (newProfileDetails.username == null ) {
+            //password change req
+        }
+
         console.log(newProfileDetails)
+        editProfileDetails({})
         //submit to backend
     }
 
@@ -265,7 +272,7 @@ const UserPage = (props) => {
                     <Modal.Header>
                     <Modal.Title>
                     <p>
-                    Edit Profile Details (leave entry blank for no change)
+                    Edit Profile Details (leave blank for no change)
                     </p>
                     </Modal.Title>
                     </Modal.Header>
@@ -276,7 +283,7 @@ const UserPage = (props) => {
                             <label for="password">New Password:</label><br/>
                             <input type="password" onChange={e => editProfileDetails({...newProfileDetails, password: e.target.value})}/><br/>
                             <label for="confirmpassword">Confirm New Password:</label><br/>
-                            <input type="confirmpassword"  onChange={e => editProfileDetails({...newProfileDetails, confirmpassword: e.target.value})}/>
+                            <input type="password"  onChange={e => editProfileDetails({...newProfileDetails, confirmpassword: e.target.value})}/>
                         </form>
                     </Modal.Body>
                     <Modal.Footer>
