@@ -36,6 +36,7 @@ function Game(props) {
     const [flopThird, setFlopThird] = useState({"val": null, "suit": null})
     const [turn, setTurn] = useState({"val": null, "suit": null})
     const [river, setRiver] = useState({"val": null, "suit": null})
+    const [result, setResult] = useState("")
     const [gamePhase, setGamePhase] = useState(0)
     //Game Phases:
     // 0: Preflop betting (2 cards in hand)
@@ -99,6 +100,7 @@ function Game(props) {
                 setFlopSecond(gameDeck.shift())
                 setFlopThird(gameDeck.shift())
                 setBet(0)
+                setResult("")
                 break;
             case 2:
                 setTurn(gameDeck.shift())
@@ -126,11 +128,127 @@ function Game(props) {
 
                 setPlayer7First(gameDeck.shift())
                 setPlayer7Second(gameDeck.shift())
+
+                scoreHand(1)
                 break;
             default:
                 break;
         }
     }, [gamePhase]) //eslint-disable-line react-hooks/exhaustive-deps
+
+    
+    function scoreHand(player) {
+        let allVals = [flopFirst.val, flopSecond.val, flopThird.val, turn.val, river.val]
+        let allSuits = [flopFirst.suit, flopSecond.suit, flopThird.suit, turn.suit, river.suit]
+        switch(player){
+            case 1:
+                allVals.push(handFirst.val, handSecond.val)
+                allSuits.push(handFirst.suit, handSecond.suit)
+                break;
+            case 2:
+                allVals.push(player2First.val, player2Second.val)
+                allSuits.push(player2First.suit, player2Second.suit)
+                break;
+            case 3:
+                allVals.push(player3First.val, player3Second.val)
+                allSuits.push(player3First.suit, player3Second.suit)
+                break;
+            case 4:
+                allVals.push(player4First.val, player4Second.val)
+                allSuits.push(player4First.suit, player4Second.suit)
+                break;
+            case 5:
+                allVals.push(player5First.val, player5Second.val)
+                allSuits.push(player5First.suit, player5Second.suit)
+                break;
+            case 6:
+                allVals.push(player6First.val, player6Second.val)
+                allSuits.push(player6First.suit, player6Second.suit)
+                break;
+            case 7:
+                allVals.push(player7First.val, player7Second.val)
+                allSuits.push(player7First.suit, player7Second.suit)
+                break;                                                                          
+        }
+        for (let i = 0; i < allVals.length; i++){
+            switch(allVals[i]){
+                case('A'):
+                    allVals[i] = 14
+                    break;
+                case('J'):
+                    allVals[i] = 13
+                    break;
+                case('Q'):
+                    allVals[i] = 12
+                    break;
+                case('K'):
+                    allVals[i] = 11
+                    break;
+                default:
+                    allVals[i] = parseInt(allVals[i], 10)
+                    break;
+            }
+            switch(allSuits[i]){
+                case (spades):
+                    allSuits[i]="♠"
+                    break;
+                case (clubs):
+                    allSuits[i]="♣"
+                    break;
+                case (hearts):
+                    allSuits[i]="♥"
+                    break;
+                case (diamonds):
+                    allSuits[i]="♦"
+                    break;
+            }
+        }
+        let hands=["4 of a Kind", "Straight Flush", "Straight", "Flush", "High Card",
+       "1 Pair", "2 Pair", "Royal Flush", "3 of a Kind", "Full House" ];
+        var A=14, K=13, Q=12, J=11, _ = { "♠":1, "♣":2, "♥":4, "♦":8 };
+
+        //Calculates the Rank of a 5 card Poker hand using bit manipulations.
+        //code from https://www.codeproject.com/Articles/569271/A-Poker-hand-analyzer-in-JavaScript-using-bit-math
+        function rankPokerHand(cs,ss) {
+            var v, i, o, s = 1<<cs[0]|1<<cs[1]|1<<cs[2]|1<<cs[3]|1<<cs[4];
+            for (i=-1, v=o=0; i<5; i++, o=Math.pow(2,cs[i]*4)) {v += o*((v/o&15)+1);}
+            v = v % 15 - ((s/(s&-s) == 31) || (s == 0x403c) ? 3 : 1);
+            v -= (ss[0] == (ss[1]|ss[2]|ss[3]|ss[4])) * ((s == 0x7c00) ? -5 : 1);
+
+            //return("Hand: "+hands[v]+((s == 0x403c)?" (Ace low)":""));
+            return(hands[v]+((s == 0x403c)?" (Ace low)":""));
+        }
+
+        let results = []
+        let scores = { "High Card":1, "1 Pair":2, "2 Pair":3, "3 of a Kind":4, "Straight":5, 
+        "Flush":6, "Full House":7, "4 of a Kind":8, "Straight Flush": 9, "Royal Flush":10}
+        let bestScore = 0;
+        let scoreString = "";
+        let bestHand = [0, 1, 2, 3, 4];
+        for(let a = 0; a < 3; a++){
+            for(let b = a+1; b < 4; b++){
+                for (let c = b+1; c < 5; c++){
+                    for (let d = c+1; d < 6; d++){
+                        for (let e = d+1; e < 7; e++){
+                            
+                            let temp = rankPokerHand([allVals[a], allVals[b], allVals[c], allVals[d], allVals[e]],
+                                [allSuits[a], allSuits[b], allSuits[c], allSuits[d], allSuits[e]])
+                            if (bestScore < scores[temp]){
+                                scoreString = temp
+                                bestScore = scores[scoreString]
+                                bestHand = [a, b, c, d, e]
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        rankPokerHand( [ allVals[0], allVals[1], allVals[2], allVals[3], allVals[4]], 
+             [ _[allSuits[0]], _[allSuits[1]], _[allSuits[2]], _[allSuits[3]], _[allSuits[4]] ] );
+        
+        setResult(scoreString)
+        
+    }
 
     const shuffleDeck = () => {
         gameDeck = [...deck]
@@ -164,6 +282,7 @@ function Game(props) {
         setTurn({"val": null, "suit": null})
         setRiver({"val": null, "suit": null})
         setPot(0)
+        setResult("")
         setGamePhase(0)
         shuffleDeck()
         setHandFirst(gameDeck.shift())
@@ -195,7 +314,6 @@ function Game(props) {
     const handleSubmit = (event) => {
         event.preventDefault();
         setBet(formHolder)
-        console.log(bet)
     }
     
     return (
@@ -288,6 +406,7 @@ function Game(props) {
                 </center>
             </div>
         </div>
+        <div className="result">{result}</div>
         <div className="playerElements">
             <center>
                 <button className="playerOption" onClick={call}>Call</button>

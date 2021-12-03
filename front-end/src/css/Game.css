@@ -113,3 +113,10 @@
     border:1px solid IndianRed;
     margin: 10px;
 }
+
+.result{
+    text-align: center;
+    font-weight: bold;
+    position: absolute;
+    top: 150px; left: 0; bottom: 0; right: 0;
+}
