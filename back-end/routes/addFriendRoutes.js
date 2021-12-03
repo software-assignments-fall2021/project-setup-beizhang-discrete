@@ -63,4 +63,24 @@ router.post("/declineFriendRequest", async (req, res) => {
     });
 });
 
+router.post("/removeFriend", async (req, res) => {
+    let message = "";
+    const [removerID, friendToRemoveID] = [req.body.remover, req.body.friendToRemove];
+    const remover = await User.findById(removerID);
+    const ftr = await User.findById(friendToRemoveID);
+
+    remover.friends.splice(remover.friends.indexOf(friendToRemoveID), 1);
+    remover.save((err) => {
+        if (err) console.log(err);
+    });
+
+    ftr.friends.splice(ftr.friends.indexOf(removerID), 1);
+    ftr.save((err) => {
+        if (err) console.log(err);
+    });
+
+    res.send("Friend removed!");
+})
+
+
 module.exports = router;

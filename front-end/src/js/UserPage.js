@@ -182,6 +182,16 @@ const UserPage = (props) => {
           }); 
         alert(response.data);
     }
+    const removeFriend = async (removerID, friendID) => {
+        if (window.confirm("Remove this friend?")) {
+            const response = await axios({
+                method: "post",
+                url: "/removeFriend",
+                data: {'remover': removerID, 'friendToRemove': friendID}
+              }); 
+            alert(response.data);
+        }
+    }
 
     if(user) {
         return (
@@ -267,7 +277,8 @@ const UserPage = (props) => {
                     </div>
                     </Modal.Body>
                     <Modal.Footer>
-                    <Button variant="secondary" onClick={() => closeModalFriend()}>Close</Button>
+                    <Button variant="secondary" onClick={() => removeFriend(user._id, friendToShow._id)}>Remove Friend</Button>
+                    <Button variant="primary" onClick={() => closeModalFriend()}>Close</Button>
                     </Modal.Footer>
                 </Modal>
     
