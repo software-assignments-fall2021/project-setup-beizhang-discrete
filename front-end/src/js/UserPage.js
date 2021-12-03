@@ -58,12 +58,13 @@ const UserPage = (props) => {
         }
     }
 
-    // const [showModalFriend, setModalFriend] = useState(false)
-    // const openModalFriend = (friendUsername) => {
-    //     getFriendDetail(friendUsername);
-    //     setModalFriend(true)
-    // }
-    // const closeModalFriend = () => setModalFriend(false)
+    const [friendToShow, setFriendToShow] = useState(user)
+    const [showModalFriend, setModalFriend] = useState(false)
+    const openModalFriend = (friendID) => {
+        setFriendToShow(friendList.find(frd => frd._id===friendID));
+        setModalFriend(true);
+    }
+    const closeModalFriend = () => setModalFriend(false)
 
     const [friendList, setFriendList] = useState([])
     const getFriendList = async (friendIDs) => {
@@ -162,7 +163,9 @@ const UserPage = (props) => {
                     <div className='info-box'>
                         <h4 className='FriendList'>Friends</h4>
                         {user.friends.length > 0 ? friendList.map(friend => (
-                            <FriendListItem key={friend._id} name={<span className="button">{friend.username}</span>} avatar={friend.avatar} status={friend.status}/>
+                            <FriendListItem key={friend._id}
+                            name={<span className="button" onClick={() => openModalFriend(friend._id)}>{friend.username}</span>}
+                            avatar={friend.avatar} status={friend.status}/>
                         )) : <p>No friend... yet</p>}
                     </div>
                 </div>
@@ -191,11 +194,11 @@ const UserPage = (props) => {
                     </form>
                 </div>
 
-                {/* <Modal show={showModalFriend} onHide={() => closeModalFriend()} >
+                <Modal show={showModalFriend} onHide={() => closeModalFriend()} >
                     <Modal.Header>
                     <Modal.Title>
                     <p>
-                    {friendDetail.username}
+                    {friendToShow.username}
                     </p>
                     </Modal.Title>
                     </Modal.Header>
@@ -203,24 +206,24 @@ const UserPage = (props) => {
                     <div className='PhotoName'>
                         <div className='avatar-container'>
                             <img className='ProfilePhoto' 
-                                src={`data:image/png;base64,${Buffer.from(friendDetail.avatar.data).toString('base64')}`}
+                                src={`data:image/png;base64,${Buffer.from(friendToShow.avatar.data).toString('base64')}`}
                                 alt={'Profile Icon'} />
                         </div>
-                        <h1 className='Username'>{user.username}</h1>
-                    </div>
-        
-                    <h2 className='UserStats'>Friend Stats</h2>
-                    <div className='StatsBox'>
-                        <p>Joined since: {friendDetail.joined_since.slice(0,10)}</p>
-                        <p>Games played: {friendDetail.games_played}</p>
-                        <p>Games won: {friendDetail.games_won}</p>
                     </div>
 
+                    <h1 className='Username'>{friendToShow.username}</h1>
+        
+                    <h2 className='UserStats'>Friend Stats</h2>
+                    <div className='FriendStats'>
+                        <p>Joined since: {friendToShow.joined_since.slice(0,10)}</p>
+                        <p>Games played: {friendToShow.games_played}</p>
+                        <p>Games won: {friendToShow.games_won}</p>
+                    </div>
                     </Modal.Body>
                     <Modal.Footer>
-                    <Button variant="secondary" onClick={() => closeModal()}>Close</Button>
+                    <Button variant="secondary" onClick={() => closeModalFriend()}>Close</Button>
                     </Modal.Footer>
-                </Modal> */}
+                </Modal>
     
                 <Modal show={showModal} onHide={() => closeModal()} >
                     <Modal.Header>
