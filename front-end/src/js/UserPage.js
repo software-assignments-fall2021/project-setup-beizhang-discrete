@@ -43,6 +43,7 @@ const UserPage = (props) => {
 
     const user = props.user, setUser = props.setUser;
     const [allUsersList, setAllUsersList] = useState([]); //GET THIS FROM API
+    // console.log(user)
 
     const getAllUsers = async () => {
         const response = await axios({
@@ -110,6 +111,50 @@ const UserPage = (props) => {
     const handleLogout = async () => {
         axios.get("/logout");
         props.setUser(null);
+    }
+
+    const [showEditProfileModal, setEditProfileModal] = useState(false)
+    const [newProfileDetails, editProfileDetails] = useState({})
+    
+    const closeEditProfileModal = () => setEditProfileModal(false)
+    const handleEditProfile = () => setEditProfileModal(true)
+       
+    const submitEditProfile = async () => {
+        //update username
+        if (newProfileDetails.username != null) {
+            const response = await axios({
+                method: "post",
+                url: "/changeUsername",
+                data: {'username' : newProfileDetails.username}
+            });
+            if(response.data.auth == false) {
+                alert(response.data.message)
+            }
+            else {
+                alert("Username successfully changed!")
+            }
+        }
+        if (newProfileDetails.password != null) {
+            if (newProfileDetails.password != newProfileDetails.confirmpassword) {
+                alert("New passwords do not match!")
+            }
+            else {
+                const response = await axios({
+                    method: "post",
+                    url: "/changePassword",
+                    data: {'password' : newProfileDetails.password}
+                }); 
+                if(response.data.auth == false) {
+                    alert(response.data.message)
+                }
+                else {
+                    alert("Password successfully changed!")
+                }
+            }
+        }
+
+        closeEditProfileModal()
+        editProfileDetails({})
     }
 
     //Handle friend requests, specify two users involved
@@ -194,6 +239,7 @@ const UserPage = (props) => {
                     </form>
                 </div>
 
+                {/* Friend info modal */}
                 <Modal show={showModalFriend} onHide={() => closeModalFriend()} >
                     <Modal.Header>
                     <Modal.Title>
@@ -225,6 +271,7 @@ const UserPage = (props) => {
                     </Modal.Footer>
                 </Modal>
     
+                {/* Friend search modal */}
                 <Modal show={showModal} onHide={() => closeModal()} >
                     <Modal.Header>
                     <Modal.Title>
@@ -245,8 +292,36 @@ const UserPage = (props) => {
                     </Button>
                     </Modal.Footer>
                 </Modal>
-                <div className="logout-holder">
+
+                {/* Edit Profile Modal */}
+                <Modal show={showEditProfileModal} onHide={() => closeEditProfileModal()} >
+                    <Modal.Header>
+                    <Modal.Title>
+                    <p>
+                    Edit Profile Details (leave blank for no change)
+                    </p>
+                    </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <form onSubmit={submitEditProfile}>
+                            <label for="username">New Username:</label><br/>
+                            <input type="text" onChange={e => editProfileDetails({...newProfileDetails, username: e.target.value})}/><br/>
+                            <label for="password">New Password:</label><br/>
+                            <input type="password" onChange={e => editProfileDetails({...newProfileDetails, password: e.target.value})}/><br/>
+                            <label for="confirmpassword">Confirm New Password:</label><br/>
+                            <input type="password"  onChange={e => editProfileDetails({...newProfileDetails, confirmpassword: e.target.value})}/>
+                        </form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={() => submitEditProfile()}>
+                    Submit
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
+
+                <div className="button-holder">
                     <div className="logout button" onClick={() => handleLogout()}>Log Out</div>
+                    <div className="editprofile button" onClick={() => handleEditProfile()}>Edit Profile</div>
                 </div>
             </div>
         )

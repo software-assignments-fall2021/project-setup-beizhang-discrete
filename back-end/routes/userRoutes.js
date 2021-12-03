@@ -133,61 +133,87 @@ router.get("/user", (req, res) => {
     }
 });
 
-router.post("/changeUsername", async (req, res) => {
-    const [username, newUsername, password] = [req.body.username, req.body.newusername, req.body.password];
-    const user = User.findOne({username: username})
-    if(user) {
-        const auth = await bcrypt.compare(password, user.password);
-        if(auth) {
-            if(doesUserExist(newUsername)) {
-                res.json({
-                    auth: false,
-                    message: 'Username taken'
-                })
+router.post("/changeUsername",  body("username").isLength({min: 3}), async (req, res) => {
+    const token = req.cookies.Bearer;
+    if(token) {
+        jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, decoded) => {
+            if(err) {
+                res.send(null);
             } else {
-                user.update({username: newUsername})
-                const token = createToken(user._id);
-                res.cookie("Bearer", token, { httpOnly: true, maxAge: maxAge*1000 });
-                res.json({
-                    auth: true,
-                    user: user,
-                    token: token
-                });
+                const user = await User.findOne({ _id : decoded._id });
+                const newUsername = req.body.username
+                if(user) { //valid user is found given cookie, update username
+                    User.updateOne({ _id : decoded._id }, {"$set": {username: newUsername}}, { returnNewDocument: true },
+                    async function(error, result) {
+                        if (error) {
+                            res.json({
+                                auth: false,
+                                message: "Error updating username",
+                            });
+                        }
+                        else {
+                            const user = await User.findOne({ _id : decoded._id });
+                            const token = createToken(user._id);
+                            res.cookie("Bearer", token, { httpOnly: true, maxAge: maxAge*1000 });
+                            res.json({
+                                auth: true,
+                                user: user,
+                                token: token
+                            });
+                        }
+                    })
+                }
+                else {
+                    res.send(null);
+                }
             }
-        }
-        else {
-            res.json({
-                auth: false,
-                message: "Incorrect password."
-            });
-        }
+        });
+    }
+    else {
+        res.send(null);
     }
 });
 
-router.post("/changePassword", async (req, res) => {
-    const [username, newPassword, password] = [req.body.username, req.body.newpassword, req.body.password];
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-    const user = User.findOne({username: username})
-    if(user) {
-        const auth = await bcrypt.compare(password, user.password);
-        if(auth) {
-            user.update({password: hashedPassword})
-            const token = createToken(user._id);
-            res.cookie("Bearer", token, { httpOnly: true, maxAge: maxAge*1000 });
-            res.json({
-                auth: true,
-                user: user,
-                token: token
-            });
-            
-        }
-        else {
-            res.json({
-                auth: false,
-                message: "Incorrect password."
-            });
-        }
-    } 
+router.post("/changePassword", body("password").isLength({min: 6}), async (req, res) => {
+    const token = req.cookies.Bearer;
+    if(token) {
+        jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, decoded) => {
+            if(err) {
+                res.send(null);
+            } else {
+                const user = await User.findOne({ _id : decoded._id });
+                const newPassword = req.body.password
+                const hashedPassword = await bcrypt.hash(newPassword, 10);
+                if(user) { //valid user is found given cookie, update password
+                    User.updateOne({ _id : decoded._id }, {"$set": {password: hashedPassword}}, { returnNewDocument: true },
+                    async function(error, result) {
+                        if (error) {
+                            res.json({
+                                auth: false,
+                                message: "Error updating password",
+                            });
+                        }
+                        else {
+                            const user = await User.findOne({ _id : decoded._id });
+                            const token = createToken(user._id);
+                            res.cookie("Bearer", token, { httpOnly: true, maxAge: maxAge*1000 });
+                            res.json({
+                                auth: true,
+                                user: user,
+                                token: token
+                            });
+                        }
+                    })
+                }
+                else {
+                    res.send(null);
+                }
+            }
+        });
+    }
+    else {
+        res.send(null);
+    }
 });
 
 router.post("/googleLogin", async (req, res) => {
@@ -195,7 +221,7 @@ router.post("/googleLogin", async (req, res) => {
         const response = await googleAuth(req.body.token)
         const {userId, email, fullName, photoUrl} = response;
         const user = await User.findOne({ googleId : userId });
-        
+    
         if (user) { // google user exists, logem in
             const token = createToken(user._id);
             res.cookie("Bearer", token, { httpOnly: true, maxAge: maxAge*1000 });
