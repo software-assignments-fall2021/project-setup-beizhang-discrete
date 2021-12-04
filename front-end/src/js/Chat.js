@@ -11,7 +11,7 @@ function Chat(props) {
 
     const [socket, setSocket] = useState(null);
     useEffect(() => {
-        const newSocket = io(`http://localhost:4000/`);
+        const newSocket = io(`http://localhost:4000/`, { query: `id=${props.id}` });
         setSocket(newSocket);
         return () => newSocket.close();
     }, []);

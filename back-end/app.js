@@ -37,10 +37,15 @@ app.use(cookieParser("secret"));
 
 /* ------------------------------ chat sockets ------------------------------ */
 io.on('connection', socket => {
-    console.log(socket.id, 'has connected');
+    const handshakeData = socket.request;
+    const room = handshakeData._query.id;
+
+    socket.join(room);
+    console.log(socket.id, 'has connected from room', room);
+
     socket.on("sendMessage", message => {
         console.log(message);
-        socket.broadcast.emit("newMessage", {...message, author:"them"});
+        socket.broadcast.to(room).emit("newMessage", {...message, author:"them"});
     });
 });
 
