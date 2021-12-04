@@ -436,7 +436,7 @@ function Game(props) {
                     Username here
                 </div>
             </center>
-            <Chat user={props.user} />
+            <Chat user={props.user} id={tableID} />
         </div>
         </div>
     )
