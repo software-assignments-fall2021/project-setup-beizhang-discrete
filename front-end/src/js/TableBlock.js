@@ -31,7 +31,7 @@ const TableBlock = (props) => {
             throw new Error(err);
         }
     }
-    if (props.table.status == "private") {
+    if (props.table.status === "private") {
         return (
             <blank></blank>
         )

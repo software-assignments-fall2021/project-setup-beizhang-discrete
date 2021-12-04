@@ -127,15 +127,15 @@ const UserPage = (props) => {
                 url: "/changeUsername",
                 data: {'username' : newProfileDetails.username}
             });
-            if(response.data.auth == false) {
+            if(response.data.auth === false) {
                 alert(response.data.message)
             }
             else {
                 alert("Username successfully changed!")
             }
         }
-        if (newProfileDetails.password != null) {
-            if (newProfileDetails.password != newProfileDetails.confirmpassword) {
+        if (newProfileDetails.password !== null) {
+            if (newProfileDetails.password !== newProfileDetails.confirmpassword) {
                 alert("New passwords do not match!")
             }
             else {
@@ -144,7 +144,7 @@ const UserPage = (props) => {
                     url: "/changePassword",
                     data: {'password' : newProfileDetails.password}
                 }); 
-                if(response.data.auth == false) {
+                if(response.data.auth === false) {
                     alert(response.data.message)
                 }
                 else {
