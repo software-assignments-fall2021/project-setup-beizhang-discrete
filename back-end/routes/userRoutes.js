@@ -24,6 +24,8 @@ router.post("/login", async (req, res) => {
     if(user) {
         const auth = await bcrypt.compare(password, user.password);
         if(auth) {
+            user.status='Online';
+            await user.save();
             const token = createToken(user._id);
             res.cookie("Bearer", token, { httpOnly: true, maxAge: maxAge*1000 });
             res.json({
@@ -96,7 +98,10 @@ router.post("/register", body("username").isLength({min: 3}), body("password").i
     }
 });
 
-router.get("/logout", (req, res) => {
+router.post("/logout", async (req, res) => {
+    const user = await User.findById(req.body.userID);
+    user.status='Offline';
+    await user.save();
     res.cookie('Bearer', '', { maxAge: 1 });
     res.send('logged out');
 });

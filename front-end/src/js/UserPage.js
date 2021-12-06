@@ -109,7 +109,7 @@ const UserPage = (props) => {
     }, [props]);
 
     const handleLogout = async () => {
-        axios.get("/logout");
+        await axios.post("/logout", {'userID': user._id});
         props.setUser(null);
     }
 
