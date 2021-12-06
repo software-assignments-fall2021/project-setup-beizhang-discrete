@@ -43,6 +43,8 @@ You can find out how to contribute on [CONTRIBUTING.md](./CONTRIBUTING.md)
 React front-end: in `front-end` directory -> `npm install --legacy-peer-deps` -> `npm start`
 Express back-end: in `back-end` directory -> add `.env` file containing secrets -> `npm install --legacy-peer-deps` -> `npm start`
 
+App deployed at [https://allinpoker.app/](https://allinpoker.app/)
+
 ## Any Relevant Documents
 
 - [Documentation](https://github.com/software-students-fall2021/user-experience-design-beizhang-discrete/blob/e9d399f87baa3c4654b4786236993fcf88cc0ff3/README.md) for app map, wireframes, and prototype
