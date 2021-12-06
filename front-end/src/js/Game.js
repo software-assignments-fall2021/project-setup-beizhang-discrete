@@ -344,7 +344,7 @@ function Game(props) {
         console.log("join table", tableID)
 
         try {
-            const response = await axios.patch("/tableJoin/" + tableID)
+            const response = await axios.patch("/api/tableJoin/" + tableID)
             console.log(response)
         } catch (err) {
             throw new Error(err);
@@ -355,7 +355,7 @@ function Game(props) {
         console.log("leaving", tableID)
 
         try {
-            const response = await axios.patch("/tableLeave/" + tableID)
+            const response = await axios.patch("/api/tableLeave/" + tableID)
             console.log(response)
         } catch (err) {
             throw new Error(err);

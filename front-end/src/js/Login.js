@@ -14,7 +14,7 @@ const Login = (props) => {
       console.log(`Success, current user: `, res.profileObj);
       const response = await axios({
         method: "post",
-        url: "/googleLogin",
+        url: "/api/googleLogin",
         data: {
           token: res.tokenId,
         },
@@ -58,7 +58,7 @@ const Login = (props) => {
         // send the request to the server api to authenticate
         const response = await axios({
           method: "post",
-          url: "/login",
+          url: "/api/login",
           data: {
             username: username,
             password: password
@@ -92,7 +92,7 @@ const Login = (props) => {
           // send the request to the server api to authenticate
           const response = await axios({
             method: "post",
-            url: "/register",
+            url: "/api/register",
             data: {
               username: username,
               password: password

@@ -105,7 +105,7 @@ const Tablecreate = (props) => {
                 // send the request to the server api to authenticate
                 const response = await axios({
                     method: "post",
-                    url: "/createTable",
+                    url: "/api/createTable",
                     data: {
                         numPlayers: numPlayers,
                         tableName: tableName,

@@ -27,7 +27,7 @@ class Tablelist extends Component {
     componentDidMount() {
         this.interval = setInterval(() => this.setState({ time: Date.now() }), 1000);
 
-        fetch('/tableList')
+        fetch('/api/tableList')
         .then(res=> {
             console.log(res);
             return res.json()

@@ -13,7 +13,7 @@ describe('login system API', () => {
     describe("POST /login", () => {
         it("Should successfully post to database and receive JSON", (done) => {
             chai.request(app)
-                .post("/login")
+                .post("/api/login")
                 .end((err, response) => {
                     if (err) throw err;
                     response.should.have.status(200);
@@ -23,7 +23,7 @@ describe('login system API', () => {
         });
         it("Response body should have user properties auth, message if no JWT", (done) => {
             chai.request(app)
-                .post("/login")
+                .post("/api/login")
                 .end((err, response) => {
                     if (err) throw err;
                     response.body.should.have.keys([
@@ -38,7 +38,7 @@ describe('login system API', () => {
     describe("POST /register", () => {
         it("Should successfully post to database and receive JSON", (done) => {
             chai.request(app)
-                .post("/register")
+                .post("/api/register")
                 .send({ username: faker.internet.userName(), password: faker.internet.password() })
                 .end((err, response) => {
                     if (err) throw err;
@@ -49,7 +49,7 @@ describe('login system API', () => {
         });
         it("Response body should have user properties auth, user, and token", (done) => {
             chai.request(app)
-                .post("/register")
+                .post("/api/register")
                 .send({ username: faker.internet.userName(), password: faker.internet.password() })
                 .end((err, response) => {
                     if (err) throw err;
@@ -65,7 +65,7 @@ describe('login system API', () => {
     describe("POST /userSearch", () => {
         it("Should send searched username to database and return array of results", (done) => {
             chai.request(app)
-                .post("/userSearch")
+                .post("/api/userSearch")
                 .send({ searched: faker.internet.userName() })
                 .end((err, response) => {
                     if (err) throw err;
@@ -81,7 +81,7 @@ describe('login system API', () => {
     describe("GET /user", () => {
         it("Should respond with status 200", (done) => {
             chai.request(app)
-                .get("/user")
+                .get("/api/user")
                 .end((err, response) => {
                     if (err) throw err;
                     response.should.have.status(200);
@@ -90,7 +90,7 @@ describe('login system API', () => {
         });
         it("Response body should be falsy (empty object) if there is no valid JWT", (done) => {
             chai.request(app)
-                .get("/user")
+                .get("/api/user")
                 .end((err, response) => {
                     if (err) throw err;
                     response.body.should.satisfy(obj => Object.keys(obj).length === 0);

@@ -16,11 +16,11 @@ const TableBlock = (props) => {
         console.log("Delete Table", props.table._id)
 
         try {
-            axios.delete("tableDelete/" + props.table._id)
+            axios.delete("/api/tableDelete/" + props.table._id)
 
             // const response = await axios({
             //     method: "delete",
-            //     url: "/tableDelete/" + props.table._id,
+            //     url: "/api/tableDelete/" + props.table._id,
                 
             //     // headers: { "Content-Type": "multipart/form-data" },
             // });
