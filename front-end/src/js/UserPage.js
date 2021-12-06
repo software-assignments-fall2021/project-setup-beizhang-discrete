@@ -48,7 +48,7 @@ const UserPage = (props) => {
     const getAllUsers = async () => {
         const response = await axios({
             method: "post",
-            url: "/userSearch",
+            url: "/api/userSearch",
             data: {'searched' : usernameToSearch}
         }); 
         if(response.data) {
@@ -71,7 +71,7 @@ const UserPage = (props) => {
     const getFriendList = async (friendIDs) => {
         const response = await axios({
             method: "post",
-            url: "/getFriendList",
+            url: "/api/getFriendList",
             data: {'IDs' : friendIDs}
         }); 
         if(response.data) {
@@ -86,7 +86,7 @@ const UserPage = (props) => {
     const getRequestList = async (requesterIDs) => {
         const response = await axios({
             method: "post",
-            url: "/getRequestList",
+            url: "/api/getRequestList",
             data: {'IDs' : requesterIDs}
         }); 
         if(response.data) {
@@ -109,7 +109,7 @@ const UserPage = (props) => {
     }, [props]);
 
     const handleLogout = async () => {
-        await axios.post("/logout", {'userID': user._id});
+        await axios.post("/api/logout", {'userID': user._id});
         props.setUser(null);
     }
 
@@ -124,7 +124,7 @@ const UserPage = (props) => {
         if (newProfileDetails.username != null) {
             const response = await axios({
                 method: "post",
-                url: "/changeUsername",
+                url: "/api/changeUsername",
                 data: {'username' : newProfileDetails.username}
             });
             if(response.data.auth === false) {
@@ -141,7 +141,7 @@ const UserPage = (props) => {
             else {
                 const response = await axios({
                     method: "post",
-                    url: "/changePassword",
+                    url: "/api/changePassword",
                     data: {'password' : newProfileDetails.password}
                 }); 
                 if(response.data.auth === false) {
@@ -161,7 +161,7 @@ const UserPage = (props) => {
     const sendFriendRequest = async (senderID, receiverID) => {
         const response = await axios({
             method: "post",
-            url: "/sendFriendRequest",
+            url: "/api/sendFriendRequest",
             data: {'sender' : senderID, 'receiver' : receiverID}
           }); 
         alert(response.data);
@@ -169,7 +169,7 @@ const UserPage = (props) => {
     const acceptFriendRequest = async (accepterID, senderID) => {
         const response = await axios({
             method: "post",
-            url: "/acceptFriendRequest",
+            url: "/api/acceptFriendRequest",
             data: {'accepter' : accepterID, 'sender' : senderID}
           }); 
         alert(response.data);
@@ -177,7 +177,7 @@ const UserPage = (props) => {
     const declineFriendRequest = async (declinerID, senderID) => {
         const response = await axios({
             method: "post",
-            url: "/declineFriendRequest",
+            url: "/api/declineFriendRequest",
             data: {'decliner' : declinerID, 'sender' : senderID}
           }); 
         alert(response.data);
@@ -186,7 +186,7 @@ const UserPage = (props) => {
         if (window.confirm("Remove this friend?")) {
             const response = await axios({
                 method: "post",
-                url: "/removeFriend",
+                url: "/api/removeFriend",
                 data: {'remover': removerID, 'friendToRemove': friendID}
               }); 
             alert(response.data);

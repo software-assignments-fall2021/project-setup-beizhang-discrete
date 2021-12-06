@@ -81,7 +81,7 @@ const AvatarUpload = (props) => {
 
         const formData = new FormData();
         formData.append("avatar", compressedFile);
-        const res = await axios.post("/uploadAvatar", formData, {
+        const res = await axios.post("/api/uploadAvatar", formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

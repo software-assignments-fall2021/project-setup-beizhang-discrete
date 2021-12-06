@@ -19,7 +19,7 @@ const io = require('socket.io')(server, {
 });
 
 /* ------------------------------- middleware ------------------------------- */
-//app.use(morgan("dev"));
+app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/static", express.static(path.join(__dirname, "public")));
@@ -62,19 +62,19 @@ mongoose.connect(dbURI, {
 
 /* ----------------------------- user and authentication ----------------------------- */
 const userRoutes = require('./routes/userRoutes');
-app.use(userRoutes);
+app.use('/api', userRoutes);
 
 /* ------------------------------ avatar upload ----------------------------- */
 const avatarUploadRoutes = require('./routes/avatarUploadRoutes');
-app.use(avatarUploadRoutes);
+app.use('/api', avatarUploadRoutes);
 
 /* ------------------------------ friend routes ----------------------------- */
 const addFriendRoutes = require('./routes/addFriendRoutes');
-app.use(addFriendRoutes);
+app.use('/api', addFriendRoutes);
 
 /* --------------------------- table routes --------------------------- */
 const tableRoutes = require('./routes/tableRoutes');
-app.use(tableRoutes);
+app.use('/api', tableRoutes);
 
 /* ------------------------------ default route ----------------------------- */
 app.get('*', (req, res) => {

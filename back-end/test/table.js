@@ -11,7 +11,7 @@ describe('table create system API', () => {
     describe("POST /createTable", () => {
         it("Should successfully post to database and receive JSON", (done) => {
             chai.request(app)
-                .post("/createTable")
+                .post("/api/createTable")
                 .end((err, response) => {
                     if (err) throw err;
                     response.should.have.status(200);
@@ -36,7 +36,7 @@ describe('table create system API', () => {
     describe("GET /tableList", () => {
         it("Should respond with status 200", (done) => {
             chai.request(app)
-                .get("/tableList")
+                .get("/api/tableList")
                 .end((err, response) => {
                     if (err) throw err;
                     response.should.have.status(200);
@@ -45,7 +45,7 @@ describe('table create system API', () => {
         });
         it("Response body should be an array", (done) => {
             chai.request(app)
-                .get("/tableList")
+                .get("/api/tableList")
                 .end((err, response) => {
                     if (err) throw err;
                     response.body.should.be.an('array');
@@ -54,7 +54,7 @@ describe('table create system API', () => {
         });
         it("Array items should be objects representing a table", (done) => {
             chai.request(app)
-                .post("/createTable")
+                .post("/api/createTable")
                 .end((err, response) => {
                     if (err) throw err;
                     for (let i = 0; i < response.body.length; i++) {

@@ -15,7 +15,7 @@ const App = (props) => {
   const [user, setUser] = useState(null);
 
   const verifyUser = async () => {
-    const response = await axios.get("/user");
+    const response = await axios.get("/api/user");
     if(response.data) {
       setUser(response.data);
     }
