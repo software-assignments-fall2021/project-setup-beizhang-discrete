@@ -25,6 +25,8 @@ class Tablelist extends Component {
     }
 
     componentDidMount() {
+        this.interval = setInterval(() => this.setState({ time: Date.now() }), 1000);
+
         fetch('/tableList')
         .then(res=> {
             console.log(res);
@@ -34,6 +36,10 @@ class Tablelist extends Component {
             console.log(tables);
             this.setState({ tables })
         })
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
     }
 
     

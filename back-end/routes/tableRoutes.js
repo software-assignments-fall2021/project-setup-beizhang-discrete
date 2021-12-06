@@ -84,6 +84,45 @@ router.delete("/tableDelete/:id", async (req, res) => {
     }
 })
 
+router.patch("/tableJoin/:id", async(req, res) => {
+    try {
+        // console.log(id)
+
+        const table = await Table.findOne({_id: req.params.id })
+
+        if (table.curPlayers >= table.numPlayers) {
+            table.curPlayers = table.numPlayers
+        }
+        else {
+            table.curPlayers = table.curPlayers + 1;
+        }
+        
+
+        await table.save()
+        res.send(table)
+    } catch {
+
+        res.status(404)
+        res.send({ error: "Table does't exist"})
+    }
+})
+
+router.patch("/tableLeave/:id", async(req, res) => {
+    try {
+        const table = await Table.findOne({_id: req.params.id })
+
+        table.curPlayers--
+
+        await table.save()
+        res.send(table)
+        
+    } catch {
+
+        res.status(404)
+        res.send({ error: "Table does't exist"})
+    }
+})
+
 
 
 module.exports = router;
