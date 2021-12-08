@@ -1,7 +1,8 @@
 import Button from '@restart/ui/esm/Button'
-import React from 'react'
+import React, {useState} from 'react'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { Redirect } from 'react-router';
 
 const axios = require('axios');
 
@@ -9,9 +10,13 @@ const axios = require('axios');
 // import Stack from 'react-bootstrap/Stack'
 
 const TableBlock = (props) => {
-
+    const [joined, setJoined] = useState(false);
     //const [status, setStatus] = useState({});
-    
+    const joinTable = () => {
+        setJoined(true);
+        return <Redirect to={`/game/${props.table._id}`}></Redirect>
+    }
+
     const deleteTable = async e => {
         console.log("Delete Table", props.table._id)
 
@@ -31,16 +36,19 @@ const TableBlock = (props) => {
             throw new Error(err);
         }
     }
-    if (props.table.status === "private") {
+    if(joined) {
+        return <Redirect to={`/game/${props.table._id}`}></Redirect>
+    }
+    else if (props.table.status === "private") {
         return (
-            <blank></blank>
+            <></>
         )
     }
     else {
         return (
         <Row>
             <Col className="table-border">
-                <a href={'/game/'+props.table._id}><strong>{props.table.tableName}</strong></a> </Col>
+                <a href="#" onClick={() => joinTable()}><strong>{props.table.tableName}</strong></a> </Col>
             <Col className="table-border">
                 {props.table.curPlayers}/{props.table.numPlayers} </Col>
             <Col className="table-border">
