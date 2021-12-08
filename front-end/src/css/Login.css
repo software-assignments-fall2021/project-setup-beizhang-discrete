@@ -1,0 +1,19 @@
+.UserProfile {
+    align-items: center;
+    text-align: center;
+}
+.header4 { 
+    color: IndianRed;
+    margin: 10px;
+    font-weight: bold;
+}
+.loginForm {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+    margin-bottom: 60px;
+}
+.formLabel {
+    padding: 10px;
+}
