@@ -36,7 +36,7 @@ app.use(session({
 app.use(cookieParser("secret"));
 
 /* ------------------------------ chat sockets ------------------------------ */
-io.on('connection', socket => {
+io.of('/api/chat').on('connection', socket => {
     const handshakeData = socket.request;
     const room = handshakeData._query.id;
 
