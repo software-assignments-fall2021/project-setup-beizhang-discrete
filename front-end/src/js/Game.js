@@ -11,9 +11,9 @@ const cardValues = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K',
 const cardSuits = [clubs, diamonds, spades, hearts]
 
 //to be passed in from table making screen
-const startingChips = 1000
-const bigBlind = 10
-const smallBlind = 5
+let startingChips = 0
+let bigBlind = 0
+let smallBlind = 0
 
 const tableID = window.location.href.split('/').at(-1)
 const deck = []
@@ -27,9 +27,10 @@ for (const val of cardValues) {
 }
 let gameDeck = [...deck]
 function Game(props) {
-
+    // window.location.reload(false);
     const [action, setAction] = useState(null)
     const [numPlayers, setNumPlayers] = useState(7)
+    const [startingValue, setStartingValue] = useState(startingChips)
     const [handFirst, setHandFirst] = useState({ "val": null, "suit": null })
     const [handSecond, setHandSecond] = useState({ "val": null, "suit": null })
     const [flopFirst, setFlopFirst] = useState({ "val": null, "suit": null })
@@ -86,6 +87,7 @@ function Game(props) {
     }, []);
 
     useEffect(() => {
+        console.log(bet)
         setPlayer1Chips(player1Chips - bet)
         setPlayer2Chips(player2Chips - bet)
         setPlayer3Chips(player3Chips - bet)
@@ -216,7 +218,6 @@ function Game(props) {
             v = v % 15 - ((s / (s & -s) === 31) || (s === 0x403c) ? 3 : 1);
             v -= (ss[0] === (ss[1] | ss[2] | ss[3] | ss[4])) * ((s === 0x7c00) ? -5 : 1);
 
-            //return("Hand: "+hands[v]+((s === 0x403c)?" (Ace low)":""));
             return (hands[v] + ((s === 0x403c) ? " (Ace low)" : ""));
         }
 
@@ -345,6 +346,21 @@ function Game(props) {
 
         try {
             const response = await axios.patch("/api/tableJoin/" + tableID)
+            bigBlind = response.data.bigBlind
+            smallBlind = response.data.smallBlind
+            startingChips = response.data.startingValue
+
+            setBet(bigBlind)
+            setPot(bet*numPlayers)
+    
+            setPlayer1Chips(startingChips-bet)
+            setPlayer2Chips(startingChips-bet)
+            setPlayer3Chips(startingChips-bet)
+            setPlayer4Chips(startingChips-bet)
+            setPlayer5Chips(startingChips-bet)
+            setPlayer6Chips(startingChips-bet)
+            setPlayer7Chips(startingChips-bet)
+
             console.log(response)
         } catch (err) {
             throw new Error(err);
@@ -372,7 +388,7 @@ function Game(props) {
 
                 <div className="player2">
 
-                    <div className="opponentName">p2 UName</div>
+                    <div className="opponentName">Player 2</div>
                     <div className="opponentChips">{player2Chips}</div>
 
                     <div className="opponentFirstCard">{player2First.val}
@@ -384,7 +400,7 @@ function Game(props) {
 
                 <div className="player3">
 
-                    <div className="opponentName">p3 UName</div>
+                    <div className="opponentName">Player 3</div>
                     <div className="opponentChips">{player3Chips}</div>
                     <div className="opponentFirstCard">{player3First.val}
                         <img className='suit' src={player3First.suit} alt="" onError={(event) => event.target.style.display = 'none'} /></div>
@@ -395,7 +411,7 @@ function Game(props) {
 
                 <div className="player4">
 
-                    <div className="opponentName">p4 UName</div>
+                    <div className="opponentName">Player 4</div>
                     <div className="opponentChips">{player4Chips}</div>
                     <div className="opponentFirstCard">{player4First.val}
                         <img className='suit' src={player4First.suit} alt="" onError={(event) => event.target.style.display = 'none'} /></div>
@@ -406,7 +422,7 @@ function Game(props) {
 
                 <div className="player5">
 
-                    <div className="opponentName">p5 UName</div>
+                    <div className="opponentName">Player 5</div>
                     <div className="opponentChips">{player5Chips}</div>
                     <div className="opponentFirstCard">{player5First.val}
                         <img className='suit' src={player5First.suit} alt="" onError={(event) => event.target.style.display = 'none'} /></div>
@@ -417,7 +433,7 @@ function Game(props) {
 
                 <div className="player6">
 
-                    <div className="opponentName">p6 UName</div>
+                    <div className="opponentName">Player 6</div>
                     <div className="opponentChips">{player6Chips}</div>
                     <div className="opponentFirstCard">{player6First.val}
                         <img className='suit' src={player6First.suit} alt="" onError={(event) => event.target.style.display = 'none'} /></div>
@@ -428,7 +444,7 @@ function Game(props) {
 
                 <div className="player7">
 
-                    <div className="opponentName">p7 UName</div>
+                    <div className="opponentName">Player 7</div>
                     <div className="opponentChips">{player7Chips}</div>
                     <div className="opponentFirstCard">{player7First.val}
                         <img className='suit' src={player7First.suit} alt="" onError={(event) => event.target.style.display = 'none'} /></div>
@@ -481,7 +497,7 @@ function Game(props) {
                         {player1Chips}
                     </div>
                     <div className="playerID">
-                        Username here
+                        {props.user.username}
                     </div>
                 </center>
                 <Chat user={props.user} id={tableID} />
